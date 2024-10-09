@@ -53,7 +53,7 @@ const MoviesBox = () => {
           className="iframe"
           src={episode}
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen ; download"
-            allowfullscreen
+            allowFullScreen
         />
       </div>
       <div className="kapilButtonContainer">
