@@ -4,8 +4,10 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { AuthContext } from "../src/context";
 import { useNavigate } from "react-router-dom";
+import { toast, Zoom } from "react-toastify";
+
 const Login = () => {
-  const { user, setUser } = useContext(AuthContext);
+  const { user, setUser, setLoading } = useContext(AuthContext);
   const navigate = useNavigate();
   const google = () => {
     const provider = new GoogleAuthProvider();
@@ -24,8 +26,21 @@ const Login = () => {
         });
       }
       // localStorage.setItem("user", true);
+
       setUser(true);
+      setLoading(true);
       navigate("/Home");
+      toast.success("Logged In Successfully!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Zoom,
+      });
     });
   };
 

@@ -6,6 +6,8 @@ import Home from "./Home";
 import ProtectedRoute from "./ProtectedRoute";
 import MoviesBox from "./MoviesBox";
 import ContextProvider from "./contextProvider";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
     <div className="App">
@@ -21,6 +23,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </ContextProvider>
+      <ToastContainer />
     </div>
   );
 }

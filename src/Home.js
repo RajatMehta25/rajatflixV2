@@ -5,9 +5,10 @@ import MoviesBox from "./MoviesBox";
 import { auth, db } from "./firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { AuthContext } from "./context";
+import { ScaleLoader } from "react-spinners";
 
 const Home = () => {
-  const { user, setUser } = useContext(AuthContext);
+  const { user, setUser, loading, setLoading } = useContext(AuthContext);
   const [userDetails, setUserDetails] = useState();
   useEffect(() => {
     fetchUserData();
@@ -20,6 +21,7 @@ const Home = () => {
       if (docSnap.exists()) {
         setUserDetails(docSnap.data());
         console.log(docSnap.data());
+        setLoading(false);
       } else {
         console.log("User not logged in");
       }
@@ -39,8 +41,16 @@ const Home = () => {
 
   return (
     <div>
-      <Header userDetails={userDetails} handleLogout={handleLogout} />
-      <MoviesBox />
+      {loading ? (
+        <div style={{ display: "flex", width: "100vw", height: "100vh", alignItems: "center", justifyContent: "center" }}>
+          <ScaleLoader color="#db0000" />
+        </div>
+      ) : (
+        <>
+          <Header userDetails={userDetails} handleLogout={handleLogout} />
+          <MoviesBox />
+        </>
+      )}
     </div>
   );
 };
