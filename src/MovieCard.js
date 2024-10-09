@@ -4,7 +4,7 @@ const MovieCard = () => {
   return (
     <div className="MovieCardContainer">
       <img src="" />
-      <button>Download</button>
+      <button>Play</button>
     </div>
   );
 };
