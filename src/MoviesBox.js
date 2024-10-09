@@ -58,7 +58,7 @@ const MoviesBox = () => {
       </div>
       <div className="kapilButtonContainer">
         {kapils02.map((ele) => (
-          <button className="downloadButton" onClick={() => setEpisode(ele.link)}>
+          <button className="downloadButton" onClick={() => setEpisode(ele.downloadLink)}>
             {ele.name}
           </button>
         ))}
