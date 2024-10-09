@@ -1,10 +1,17 @@
 import React from "react";
 
-const MovieCard = ({ photo, link }) => {
+const MovieCard = ({ photo, link, name }) => {
   return (
     <div className="MovieCardContainer">
-      <img src={photo} width="200px" height="200px" style={{ borderRadius: "1rem", padding: "0.5rem" }} />
-      <button>Download</button>
+      <div style={{ width: "200px", height: "200px", borderRadius: "1rem", padding: "0.5rem" }}>
+        <img src={photo} width="100%" height="100%" />
+      </div>
+      <div>{name}</div>
+      <button className="downloadButton">
+        <a style={{ textDecoration: "none", color: "white" }} href={link} target="_blank">
+          Download
+        </a>
+      </button>
     </div>
   );
 };
