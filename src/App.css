@@ -181,6 +181,8 @@
   flex-direction: row;
   flex: 1;
   gap: 1rem;
+  flex-wrap:wrap;
+  padding: 1rem
 }
 
 ::-webkit-scrollbar {
