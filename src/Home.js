@@ -6,13 +6,14 @@ import { auth, db } from "./firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { AuthContext } from "./context";
 import { ScaleLoader } from "react-spinners";
+import { toast, Zoom } from "react-toastify";
 
 const Home = () => {
   const { user, setUser, loading, setLoading } = useContext(AuthContext);
   const [userDetails, setUserDetails] = useState();
   useEffect(() => {
     fetchUserData();
-  }, []);
+  }, [loading]);
 
   const fetchUserData = async () => {
     auth.onAuthStateChanged(async (user) => {

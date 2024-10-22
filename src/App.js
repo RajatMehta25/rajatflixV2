@@ -1,4 +1,4 @@
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Outlet, Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import Header from "./Header";
 import Login from "./Login";
@@ -8,6 +8,9 @@ import MoviesBox from "./MoviesBox";
 import ContextProvider from "./contextProvider";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "./context";
+import { auth } from "./firebase";
 function App() {
   return (
     <div className="App">

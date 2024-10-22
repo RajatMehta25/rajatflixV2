@@ -53,12 +53,12 @@ const MoviesBox = () => {
           className="iframe"
           src={episode}
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen ; download"
-            allowFullScreen
+          allowFullScreen
         />
       </div>
       <div className="kapilButtonContainer">
-        {kapils02.map((ele) => (
-          <button className="downloadButton" onClick={() => setEpisode(ele.downloadLink)}>
+        {kapils02.map((ele, i) => (
+          <button key={ele.downloadLink + i} className="downloadButton" onClick={() => setEpisode(ele.downloadLink)}>
             {ele.name}
           </button>
         ))}

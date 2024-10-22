@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { auth, db } from "./firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
@@ -7,8 +7,19 @@ import { useNavigate } from "react-router-dom";
 import { toast, Zoom } from "react-toastify";
 
 const Login = () => {
-  const { user, setUser, setLoading } = useContext(AuthContext);
   const navigate = useNavigate();
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(true);
+        // setLoading(true);
+        navigate("/Home");
+      } else {
+      }
+    });
+  }, []);
+
+  const { user, setUser, setLoading } = useContext(AuthContext);
   const google = () => {
     const provider = new GoogleAuthProvider();
     // provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
