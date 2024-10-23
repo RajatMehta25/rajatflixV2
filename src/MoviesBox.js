@@ -89,9 +89,19 @@ const MoviesBox = () => {
             // }
           }}
           value={search}
-          placeholder="Search Content Name"
+          placeholder="Search Movie Name"
           className="search"
         />
+      </div>
+      <div style={{ fontSize: "1.5rem" }}>Movies</div>
+      <div
+        // className="MovieList"
+        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
+        ref={Movieref}
+      >
+        {searchMovie(data)?.map((ele, i) => (
+          <MovieCard key={ele + i} photo={ele.image} link={ele.downloadLink} name={ele.name} />
+        ))}
       </div>
       <div style={{ fontSize: "1.5rem" }}>Kapil Season 2</div>
       <div style={{ width: "100%" }}>
@@ -111,17 +121,6 @@ const MoviesBox = () => {
           <button key={ele.downloadLink + i} className="downloadButton" onClick={() => setEpisode(ele.downloadLink)}>
             {ele.name}
           </button>
-        ))}
-      </div>
-
-      <div style={{ fontSize: "1.5rem" }}>DOWNLOADABLE CONTENT</div>
-      <div
-        // className="MovieList"
-        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
-        ref={Movieref}
-      >
-        {searchMovie(data)?.map((ele, i) => (
-          <MovieCard key={ele + i} photo={ele.image} link={ele.downloadLink} name={ele.name} />
         ))}
       </div>
 
