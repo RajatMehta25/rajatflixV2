@@ -181,9 +181,9 @@
   flex-direction: row;
   flex: 1;
   gap: 1rem;
-  flex-wrap:wrap;
-  justify-content:center;
-  align-items:center;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 
 ::-webkit-scrollbar {
@@ -205,4 +205,8 @@
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #b30000;
+}
+
+::-webkit-scrollbar:horizontal {
+  display: none;
 }
