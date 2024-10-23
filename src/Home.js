@@ -42,9 +42,9 @@ const Home = () => {
   };
   const checkExpiryTime = (expiryTime) => {
     if (moment().isAfter(moment(expiryTime))) {
-      return false;
-    } else {
       return true;
+    } else {
+      return false;
     }
   };
 
