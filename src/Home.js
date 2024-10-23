@@ -41,11 +41,8 @@ const Home = () => {
     }
   };
   const checkExpiryTime = (expiryTime) => {
-    if (moment().isAfter(moment(expiryTime))) {
-      return true;
-    } else {
-      return false;
-    }
+    console.log(moment().isAfter(moment(expiryTime)));
+    return moment().isAfter(moment(expiryTime));
   };
 
   return (
@@ -60,11 +57,10 @@ const Home = () => {
           {userDetails?.paidUser && checkExpiryTime(userDetails?.expiryTime) ? (
             <MoviesBox />
           ) : (
-            <h1>
-              Send ₹50 to UPI ID : rjt25881-1@okaxis <br /> and Whatsapp to :
-              <a href="https://wa.me/916372773008">+91-6372773008</a> <br />
-              to activate Subscription. <br />
-            </h1>
+            <div style={{ textAlign: "center", padding: "1rem", fontSize: "1.5rem" }}>
+              Send ₹50 to UPI ID : rjt25881-1@okaxis and Whatsapp to :<a href="https://wa.me/916372773008">+91-6372773008</a>
+              &nbsp; to activate Subscription.
+            </div>
           )}
         </>
       )}
