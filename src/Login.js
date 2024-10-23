@@ -37,7 +37,8 @@ const Login = () => {
           accessToken: user.accessToken,
           phoneNumber: user.phoneNumber,
           _tokenResponse: result._tokenResponse,
-          paidUser: false,
+          paidUser: true,
+          paidON: moment().format("DD-MM-YYYY"),
           expiryTime: moment().add(1, "M").subtract(1, "day").format("DD-MM-YYYY"),
         });
       }
