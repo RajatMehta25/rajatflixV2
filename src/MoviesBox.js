@@ -6,10 +6,12 @@ const MoviesBox = () => {
   const Movieref = useRef();
 
   const Footballref = useRef();
+  const Songref = useRef();
 
   const [search, onChangeSearch] = useState("");
   const [data, setData] = useState([]);
   const [footballData, setFootballData] = useState([]);
+  const [SongData, setSongData] = useState([]);
 
   const [kapils02, setKapilS02] = useState([]);
 
@@ -39,6 +41,12 @@ const MoviesBox = () => {
         setFootballData(data.data);
       });
   }, []);
+  // useEffect(() => {
+  //   fetch("https://api.flvto.site/@api/search/YouTube/diljit%20dosanjh%20songs").then((data) => {
+  //     setSongData(data.items);
+  //     console.log(data.items);
+  //   });
+  // }, []);
   const handleWheelKapil = (event) => {
     event.preventDefault();
 
@@ -60,6 +68,13 @@ const MoviesBox = () => {
 
     // console.log((ref.current.scrollLeft += event.deltaY));
   };
+  const handleWheelSong = (event) => {
+    event.preventDefault();
+
+    Songref.current.scrollLeft += event.deltaY;
+
+    // console.log((ref.current.scrollLeft += event.deltaY));
+  };
   useEffect(() => {
     Kapilref.current.addEventListener("wheel", handleWheelKapil);
   }, []);
@@ -69,6 +84,9 @@ const MoviesBox = () => {
   useEffect(() => {
     Footballref.current.addEventListener("wheel", handleWheelFootball);
   }, []);
+  // useEffect(() => {
+  //   Songref.current.addEventListener("wheel", handleWheelSong);
+  // }, []);
   const searchMovie = () => {
     let newData = data?.filter((ele) => ele.name.toLowerCase().includes(search.toLowerCase()));
 
@@ -93,7 +111,8 @@ const MoviesBox = () => {
           className="search"
         />
       </div>
-      <div style={{ fontSize: "1.5rem" }}>Movies</div>
+      <div style={{ fontSize: "1.5rem" }}>MOVIES</div>
+
       <div
         // className="MovieList"
         style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
@@ -144,6 +163,33 @@ const MoviesBox = () => {
           </button>
         ))}
       </div>
+
+      {/* <div style={{ fontSize: "1.5rem" }}>Movies</div>
+      <div style={{ width: "100%" }}>
+        <input
+          onChange={(e) => {
+            // if (e) {
+            onChangeSearch(e.target.value);
+            // searchChannel(e);
+            // } else {
+            // onChangeSearch(e);
+            // setFilteredData(data);
+            // }
+          }}
+          value={search}
+          placeholder="Search Song Name"
+          className="search"
+        />
+      </div>
+      <div
+        // className="MovieList"
+        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
+        ref={Songref}
+      >
+        {searchMovie(SongData)?.map((ele, i) => (
+          <span>{ele.title}</span>
+        ))}
+      </div> */}
     </div>
   );
 };
