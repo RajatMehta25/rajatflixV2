@@ -5,12 +5,14 @@ import { doc, setDoc } from "firebase/firestore";
 import { AuthContext } from "../src/context";
 import { useNavigate } from "react-router-dom";
 import { toast, Zoom } from "react-toastify";
+import moment from "moment";
 
 const Login = () => {
   const navigate = useNavigate();
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
+        console.log(user);
         setUser(true);
         // setLoading(true);
         navigate("/Home");
@@ -20,6 +22,7 @@ const Login = () => {
   }, []);
 
   const { user, setUser, setLoading } = useContext(AuthContext);
+  console.log(moment().add(1, "M").subtract(1, "day").format("DD-MM-YYYY"));
   const google = () => {
     const provider = new GoogleAuthProvider();
     // provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
@@ -34,6 +37,8 @@ const Login = () => {
           accessToken: user.accessToken,
           phoneNumber: user.phoneNumber,
           _tokenResponse: result._tokenResponse,
+          paidUser: false,
+          expiryTime: moment().add(1, "M").subtract(1, "day").format("DD-MM-YYYY"),
         });
       }
       // localStorage.setItem("user", true);

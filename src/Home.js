@@ -7,6 +7,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { AuthContext } from "./context";
 import { ScaleLoader } from "react-spinners";
 import { toast, Zoom } from "react-toastify";
+import moment from "moment";
 
 const Home = () => {
   const { user, setUser, loading, setLoading } = useContext(AuthContext);
@@ -39,6 +40,13 @@ const Home = () => {
       console.log(error.message);
     }
   };
+  const checkExpiryTime = (expiryTime) => {
+    if (moment().isAfter(moment(expiryTime))) {
+      return false;
+    } else {
+      return true;
+    }
+  };
 
   return (
     <div>
@@ -49,7 +57,15 @@ const Home = () => {
       ) : (
         <>
           <Header userDetails={userDetails} handleLogout={handleLogout} />
-          <MoviesBox />
+          {userDetails?.paidUser && checkExpiryTime(userDetails?.expiryTime) ? (
+            <MoviesBox />
+          ) : (
+            <h1>
+              Send ₹50 to UPI ID : rjt25881-1@okaxis <br /> and Whatsapp to :
+              <a href="https://wa.me/916372773008">+91-6372773008</a> <br />
+              to activate Subscription. <br />
+            </h1>
+          )}
         </>
       )}
     </div>
