@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import MovieCard from "./MovieCard";
+import moment from "moment";
+import FootballCard from "./FootballCard";
 
 const MoviesBox = () => {
   const Kapilref = useRef();
@@ -7,11 +9,12 @@ const MoviesBox = () => {
 
   const Footballref = useRef();
   const Songref = useRef();
-
+  const FootballCardref = useRef();
   const [search, onChangeSearch] = useState("");
   const [data, setData] = useState([]);
   const [footballData, setFootballData] = useState([]);
   const [SongData, setSongData] = useState([]);
+  const [FootballCardData, setFootballCardData] = useState([]);
 
   const [kapils02, setKapilS02] = useState([]);
 
@@ -68,6 +71,13 @@ const MoviesBox = () => {
 
     // console.log((ref.current.scrollLeft += event.deltaY));
   };
+  const handleWheelFootballCard = (event) => {
+    event.preventDefault();
+
+    FootballCardref.current.scrollLeft += event.deltaY;
+
+    // console.log((ref.current.scrollLeft += event.deltaY));
+  };
   const handleWheelSong = (event) => {
     event.preventDefault();
 
@@ -84,6 +94,9 @@ const MoviesBox = () => {
   useEffect(() => {
     Footballref.current.addEventListener("wheel", handleWheelFootball);
   }, []);
+  useEffect(() => {
+    FootballCardref.current.addEventListener("wheel", handleWheelFootballCard);
+  }, []);
   // useEffect(() => {
   //   Songref.current.addEventListener("wheel", handleWheelSong);
   // }, []);
@@ -93,6 +106,14 @@ const MoviesBox = () => {
     // setFilteredData(newData ?? data);
     return newData;
   };
+
+  //Football
+  useEffect(() => {
+    fetch(`https://web-api.yalla-score.com/api/all-matches/en/${moment().format("YYYY-MM-DD")}/shoote-yalla.com?t=59`)
+      .then((res) => res.json())
+      .then((data) => setFootballCardData(data));
+  }, []);
+
   return (
     <div className="MovieContainer">
       <div style={{ width: "100%" }}>
@@ -144,6 +165,8 @@ const MoviesBox = () => {
       </div>
 
       <div style={{ fontSize: "1.5rem" }}>Live Stream Football</div>
+      <div style={{ fontSize: "1rem" }}>(Use Ad Blocker)</div>
+
       <div style={{ width: "100%" }}>
         <iframe
           className="iframe"
@@ -152,6 +175,29 @@ const MoviesBox = () => {
           allowFullScreen
         />
       </div>
+      <div style={{ fontSize: "1rem" }}>Live Matches</div>
+
+      <div
+        className="HideScroll"
+        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
+        ref={FootballCardref}
+      >
+        {FootballCardData.map((ele, i) => (
+          <FootballCard
+            key={ele.id}
+            homeLogo={ele.home_logo}
+            awayLogo={ele.away_logo}
+            homeName={ele.home_en}
+            awayName={ele.away_en}
+            status={ele.status}
+            time={ele.time}
+            score={ele.score}
+            league={ele.league_en}
+          />
+        ))}
+      </div>
+      <div style={{ fontSize: "1rem" }}>TV Channels (Watch Here)</div>
+
       <div
         className="HideScroll"
         style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
