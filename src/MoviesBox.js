@@ -175,7 +175,21 @@ const MoviesBox = () => {
           allowFullScreen
         />
       </div>
-      <div style={{ fontSize: "1rem" }}>Live Matches</div>
+
+      <div style={{ fontSize: "1rem" }}>TV Channels (Click To Watch Live)</div>
+
+      <div
+        className="HideScroll"
+        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
+        ref={Footballref}
+      >
+        {footballData.map((ele, i) => (
+          <button key={ele.link + i} className="downloadButton" onClick={() => setChannel(ele.link)}>
+            {ele.channel_name}
+          </button>
+        ))}
+      </div>
+      <div style={{ fontSize: "1rem" }}>Today Matches</div>
 
       <div
         className="HideScroll"
@@ -194,19 +208,6 @@ const MoviesBox = () => {
             score={ele.score}
             league={ele.league_en}
           />
-        ))}
-      </div>
-      <div style={{ fontSize: "1rem" }}>TV Channels (Watch Here)</div>
-
-      <div
-        className="HideScroll"
-        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
-        ref={Footballref}
-      >
-        {footballData.map((ele, i) => (
-          <button key={ele.link + i} className="downloadButton" onClick={() => setChannel(ele.link)}>
-            {ele.channel_name}
-          </button>
         ))}
       </div>
 
