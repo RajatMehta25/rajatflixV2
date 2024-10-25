@@ -205,7 +205,7 @@ allow-top-navigation"
             // setFilteredData(data);
             // }
           }}
-          value={search}
+          value={channelSearch}
           placeholder="Search Channel Name"
           className="search"
         />
