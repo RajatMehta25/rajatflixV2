@@ -177,7 +177,7 @@ const MoviesBox = () => {
       </div>
 
       <div style={{ fontSize: "1.5rem" }}>Live Stream Football</div>
-      <div style={{ fontSize: "1rem" }}>(Use Ad Blocker)</div>
+      {/* <div style={{ fontSize: "1rem" }}>(Use Ad Blocker)</div> */}
 
       <div style={{ width: "100%" }}>
         <iframe
