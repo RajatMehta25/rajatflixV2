@@ -4,13 +4,13 @@ importScripts("https://www.gstatic.com/firebasejs/10.13.2/firebase-messaging-com
 
 // Initialize the Firebase app in the service worker by passing the generated config
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
+  apiKey: "AIzaSyD14lQYW1oUvozl-kUTVacAmndXeS9lNQU",
+  authDomain: "rajatflix-3be48.firebaseapp.com",
+  projectId: "rajatflix-3be48",
+  storageBucket: "rajatflix-3be48.appspot.com",
+  messagingSenderId: "696542563427",
+  appId: "1:696542563427:web:ccc6e274f1873ed5f13c56",
+  measurementId: "G-45S1MW3W72",
 };
 
 firebase.initializeApp(firebaseConfig);

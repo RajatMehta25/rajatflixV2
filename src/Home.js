@@ -3,7 +3,7 @@ import Header from "./Header";
 import { Outlet } from "react-router-dom";
 import MoviesBox from "./MoviesBox";
 import { auth, db, onMessageListener, requestForToken } from "./firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { AuthContext } from "./context";
 import { ScaleLoader } from "react-spinners";
 import { toast, Zoom } from "react-toastify";
@@ -13,39 +13,6 @@ import { messaging } from "./firebase";
 const Home = () => {
   // const VAPID_KEY = process.env.REACT_APP_VAPID_KEY;
 
-  async function requestPermission() {
-    const permission = await Notification.requestPermission();
-
-    if (permission === "granted") {
-      const token = await getToken(messaging, {
-        vapidKey: process.env.REACT_APP_VAPID_KEY,
-      });
-
-      console.log("Token generated : ", token);
-    } else if (permission === "denied") {
-      alert("You denied for the notification");
-    }
-  }
-
-  useEffect(() => {
-    requestPermission();
-    // requestForToken();
-  }, []);
-
-  onMessage(messaging, (payload) => {
-    console.log("payload", payload);
-    toast.info(`${payload?.notification?.title}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-      transition: Zoom,
-    });
-  });
   // onMessageListener()
   //   .then((payload) => {
   //     toast.info(`${payload?.notification?.title}`, {
@@ -97,7 +64,59 @@ const Home = () => {
     console.log(moment().isAfter(moment(expiryTime)));
     return !moment().isAfter(moment(expiryTime));
   };
+  // firebase
+  async function requestPermission() {
+    const permission = await Notification.requestPermission();
 
+    if (permission === "granted") {
+      const token = await getToken(messaging, {
+        vapidKey: process.env.REACT_APP_VAPID_KEY,
+      });
+      if (token) {
+        await setDoc(doc(db, "PUSH", userDetails?.email), {
+          PushToken: token,
+          userAgent: Window.navigator.userAgent,
+        });
+      }
+      console.log("Token generated : ", token);
+    } else if (permission === "denied") {
+      alert("You denied for the notification");
+    }
+  }
+
+  useEffect(() => {
+    requestPermission();
+    // requestForToken();
+  }, []);
+
+  onMessage(messaging, (payload) => {
+    console.log("payload", payload);
+    toast.info(`${payload?.notification?.title}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Zoom,
+    });
+  });
+  const showNoti = () => {
+    const t = "hello";
+    toast.info(`${t}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Zoom,
+    });
+  };
   return (
     <div>
       {loading ? (
@@ -107,6 +126,7 @@ const Home = () => {
       ) : (
         <>
           <Header userDetails={userDetails} handleLogout={handleLogout} />
+          {/* <button onClick={() => showNoti()}>Click Me</button> */}
           {userDetails?.paidUser && checkExpiryTime(userDetails?.expiryTime) ? (
             <MoviesBox />
           ) : (
