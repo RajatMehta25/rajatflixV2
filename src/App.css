@@ -162,6 +162,7 @@
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+  cursor: pointer;
 }
 
 .downloadButton:hover,
