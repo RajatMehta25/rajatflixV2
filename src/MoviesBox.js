@@ -11,6 +11,8 @@ const MoviesBox = () => {
   const Songref = useRef();
   const FootballCardref = useRef();
   const [search, onChangeSearch] = useState("");
+  const [channelSearch, onChangeChannelSearch] = useState("");
+
   const [data, setData] = useState([]);
   const [footballData, setFootballData] = useState([]);
   const [SongData, setSongData] = useState([]);
@@ -106,13 +108,23 @@ const MoviesBox = () => {
     // setFilteredData(newData ?? data);
     return newData;
   };
+  const searchChannel = () => {
+    let newData = footballData?.filter((ele) => ele.channel_name.toLowerCase().includes(channelSearch.toLowerCase()));
+
+    // setFilteredData(newData ?? data);
+    return newData;
+  };
 
   //Football
   useEffect(() => {
+    FootballCardDataApi();
+  }, []);
+
+  const FootballCardDataApi = () => {
     fetch(`https://web-api.yalla-score.com/api/all-matches/en/${moment().format("YYYY-MM-DD")}/shoote-yalla.com?t=59`)
       .then((res) => res.json())
       .then((data) => setFootballCardData(data));
-  }, []);
+  };
 
   return (
     <div className="MovieContainer">
@@ -173,23 +185,53 @@ const MoviesBox = () => {
           src={channel}
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen ; download"
           allowFullScreen
+          sandbox="	allow-forms
+allow-pointer-lock
+allow-same-origin
+allow-scripts
+allow-top-navigation"
         />
       </div>
 
       <div style={{ fontSize: "1rem" }}>TV Channels (Click To Watch Live)</div>
-
+      <div style={{ width: "100%" }}>
+        <input
+          onChange={(e) => {
+            // if (e) {
+            onChangeChannelSearch(e.target.value);
+            // searchChannel(e);
+            // } else {
+            // onChangeSearch(e);
+            // setFilteredData(data);
+            // }
+          }}
+          value={search}
+          placeholder="Search Channel Name"
+          className="search"
+        />
+      </div>
       <div
         className="HideScroll"
         style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
         ref={Footballref}
       >
-        {footballData.map((ele, i) => (
-          <button key={ele.link + i} className="downloadButton" onClick={() => setChannel(ele.link)}>
+        {searchChannel().map((ele, i) => (
+          <button
+            style={{ textWrap: "nowrap", textTransform: "uppercase" }}
+            key={ele.link + i}
+            className="downloadButton"
+            onClick={() => setChannel(ele.link)}
+          >
             {ele.channel_name}
           </button>
         ))}
       </div>
       <div style={{ fontSize: "1rem" }}>Today Matches</div>
+      <div style={{ fontSize: "1rem" }}>
+        <button className="downloadButton" onClick={() => FootballCardDataApi()}>
+          Refresh Score Cards
+        </button>
+      </div>
 
       <div
         className="HideScroll"
