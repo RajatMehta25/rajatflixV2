@@ -185,11 +185,6 @@ const MoviesBox = () => {
           src={channel}
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen ; download"
           allowFullScreen
-          sandbox="	allow-forms
-allow-pointer-lock
-allow-same-origin
-allow-scripts
-allow-top-navigation"
         />
       </div>
 

@@ -13,40 +13,54 @@ import { messaging } from "./firebase";
 const Home = () => {
   // const VAPID_KEY = process.env.REACT_APP_VAPID_KEY;
 
-  // async function requestPermission() {
-  //   const permission = await Notification.requestPermission();
+  async function requestPermission() {
+    const permission = await Notification.requestPermission();
 
-  //   if (permission === "granted") {
-  //     const token = await getToken(messaging, {
-  //       vapidKey: VAPID_KEY,
-  //     });
-
-  //     console.log("Token generated : ", token);
-  //   } else if (permission === "denied") {
-  //     alert("You denied for the notification");
-  //   }
-  // }
-
-  // useEffect(() => {
-  // requestPermission();
-  requestForToken();
-  // }, []);
-
-  onMessageListener()
-    .then((payload) => {
-      toast.info(`${payload?.notification?.title}`, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Zoom,
+    if (permission === "granted") {
+      const token = await getToken(messaging, {
+        vapidKey: process.env.REACT_APP_VAPID_KEY,
       });
-    })
-    .catch((err) => console.log("failed: ", err));
+
+      console.log("Token generated : ", token);
+    } else if (permission === "denied") {
+      alert("You denied for the notification");
+    }
+  }
+
+  useEffect(() => {
+    requestPermission();
+    // requestForToken();
+  }, []);
+
+  onMessage(messaging, (payload) => {
+    console.log("payload", payload);
+    toast.info(`${payload?.notification?.title}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Zoom,
+    });
+  });
+  // onMessageListener()
+  //   .then((payload) => {
+  //     toast.info(`${payload?.notification?.title}`, {
+  //       position: "top-right",
+  //       autoClose: 5000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "dark",
+  //       transition: Zoom,
+  //     });
+  //   })
+  //   .catch((err) => console.log("failed: ", err));
 
   //
   const { user, setUser, loading, setLoading } = useContext(AuthContext);
