@@ -10,6 +10,20 @@ import { toast, Zoom } from "react-toastify";
 import moment from "moment";
 import { getToken, onMessage, getMessaging } from "firebase/messaging";
 import { messaging } from "./firebase";
+
+const Message = ({ image, title, body }) => {
+  return (
+    <>
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        {image ? <img src={image} style={{ width: "100px", height: "100px", borderRadius: "1rem" }} /> : false}
+        <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+          <div style={{ fontSize: "1.5rem" }}>{title}</div>
+          <div>{body}</div>
+        </div>
+      </div>
+    </>
+  );
+};
 const Home = () => {
   // const VAPID_KEY = process.env.REACT_APP_VAPID_KEY;
 
@@ -99,17 +113,32 @@ const Home = () => {
           {payload?.notification?.body}
         </span>
       );
-      toast.info(display, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Zoom,
-      });
+      //   toast.info(display, {
+      //     position: "top-right",
+      //     autoClose: 5000,
+      //     hideProgressBar: false,
+      //     closeOnClick: true,
+      //     pauseOnHover: true,
+      //     draggable: true,
+      //     progress: undefined,
+      //     theme: "dark",
+      //     transition: Zoom,
+      //   });
+      // });
+      toast(
+        <Message image={payload.notification.image} title={payload.notification.title} body={payload.notification.body} />,
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Zoom,
+        }
+      );
     });
   }, [messaging, onMessage]);
 
