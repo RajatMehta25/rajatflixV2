@@ -8,7 +8,7 @@ import { AuthContext } from "./context";
 import { ScaleLoader } from "react-spinners";
 import { toast, Zoom } from "react-toastify";
 import moment from "moment";
-import { getToken, onMessage } from "firebase/messaging";
+import { getToken, onMessage, getMessaging } from "firebase/messaging";
 import { messaging } from "./firebase";
 const Home = () => {
   // const VAPID_KEY = process.env.REACT_APP_VAPID_KEY;
@@ -89,21 +89,23 @@ const Home = () => {
     requestPermission();
     // requestForToken();
   }, [userDetails]);
-
-  onMessage(messaging, (payload) => {
-    console.log("payload", payload);
-    toast.info(`${payload?.notification?.title}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-      transition: Zoom,
+  useEffect(() => {
+    onMessage(messaging, (payload) => {
+      console.log("payload", payload);
+      toast.info(`${payload?.notification?.title}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Zoom,
+      });
     });
-  });
+  }, [messaging, onMessage]);
+
   const showNoti = () => {
     const t = "hello";
     toast.info(`${t}`, {

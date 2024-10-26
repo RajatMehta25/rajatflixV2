@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import { getMessaging } from "firebase/messaging/sw";
+import { getMessaging } from "firebase/messaging";
 import { toast, Zoom } from "react-toastify";
 
 // TODO: Add SDKs for Firebase products that you want to use
