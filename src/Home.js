@@ -92,7 +92,14 @@ const Home = () => {
   useEffect(() => {
     onMessage(messaging, (payload) => {
       console.log("payload", payload);
-      toast.info(`${payload?.notification?.title}`, {
+      const display = (
+        <span>
+          {payload?.notification?.title}
+          <br />
+          {payload?.notification?.body}
+        </span>
+      );
+      toast.info(display, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
