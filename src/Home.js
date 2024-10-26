@@ -31,7 +31,7 @@ const Home = () => {
 
   //
   const { user, setUser, loading, setLoading } = useContext(AuthContext);
-  const [userDetails, setUserDetails] = useState();
+  const [userDetails, setUserDetails] = useState({});
   useEffect(() => {
     fetchUserData();
   }, [loading]);
@@ -66,28 +66,29 @@ const Home = () => {
   };
   // firebase
   async function requestPermission() {
-    const permission = await Notification.requestPermission();
+    // const permission = await Notification.requestPermission();
 
-    if (permission === "granted") {
-      const token = await getToken(messaging, {
-        vapidKey: process.env.REACT_APP_VAPID_KEY,
+    // if (permission === "granted") {
+    const token = await getToken(messaging, {
+      vapidKey: process.env.REACT_APP_VAPID_KEY,
+    });
+    console.log("Token generated : ", token);
+    if (Object.keys(userDetails).length > 0 && token) {
+      await setDoc(doc(db, "PUSH", userDetails?.email), {
+        PushToken: token,
+        userAgent: window.navigator.userAgent,
       });
-      if (token) {
-        await setDoc(doc(db, "PUSH", userDetails?.email), {
-          PushToken: token,
-          userAgent: Window.navigator.userAgent,
-        });
-      }
-      console.log("Token generated : ", token);
-    } else if (permission === "denied") {
-      alert("You denied for the notification");
+      //   // }
+      // } else if (permission === "denied") {
+      //   alert("You denied for the notification");
+      // }
     }
   }
 
   useEffect(() => {
     requestPermission();
     // requestForToken();
-  }, []);
+  }, [userDetails]);
 
   onMessage(messaging, (payload) => {
     console.log("payload", payload);
