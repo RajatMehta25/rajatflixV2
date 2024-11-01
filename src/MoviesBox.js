@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import MovieCard from "./MovieCard";
 import moment from "moment";
 import FootballCard from "./FootballCard";
+import HowToDownload from "./HowToDownload";
 
 const MoviesBox = () => {
   const Kapilref = useRef();
@@ -145,7 +146,7 @@ const MoviesBox = () => {
         />
       </div>
       <div style={{ fontSize: "1.5rem" }}>MOVIES</div>
-
+      <HowToDownload />
       <div
         // className="MovieList"
         style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
