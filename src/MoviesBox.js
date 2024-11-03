@@ -102,9 +102,9 @@ const MoviesBox = () => {
   useEffect(() => {
     FootballCardref.current.addEventListener("wheel", handleWheelFootballCard);
   }, []);
-  // useEffect(() => {
-  //   Songref.current.addEventListener("wheel", handleWheelSong);
-  // }, []);
+  useEffect(() => {
+    Songref.current.addEventListener("wheel", handleWheelSong);
+  }, []);
   const searchMovie = () => {
     let newData = data?.filter((ele) => ele.name.toLowerCase().includes(search.toLowerCase()));
 
