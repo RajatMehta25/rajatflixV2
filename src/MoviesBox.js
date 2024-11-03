@@ -3,6 +3,7 @@ import MovieCard from "./MovieCard";
 import moment from "moment";
 import FootballCard from "./FootballCard";
 import HowToDownload from "./HowToDownload";
+import SongCard from "./SongCard";
 
 const MoviesBox = () => {
   const Kapilref = useRef();
@@ -13,7 +14,7 @@ const MoviesBox = () => {
   const FootballCardref = useRef();
   const [search, onChangeSearch] = useState("");
   const [channelSearch, onChangeChannelSearch] = useState("");
-
+  const [searchSong, onChangeSearchSong] = useState("");
   const [data, setData] = useState([]);
   const [footballData, setFootballData] = useState([]);
   const [SongData, setSongData] = useState([]);
@@ -47,12 +48,13 @@ const MoviesBox = () => {
         setFootballData(data.data);
       });
   }, []);
-  // useEffect(() => {
-  //   fetch("https://api.flvto.site/@api/search/YouTube/diljit%20dosanjh%20songs").then((data) => {
-  //     setSongData(data.items);
-  //     console.log(data.items);
-  //   });
-  // }, []);
+  useEffect(() => {
+    fetch("https://raw.githubusercontent.com/RajatMehta25/TV/main/Songs.json")
+      .then((res) => res.json())
+      .then((data) => {
+        setSongData(data.data);
+      });
+  }, []);
   const handleWheelKapil = (event) => {
     event.preventDefault();
 
@@ -111,6 +113,12 @@ const MoviesBox = () => {
   };
   const searchChannel = () => {
     let newData = footballData?.filter((ele) => ele.channel_name.toLowerCase().includes(channelSearch.toLowerCase()));
+
+    // setFilteredData(newData ?? data);
+    return newData;
+  };
+  const searchSongs = () => {
+    let newData = SongData?.filter((ele) => ele.name.toLowerCase().includes(searchSong.toLowerCase()));
 
     // setFilteredData(newData ?? data);
     return newData;
@@ -249,19 +257,19 @@ const MoviesBox = () => {
         ))}
       </div>
 
-      {/* <div style={{ fontSize: "1.5rem" }}>Movies</div>
+      <div style={{ fontSize: "1.5rem" }}>Songs</div>
       <div style={{ width: "100%" }}>
         <input
           onChange={(e) => {
             // if (e) {
-            onChangeSearch(e.target.value);
+            onChangeSearchSong(e.target.value);
             // searchChannel(e);
             // } else {
             // onChangeSearch(e);
             // setFilteredData(data);
             // }
           }}
-          value={search}
+          value={searchSong}
           placeholder="Search Song Name"
           className="search"
         />
@@ -271,10 +279,10 @@ const MoviesBox = () => {
         style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
         ref={Songref}
       >
-        {searchMovie(SongData)?.map((ele, i) => (
-          <span>{ele.title}</span>
+        {searchSongs(SongData)?.map((ele, i) => (
+          <SongCard photo={ele.image} link={ele.downloadLink} name={ele.name} key={ele.name + i} />
         ))}
-      </div> */}
+      </div>
     </div>
   );
 };
