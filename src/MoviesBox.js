@@ -295,9 +295,9 @@ const MoviesBox = () => {
         <div>{nowPlaying}</div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", justifyContent: "center", alignItems: "center" }}>
           <audio controls loop preload="none" src={playingLink} />
-          <a href={playingLink} download style={{ fontSize: "2rem" }} title="Download">
+          {/* <a href={playingLink} download style={{ fontSize: "2rem" }} title="Download">
             <MdOutlineDownloading />
-          </a>
+          </a> */}
         </div>
       </div>
     </div>
