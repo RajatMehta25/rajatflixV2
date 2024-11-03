@@ -5,6 +5,7 @@ import FootballCard from "./FootballCard";
 import HowToDownload from "./HowToDownload";
 import SongCard from "./SongCard";
 import { MdOutlineDownloading } from "react-icons/md";
+import { FaMicrophone } from "react-icons/fa";
 
 const MoviesBox = () => {
   const Kapilref = useRef();
@@ -23,6 +24,7 @@ const MoviesBox = () => {
   const [playingLink, setSongPlayLink] = useState("");
   const [kapils02, setKapilS02] = useState([]);
   const [nowPlaying, setNowPlaying] = useState("");
+  const [isListening, setIsListening] = useState(false);
   const [iframeLink, setIframeLink] = useState("");
   const [episode, setEpisode] = useState("https://drive.google.com/file/d/15PBFDR6x-ncSwuBNWKF7gW-BUlvnJPeL/preview");
   const [channel, setChannel] = useState("https://koora.vip/share.php?ch=b1_1");
@@ -136,11 +138,14 @@ const MoviesBox = () => {
       .then((data) => setFootballCardData(data));
   };
 
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = new SpeechRecognition();
+
   return (
     <div className="MovieContainer">
       <div style={{ fontSize: "1.5rem" }}>MOVIES</div>
       <HowToDownload />
-      <div style={{ width: "100%" }}>
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}>
         <input
           onChange={(e) => {
             // if (e) {
@@ -155,6 +160,23 @@ const MoviesBox = () => {
           placeholder="Search Movie Name"
           className="search"
         />
+        <span style={{ fontSize: "2rem", cursor: "pointer" }}>
+          <FaMicrophone
+            onClick={() => {
+              recognition.start();
+              setIsListening(true);
+              recognition.onresult = (event) => {
+                const result = event.results[0][0].transcript;
+                onChangeSearch(result);
+                console.log(result);
+              };
+              recognition.onspeechend = () => {
+                recognition.stop();
+                setIsListening(false);
+              };
+            }}
+          />
+        </span>
       </div>
       <div
         // className="MovieList"
@@ -199,7 +221,7 @@ const MoviesBox = () => {
       </div>
 
       <div style={{ fontSize: "1rem" }}>TV Channels (Click To Watch Live)</div>
-      <div style={{ width: "100%" }}>
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}>
         <input
           onChange={(e) => {
             // if (e) {
@@ -214,6 +236,23 @@ const MoviesBox = () => {
           placeholder="Search Channel Name"
           className="search"
         />
+        <span style={{ fontSize: "2rem", cursor: "pointer" }}>
+          <FaMicrophone
+            onClick={() => {
+              recognition.start();
+              setIsListening(true);
+              recognition.onresult = (event) => {
+                const result = event.results[0][0].transcript;
+                onChangeChannelSearch(result);
+                console.log(result);
+              };
+              recognition.onspeechend = () => {
+                recognition.stop();
+                setIsListening(false);
+              };
+            }}
+          />
+        </span>
       </div>
       <div
         className="HideScroll"
@@ -259,7 +298,7 @@ const MoviesBox = () => {
       </div>
 
       <div style={{ fontSize: "1.5rem" }}>Songs</div>
-      <div style={{ width: "100%" }}>
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}>
         <input
           onChange={(e) => {
             // if (e) {
@@ -274,6 +313,23 @@ const MoviesBox = () => {
           placeholder="Search Song Name"
           className="search"
         />
+        <span style={{ fontSize: "2rem", cursor: "pointer" }}>
+          <FaMicrophone
+            onClick={() => {
+              recognition.start();
+              setIsListening(true);
+              recognition.onresult = (event) => {
+                const result = event.results[0][0].transcript;
+                onChangeSearchSong(result);
+                console.log(result);
+              };
+              recognition.onspeechend = () => {
+                recognition.stop();
+                setIsListening(false);
+              };
+            }}
+          />
+        </span>
       </div>
       <div
         // className="MovieList"
