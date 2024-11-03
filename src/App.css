@@ -163,6 +163,7 @@
   -webkit-user-select: none;
   touch-action: manipulation;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .downloadButton:hover,

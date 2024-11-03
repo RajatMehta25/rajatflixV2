@@ -4,6 +4,7 @@ import moment from "moment";
 import FootballCard from "./FootballCard";
 import HowToDownload from "./HowToDownload";
 import SongCard from "./SongCard";
+import { MdOutlineDownloading } from "react-icons/md";
 
 const MoviesBox = () => {
   const Kapilref = useRef();
@@ -19,9 +20,9 @@ const MoviesBox = () => {
   const [footballData, setFootballData] = useState([]);
   const [SongData, setSongData] = useState([]);
   const [FootballCardData, setFootballCardData] = useState([]);
-
+  const [playingLink, setSongPlayLink] = useState("");
   const [kapils02, setKapilS02] = useState([]);
-
+  const [nowPlaying, setNowPlaying] = useState("");
   const [iframeLink, setIframeLink] = useState("");
   const [episode, setEpisode] = useState("https://drive.google.com/file/d/15PBFDR6x-ncSwuBNWKF7gW-BUlvnJPeL/preview");
   const [channel, setChannel] = useState("https://koora.vip/share.php?ch=b1_1");
@@ -137,6 +138,8 @@ const MoviesBox = () => {
 
   return (
     <div className="MovieContainer">
+      <div style={{ fontSize: "1.5rem" }}>MOVIES</div>
+      <HowToDownload />
       <div style={{ width: "100%" }}>
         <input
           onChange={(e) => {
@@ -153,8 +156,6 @@ const MoviesBox = () => {
           className="search"
         />
       </div>
-      <div style={{ fontSize: "1.5rem" }}>MOVIES</div>
-      <HowToDownload />
       <div
         // className="MovieList"
         style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
@@ -280,8 +281,24 @@ const MoviesBox = () => {
         ref={Songref}
       >
         {searchSongs(SongData)?.map((ele, i) => (
-          <SongCard photo={ele.image} link={ele.downloadLink} name={ele.name} key={ele.name + i} />
+          <SongCard
+            photo={ele.image}
+            link={ele.downloadLink}
+            name={ele.name}
+            key={ele.name + i}
+            setSongPlayLink={setSongPlayLink}
+            setNowPlaying={setNowPlaying}
+          />
         ))}
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: "1rem", justifyContent: "center", alignItems: "center" }}>
+        <div>{nowPlaying}</div>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", justifyContent: "center", alignItems: "center" }}>
+          <audio controls loop preload="none" src={playingLink} />
+          <a href={playingLink} download style={{ fontSize: "2rem" }} title="Download">
+            <MdOutlineDownloading />
+          </a>
+        </div>
       </div>
     </div>
   );
