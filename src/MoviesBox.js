@@ -14,9 +14,13 @@ const MoviesBox = () => {
   const Footballref = useRef();
   const Songref = useRef();
   const FootballCardref = useRef();
+  const Telegramref = useRef();
+
   const [search, onChangeSearch] = useState("");
   const [channelSearch, onChangeChannelSearch] = useState("");
   const [searchSong, onChangeSearchSong] = useState("");
+  const [serachTelegram, onChangeSearchTelegram] = useState("");
+
   const [data, setData] = useState([]);
   const [footballData, setFootballData] = useState([]);
   const [SongData, setSongData] = useState([]);
@@ -28,6 +32,7 @@ const MoviesBox = () => {
   const [iframeLink, setIframeLink] = useState("");
   const [episode, setEpisode] = useState("https://drive.google.com/file/d/15PBFDR6x-ncSwuBNWKF7gW-BUlvnJPeL/preview");
   const [channel, setChannel] = useState("https://koora.vip/share.php?ch=b1_1");
+  const [telegramData, setTelegramData] = useState([]);
 
   useEffect(() => {
     fetch("https://raw.githubusercontent.com/RajatMehta25/TV/main/Movie.json")
@@ -133,10 +138,14 @@ const MoviesBox = () => {
   }, []);
 
   const FootballCardDataApi = () => {
-    fetch(`https://web-api.yalla-score.com/api/all-matches/en/${moment().format("YYYY-MM-DD")}/shoote-yalla.com?t=59`)
+    fetch(`https://ws.kora-api.top/api/matches/${moment().format("YYYY-MM-DD")}?t=59`)
       .then((res) => res.json())
       .then((data) => setFootballCardData(data));
   };
+  //telegram bot
+  // useEffect(() => {
+  //   fetch(`http://localhost:5000/getUpdates`).then((res) => res.json().then((json) => setTelegramData(json.result)));
+  // }, []);
 
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   const recognition = new SpeechRecognition();
@@ -144,7 +153,31 @@ const MoviesBox = () => {
   return (
     <div className="MovieContainer">
       <div style={{ fontSize: "1.5rem" }}>MOVIES</div>
-      <HowToDownload />
+
+      {/* <div style={{ fontSize: "1.5rem" }}>Telegram</div> */}
+
+      {/* <div
+       
+        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
+        ref={Telegramref}
+      >
+        <video controls src={ } />
+        {telegramData.map((ele, i) =>
+          ele.message.document ? (
+            <button
+              style={{ textWrap: "nowrap", textTransform: "uppercase" }}
+              key={ele.link + i}
+              className="downloadButton"
+              // onClick={() => setChannel(ele.link)}
+            >
+              {ele.message.document.file_name}
+            </button>
+          ) : (
+            false
+          )
+        )}
+      </div> */}
+
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}>
         <input
           onChange={(e) => {
@@ -157,11 +190,11 @@ const MoviesBox = () => {
             // }
           }}
           value={search}
-          placeholder="Search Movie Name"
+          placeholder="Search Movie"
           className="search"
         />
         <span style={{ fontSize: "2rem", cursor: "pointer" }}>
-          <FaMicrophone
+          {/* <FaMicrophone
             onClick={() => {
               recognition.start();
               setIsListening(true);
@@ -175,7 +208,7 @@ const MoviesBox = () => {
                 setIsListening(false);
               };
             }}
-          />
+          /> */}
         </span>
       </div>
       <div
@@ -187,6 +220,8 @@ const MoviesBox = () => {
           <MovieCard key={ele + i} photo={ele.image} link={ele.downloadLink} name={ele.name} />
         ))}
       </div>
+      <HowToDownload />
+
       <div style={{ fontSize: "1.5rem" }}>Kapil Season 2</div>
       <div style={{ width: "100%" }}>
         <iframe
@@ -237,7 +272,7 @@ const MoviesBox = () => {
           className="search"
         />
         <span style={{ fontSize: "2rem", cursor: "pointer" }}>
-          <FaMicrophone
+          {/* <FaMicrophone
             onClick={() => {
               recognition.start();
               setIsListening(true);
@@ -251,7 +286,7 @@ const MoviesBox = () => {
                 setIsListening(false);
               };
             }}
-          />
+          /> */}
         </span>
       </div>
       <div
@@ -314,7 +349,7 @@ const MoviesBox = () => {
           className="search"
         />
         <span style={{ fontSize: "2rem", cursor: "pointer" }}>
-          <FaMicrophone
+          {/* <FaMicrophone
             onClick={() => {
               recognition.start();
               setIsListening(true);
@@ -328,7 +363,7 @@ const MoviesBox = () => {
                 setIsListening(false);
               };
             }}
-          />
+          /> */}
         </span>
       </div>
       <div

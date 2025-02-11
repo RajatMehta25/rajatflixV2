@@ -25,7 +25,7 @@ const FootballCard = ({ homeLogo, awayLogo, homeName, awayName, status, time, sc
           <span>{homeName}</span>
           <img
             style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-            src={`https://web-api.yalla-score.com/uploads/team/${homeLogo}`}
+            src={`https://ws.kora-api.top/uploads/team/${homeLogo}`}
           />
         </div>
         <span>VS</span>
@@ -35,7 +35,7 @@ const FootballCard = ({ homeLogo, awayLogo, homeName, awayName, status, time, sc
           <span>{awayName}</span>
           <img
             style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-            src={`https://web-api.yalla-score.com/uploads/team/${awayLogo}`}
+            src={`https://ws.kora-api.top/uploads/team/${awayLogo}`}
           />
         </div>
       </div>
