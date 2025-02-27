@@ -9,7 +9,7 @@ const MovieCard = ({ photo, link, name }) => {
       <div>{name}</div>
       <button className="downloadButton">
         <a style={{ textDecoration: "none", color: "white" }} href={link} target="_blank">
-          Download
+          Watch
         </a>
       </button>
     </div>
