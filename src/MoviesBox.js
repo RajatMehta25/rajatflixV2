@@ -66,10 +66,6 @@ const MoviesBox = () => {
   }, []);
   useEffect(() => {
     audioRef.current.play();
-
-    return () => {
-      second;
-    };
   }, [playingLink]);
 
   const handleWheelKapil = (event) => {
