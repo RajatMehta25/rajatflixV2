@@ -15,7 +15,7 @@ const MoviesBox = () => {
   const Songref = useRef();
   const FootballCardref = useRef();
   const Telegramref = useRef();
-
+  const audioRef = useRef();
   const [search, onChangeSearch] = useState("");
   const [channelSearch, onChangeChannelSearch] = useState("");
   const [searchSong, onChangeSearchSong] = useState("");
@@ -25,7 +25,7 @@ const MoviesBox = () => {
   const [footballData, setFootballData] = useState([]);
   const [SongData, setSongData] = useState([]);
   const [FootballCardData, setFootballCardData] = useState([]);
-  const [playingLink, setSongPlayLink] = useState("https://s320.djpunjab.is/data/48/56545/306006/Wavy%20-%20Karan%20Aujla.mp3");
+  const [playingLink, setSongPlayLink] = useState("");
   const [kapils02, setKapilS02] = useState([]);
   const [nowPlaying, setNowPlaying] = useState("");
   const [isListening, setIsListening] = useState(false);
@@ -64,6 +64,14 @@ const MoviesBox = () => {
         setSongData(data.data);
       });
   }, []);
+  useEffect(() => {
+    audioRef.current.play();
+
+    return () => {
+      second;
+    };
+  }, [playingLink]);
+
   const handleWheelKapil = (event) => {
     event.preventDefault();
 
@@ -399,7 +407,7 @@ const MoviesBox = () => {
       <div style={{ display: "flex", flexDirection: "column", gap: "1rem", justifyContent: "center", alignItems: "center" }}>
         <div>{nowPlaying}</div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", justifyContent: "center", alignItems: "center" }}>
-          <audio controls loop preload="none" src={playingLink} />
+          <audio ref={audioRef} controls loop preload="none" src={playingLink} />
           {/* <a href={playingLink} download style={{ fontSize: "2rem" }} title="Download">
             <MdOutlineDownloading />
           </a> */}
