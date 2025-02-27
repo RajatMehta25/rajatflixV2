@@ -185,12 +185,12 @@ const MoviesBox = () => {
           )
         )}
       </div> */}
-      <div>
+      {/* <div>
         <video controls>
           <source src="https://store-eu-par-2.gofile.io/download/web/c1a0463e-9d7f-4666-b539-60fe9c265bb4/326511237_198803062812293_5412635769479048491_n.mp4"></source>
         </video>
       </div>
-      <iframe src="https://koora.vip/api/watch1?mubasher=live&ch=on2_1" />
+      <iframe src="https://koora.vip/api/watch1?mubasher=live&ch=on2_1" /> */}
 
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}>
         <input
