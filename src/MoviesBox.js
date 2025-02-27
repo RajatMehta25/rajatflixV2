@@ -66,10 +66,7 @@ const MoviesBox = () => {
   }, []);
   useEffect(() => {
     audioRef.current.play();
-    if (audioRef.current.paused) {
-      audioRef.current.play();
-    }
-  }, [playingLink]);
+  }, [playingLink, audioRef.current]);
 
   const handleWheelKapil = (event) => {
     event.preventDefault();
