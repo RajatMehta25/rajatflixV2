@@ -25,7 +25,7 @@ const MoviesBox = () => {
   const [footballData, setFootballData] = useState([]);
   const [SongData, setSongData] = useState([]);
   const [FootballCardData, setFootballCardData] = useState([]);
-  const [playingLink, setSongPlayLink] = useState("");
+  const [playingLink, setSongPlayLink] = useState("https://s320.djpunjab.is/data/48/56545/306006/Wavy%20-%20Karan%20Aujla.mp3");
   const [kapils02, setKapilS02] = useState([]);
   const [nowPlaying, setNowPlaying] = useState("");
   const [isListening, setIsListening] = useState(false);
@@ -33,6 +33,7 @@ const MoviesBox = () => {
   const [episode, setEpisode] = useState("https://drive.google.com/file/d/15PBFDR6x-ncSwuBNWKF7gW-BUlvnJPeL/preview");
   const [channel, setChannel] = useState("https://koora.vip/share.php?ch=b1_1");
   const [telegramData, setTelegramData] = useState([]);
+  const [matchData, setMatchData] = useState({});
 
   useEffect(() => {
     fetch("https://raw.githubusercontent.com/RajatMehta25/TV/main/Movie.json")
@@ -142,6 +143,13 @@ const MoviesBox = () => {
       .then((res) => res.json())
       .then((data) => setFootballCardData(data));
   };
+
+  const MatchDetails = (id) => {
+    // fetch(`https://ws.kora-api.top/api/matche/${ID}/en?t=0716`);
+    fetch(`https://ws.kora-api.top/api/matche/${id}/en?t=${moment.format("YYYY-MM-DD h:i")}`)
+      .then((res) => res.json())
+      .then((data) => setMatchData(data));
+  };
   //telegram bot
   // useEffect(() => {
   //   fetch(`http://localhost:5000/getUpdates`).then((res) => res.json().then((json) => setTelegramData(json.result)));
@@ -177,6 +185,12 @@ const MoviesBox = () => {
           )
         )}
       </div> */}
+      <div>
+        <video controls>
+          <source src="https://store-eu-par-2.gofile.io/download/web/c1a0463e-9d7f-4666-b539-60fe9c265bb4/326511237_198803062812293_5412635769479048491_n.mp4"></source>
+        </video>
+      </div>
+      <iframe src="https://koora.vip/api/watch1?mubasher=live&ch=on2_1" />
 
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}>
         <input
@@ -220,7 +234,7 @@ const MoviesBox = () => {
           <MovieCard key={ele + i} photo={ele.image} link={ele.downloadLink} name={ele.name} />
         ))}
       </div>
-      <HowToDownload />
+      {/* <HowToDownload /> */}
 
       <div style={{ fontSize: "1.5rem" }}>Kapil Season 2</div>
       <div style={{ width: "100%" }}>
@@ -244,7 +258,7 @@ const MoviesBox = () => {
       </div>
 
       <div style={{ fontSize: "1.5rem" }}>Live Stream Football</div>
-      <div style={{ fontSize: "1rem" }}>(Use Ad Blocker)</div>
+      {/* <div style={{ fontSize: "1rem" }}>(Use Ad Blocker)</div> */}
 
       <div style={{ width: "100%" }}>
         <iframe
