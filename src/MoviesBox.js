@@ -10,6 +10,7 @@ import { FaMicrophone } from "react-icons/fa";
 const MoviesBox = () => {
   const Kapilref = useRef();
   const Movieref = useRef();
+  const playref = useRef();
 
   const Footballref = useRef();
   const Songref = useRef();
@@ -27,6 +28,8 @@ const MoviesBox = () => {
   const [FootballCardData, setFootballCardData] = useState([]);
   const [playingLink, setSongPlayLink] = useState("");
   const [kapils02, setKapilS02] = useState([]);
+  const [movieFrame, setMovieFrame] = useState([]);
+  const [playLink, setplayLink] = useState("");
   const [nowPlaying, setNowPlaying] = useState("");
   const [isListening, setIsListening] = useState(false);
   const [iframeLink, setIframeLink] = useState("");
@@ -41,6 +44,14 @@ const MoviesBox = () => {
       .then((data) => {
         setData(data.data);
         onChangeSearch("");
+      });
+  }, []);
+  useEffect(() => {
+    fetch("https://raw.githubusercontent.com/RajatMehta25/TV/main/MovieFrame.json")
+      .then((res) => res.json())
+      .then((data) => {
+        setMovieFrame(data.data);
+        // onChangeSearch("");
       });
   }, []);
   useEffect(() => {
@@ -103,6 +114,13 @@ const MoviesBox = () => {
 
     // console.log((ref.current.scrollLeft += event.deltaY));
   };
+  const handleMovieFrame = (event) => {
+    event.preventDefault();
+
+    playref.current.scrollLeft += event.deltaY;
+
+    // console.log((ref.current.scrollLeft += event.deltaY));
+  };
   useEffect(() => {
     Kapilref.current.addEventListener("wheel", handleWheelKapil);
   }, []);
@@ -117,6 +135,9 @@ const MoviesBox = () => {
   }, []);
   useEffect(() => {
     Songref.current.addEventListener("wheel", handleWheelSong);
+  }, []);
+  useEffect(() => {
+    Songref.current.addEventListener("wheel", handleMovieFrame);
   }, []);
   const searchMovie = () => {
     let newData = data?.filter((ele) => ele.name.toLowerCase().includes(search.toLowerCase()));
@@ -166,36 +187,6 @@ const MoviesBox = () => {
     <div className="MovieContainer">
       <div style={{ fontSize: "1.5rem" }}>MOVIES</div>
 
-      {/* <div style={{ fontSize: "1.5rem" }}>Telegram</div> */}
-
-      {/* <div
-       
-        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
-        ref={Telegramref}
-      >
-        <video controls src={ } />
-        {telegramData.map((ele, i) =>
-          ele.message.document ? (
-            <button
-              style={{ textWrap: "nowrap", textTransform: "uppercase" }}
-              key={ele.link + i}
-              className="downloadButton"
-              // onClick={() => setChannel(ele.link)}
-            >
-              {ele.message.document.file_name}
-            </button>
-          ) : (
-            false
-          )
-        )}
-      </div> */}
-      {/* <div>
-        <video controls>
-          <source src="https://store-eu-par-2.gofile.io/download/web/c1a0463e-9d7f-4666-b539-60fe9c265bb4/326511237_198803062812293_5412635769479048491_n.mp4"></source>
-        </video>
-      </div>
-      <iframe src="https://koora.vip/api/watch1?mubasher=live&ch=on2_1" /> */}
-
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}>
         <input
           onChange={(e) => {
@@ -239,6 +230,28 @@ const MoviesBox = () => {
         ))}
       </div>
       {/* <HowToDownload /> */}
+      <div style={{ fontSize: "1.5rem" }}>Live Stream Movies</div>
+      <div style={{ fontSize: "1.2rem" }}>USE AD BLOCKER / CLOSE ADS TO WATCH MOVIE</div>
+
+      <div style={{ width: "100%" }}>
+        <iframe
+          className="iframe"
+          src={playLink}
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen ; download"
+          allowFullScreen
+        />
+      </div>
+      <div
+        // className="kapilButtonContainer"
+        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
+        ref={playref}
+      >
+        {movieFrame.map((ele, i) => (
+          <button key={ele.playLink + i} className="downloadButton" onClick={() => setplayLink(ele.playLink)}>
+            {ele.name}
+          </button>
+        ))}
+      </div>
 
       <div style={{ fontSize: "1.5rem" }}>Kapil Season 2</div>
       <div style={{ width: "100%" }}>
