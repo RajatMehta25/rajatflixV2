@@ -233,7 +233,7 @@ const MoviesBox = () => {
       <div style={{ fontSize: "1.5rem" }}>Live Stream Movies</div>
       <div style={{ fontSize: "1.2rem" }}>USE AD BLOCKER / CLOSE ADS TO WATCH MOVIE</div>
 
-      <div style={{ width: "100%" }}>
+      <div style={{ width: "100%", minHeight: "600px" }}>
         <iframe
           className="iframe"
           src={playLink}
