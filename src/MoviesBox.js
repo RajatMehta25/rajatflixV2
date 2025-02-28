@@ -239,6 +239,7 @@ const MoviesBox = () => {
           src={playLink}
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen ; download"
           allowFullScreen
+          allowfullscreen="true"
         />
       </div>
       <div
