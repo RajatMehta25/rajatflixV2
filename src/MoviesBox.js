@@ -39,22 +39,48 @@ const MoviesBox = () => {
   const [matchData, setMatchData] = useState({});
 
   useEffect(() => {
-    const adElements = document.querySelectorAll("iframe,img,a,script");
-
-    adElements.forEach((ele) => {
-      if (
-        ele?.src?.includes("ads") ||
-        ele?.src?.includes("ad") ||
-        ele?.src?.includes("adsbygoogle") ||
-        ele?.src?.includes("soliads") ||
-        ele?.src?.includes("xadsmart") ||
-        ele?.src?.includes("fondisheremian") ||
-        ele?.src?.includes("adsco")
-      ) {
-        ele.remove();
-        console.log("ele-->", ele?.src);
-      }
+    // const adElements = document.querySelectorAll("iframe,img,a,script");
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.addedNodes) {
+          mutation.addedNodes.forEach((node) => {
+            if (node.nodeName === "IFRAME") {
+              if (
+                // node?.src?.includes("ads") || node?.src?.includes("ad") || node?.src?.includes("adsbygoogle")
+                ele?.src?.includes("ads") ||
+                ele?.src?.includes("ad") ||
+                // ele?.src?.includes("adsbygoogle") ||
+                ele?.src?.includes("soliads") ||
+                ele?.src?.includes("xadsmart") ||
+                ele?.src?.includes("fondisheremian") ||
+                ele?.src?.includes("adsco")
+              ) {
+                node.remove();
+                console.log("node-->", node?.src);
+              }
+            }
+          });
+        }
+      });
     });
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+    // adElements.forEach((ele) => {
+    //   if (
+    //     ele?.src?.includes("ads") ||
+    //     ele?.src?.includes("ad") ||
+    //     ele?.src?.includes("adsbygoogle") ||
+    //     ele?.src?.includes("soliads") ||
+    //     ele?.src?.includes("xadsmart") ||
+    //     ele?.src?.includes("fondisheremian") ||
+    //     ele?.src?.includes("adsco")
+    //   ) {
+    //     ele.remove();
+    //     console.log("ele-->", ele?.src);
+    //   }
+    // });
   });
 
   useEffect(() => {
