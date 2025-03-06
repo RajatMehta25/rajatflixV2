@@ -41,7 +41,9 @@ const MoviesBox = () => {
   useEffect(() => {
     // const adElements = document.querySelectorAll("iframe,img,a,script");
     const observer = new MutationObserver((mutations) => {
+      console.log("mutations-->", mutations);
       mutations.forEach((mutation) => {
+        console.log("mutation-->", mutation);
         if (mutation.addedNodes) {
           mutation.addedNodes.forEach((node) => {
             console.log("node-->", node.nodeName);
@@ -64,7 +66,7 @@ const MoviesBox = () => {
         }
       });
     });
-    observer.observe(document.body, {
+    observer.observe(document.body.iframe, {
       childList: true,
       subtree: true,
     });
