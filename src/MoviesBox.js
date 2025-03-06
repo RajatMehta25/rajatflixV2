@@ -41,7 +41,12 @@ const MoviesBox = () => {
   useEffect(() => {
     const adElements = document.querySelectorAll("iframe,img,a");
     adElements.forEach((ele) => {
-      if (ele.src.includes("ads") || ele.src.includes("ad") || ele.src.includes("adsbygoogle") || ele.src.includes("google")) {
+      if (
+        ele?.src?.includes("ads") ||
+        ele?.src?.includes("ad") ||
+        ele?.src?.includes("adsbygoogle") ||
+        ele?.src?.includes("google")
+      ) {
         ele.remove();
       }
     });
