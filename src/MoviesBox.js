@@ -45,7 +45,8 @@ const MoviesBox = () => {
         ele?.src?.includes("ads") ||
         ele?.src?.includes("ad") ||
         ele?.src?.includes("adsbygoogle") ||
-        ele?.src?.includes("google")
+        ele?.src?.includes("soliads") ||
+        ele?.src?.includes("xadsmart")
       ) {
         ele.remove();
       }
