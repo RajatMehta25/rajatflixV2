@@ -42,29 +42,28 @@ const MoviesBox = () => {
     setIframeLoaded(true);
   };
 
-  useEffect(() => {
-    // const adElements = document.querySelectorAll("iframe,img,a,script");
-    console.log("iframeLoaded", iframeLoaded);
-    if (iframeLoaded) {
-      const iframe = document?.getElementById("myIframe");
-      const iframeDocument = iframe?.contentDocument || iframe?.contentWindow?.document;
-      const adElements = iframeDocument?.querySelectorAll("iframe,img,a,script");
-      adElements.forEach((ele) => {
-        if (
-          ele?.src?.includes("ads") ||
-          ele?.src?.includes("ad") ||
-          ele?.src?.includes("xads") ||
-          // ele?.src?.includes("xadsmart") ||
-          // ele?.src?.includes("/xads.js") ||
-          ele?.src?.includes("https://c.adsco.re/") ||
-          ele?.src?.includes("soliads") ||
-          ele?.href?.includes("ad")
-        ) {
-          ele.remove();
-        }
-      });
-    }
-  }, [iframeLoaded]);
+  // useEffect(() => {
+  //   console.log("iframeLoaded", iframeLoaded);
+  //   if (iframeLoaded) {
+  //     const iframe = document?.getElementById("myIframe");
+  //     const iframeDocument = iframe?.contentDocument || iframe?.contentWindow?.document;
+  //     const adElements = iframeDocument?.querySelectorAll("iframe,img,a,script");
+  //     adElements.forEach((ele) => {
+  //       if (
+  //         ele?.src?.includes("ads") ||
+  //         ele?.src?.includes("ad") ||
+  //         ele?.src?.includes("xads") ||
+  //         ele?.src?.includes("xadsmart") ||
+  //         ele?.src?.includes("/xads.js") ||
+  //         ele?.src?.includes("https://c.adsco.re/") ||
+  //         ele?.src?.includes("soliads") ||
+  //         ele?.href?.includes("ad")
+  //       ) {
+  //         ele.remove();
+  //       }
+  //     });
+  //   }
+  // }, [iframeLoaded]);
 
   useEffect(() => {
     fetch("https://raw.githubusercontent.com/RajatMehta25/TV/main/Movie.json")
@@ -268,7 +267,7 @@ const MoviesBox = () => {
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen ; download"
           allowFullScreen
           allowfullscreen="true"
-          onLoad={handleIframeLoad}
+          // onLoad={handleIframeLoad}
           id="myIframe"
         />
       </div>
