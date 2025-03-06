@@ -45,8 +45,8 @@ const MoviesBox = () => {
   useEffect(() => {
     // const adElements = document.querySelectorAll("iframe,img,a,script");
     if (iframeLoaded) {
-      const iframe = document.getElementById("myIframe");
-      const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+      const iframe = document?.getElementById("myIframe");
+      const iframeDocument = iframe?.contentDocument || iframe?.contentWindow?.document;
       const adElements = iframeDocument.querySelectorAll("iframe,img,a,script");
       adElements.forEach((ele) => {
         if (
