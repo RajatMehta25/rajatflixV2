@@ -39,6 +39,15 @@ const MoviesBox = () => {
   const [matchData, setMatchData] = useState({});
 
   useEffect(() => {
+    const adElements = document.querySelectorAll("iframe,img,a");
+    adElements.forEach((ele) => {
+      if (ele.src.includes("ads") || ele.src.includes("ad") || ele.src.includes("adsbygoogle") || ele.src.includes("google")) {
+        ele.remove();
+      }
+    });
+  });
+
+  useEffect(() => {
     fetch("https://raw.githubusercontent.com/RajatMehta25/TV/main/Movie.json")
       .then((res) => res.json())
       .then((data) => {

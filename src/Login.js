@@ -27,8 +27,9 @@ const Login = () => {
     const provider = new GoogleAuthProvider();
     // provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
     signInWithPopup(auth, provider).then(async (result) => {
-      console.log(result);
+      console.log("google-->", result);
       const user = result.user;
+
       if (user) {
         await setDoc(doc(db, "Users", user.uid), {
           email: user.email,
