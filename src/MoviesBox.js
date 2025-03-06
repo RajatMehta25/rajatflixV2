@@ -37,54 +37,29 @@ const MoviesBox = () => {
   const [channel, setChannel] = useState("https://koora.vip/share.php?ch=b1_1");
   const [telegramData, setTelegramData] = useState([]);
   const [matchData, setMatchData] = useState({});
+  const [iframeLoaded, setIframeLoaded] = useState(false);
+  const handleIframeLoad = () => {
+    setIframeLoaded(true);
+  };
 
   useEffect(() => {
     // const adElements = document.querySelectorAll("iframe,img,a,script");
-    const observer = new MutationObserver((mutations) => {
-      console.log("mutations-->", mutations);
-      mutations.forEach((mutation) => {
-        console.log("mutation-->", mutation);
-        if (mutation.addedNodes) {
-          mutation.addedNodes.forEach((node) => {
-            console.log("node-->", node.nodeName);
-            if (node.nodeName === "IFRAME" || node.nodeName === "IMG" || node.nodeName === "A" || node.nodeName === "SCRIPT") {
-              if (
-                // node?.src?.includes("ads") || node?.src?.includes("ad") || node?.src?.includes("adsbygoogle")
-                node?.src?.includes("ads") ||
-                node?.src?.includes("ad") ||
-                // ele?.src?.includes("adsbygoogle") ||
-                node?.src?.includes("soliads") ||
-                node?.src?.includes("xadsmart") ||
-                node?.src?.includes("fondisheremian") ||
-                node?.src?.includes("adsco")
-              ) {
-                node.remove();
-                console.log("node-->", node?.src);
-              }
-            }
-          });
+    if (iframeLoaded) {
+      const iframe = document.getElementById("myIframe");
+      const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+      const adElements = iframeDocument.querySelectorAll("iframe,img,a,script");
+      adElements.forEach((ele) => {
+        if (
+          ele?.src?.includes("ads") ||
+          ele?.src?.includes("ad") ||
+          ele?.src?.includes("xads") ||
+          ele?.src?.includes("soliads")
+        ) {
+          ele.remove();
         }
       });
-    });
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-    });
-    // adElements.forEach((ele) => {
-    //   if (
-    //     ele?.src?.includes("ads") ||
-    //     ele?.src?.includes("ad") ||
-    //     ele?.src?.includes("adsbygoogle") ||
-    //     ele?.src?.includes("soliads") ||
-    //     ele?.src?.includes("xadsmart") ||
-    //     ele?.src?.includes("fondisheremian") ||
-    //     ele?.src?.includes("adsco")
-    //   ) {
-    //     ele.remove();
-    //     console.log("ele-->", ele?.src);
-    //   }
-    // });
-  });
+    }
+  }, [iframeLoaded]);
 
   useEffect(() => {
     fetch("https://raw.githubusercontent.com/RajatMehta25/TV/main/Movie.json")
@@ -288,6 +263,8 @@ const MoviesBox = () => {
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen ; download"
           allowFullScreen
           allowfullscreen="true"
+          onLoad={handleIframeLoad}
+          id="myIframe"
         />
       </div>
       <div
