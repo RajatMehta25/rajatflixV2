@@ -48,8 +48,7 @@ const MoviesBox = () => {
         ele?.src?.includes("soliads") ||
         ele?.src?.includes("xadsmart") ||
         ele?.src?.includes("fondisheremian") ||
-        ele?.src?.includes("adsco") ||
-
+        ele?.src?.includes("adsco")
       ) {
         ele.remove();
       }
