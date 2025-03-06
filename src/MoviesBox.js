@@ -40,6 +40,7 @@ const MoviesBox = () => {
 
   useEffect(() => {
     const adElements = document.querySelectorAll("iframe,img,a,script");
+
     adElements.forEach((ele) => {
       if (
         ele?.src?.includes("ads") ||
@@ -51,6 +52,7 @@ const MoviesBox = () => {
         ele?.src?.includes("adsco")
       ) {
         ele.remove();
+        console.log("ele-->", ele?.src);
       }
     });
   });
