@@ -39,14 +39,17 @@ const MoviesBox = () => {
   const [matchData, setMatchData] = useState({});
 
   useEffect(() => {
-    const adElements = document.querySelectorAll("iframe,img,a");
+    const adElements = document.querySelectorAll("iframe,img,a,script");
     adElements.forEach((ele) => {
       if (
         ele?.src?.includes("ads") ||
         ele?.src?.includes("ad") ||
         ele?.src?.includes("adsbygoogle") ||
         ele?.src?.includes("soliads") ||
-        ele?.src?.includes("xadsmart")
+        ele?.src?.includes("xadsmart") ||
+        ele?.src?.includes("fondisheremian") ||
+        ele?.src?.includes("adsco") ||
+
       ) {
         ele.remove();
       }
