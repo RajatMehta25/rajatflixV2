@@ -53,7 +53,11 @@ const MoviesBox = () => {
           ele?.src?.includes("ads") ||
           ele?.src?.includes("ad") ||
           ele?.src?.includes("xads") ||
-          ele?.src?.includes("soliads")
+          ele?.src?.includes("xadsmart") ||
+          ele?.src?.includes("/xads.js") ||
+          ele?.src?.includes("https://c.adsco.re/") ||
+          ele?.src?.includes("soliads") ||
+          ele?.href?.includes("ad")
         ) {
           ele.remove();
         }
