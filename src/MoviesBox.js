@@ -64,7 +64,7 @@ const MoviesBox = () => {
         }
       });
     });
-    observer.observe(document.body, {
+    observer.observe(document.body.querySelectorAll("iframe"), {
       childList: true,
       subtree: true,
     });
