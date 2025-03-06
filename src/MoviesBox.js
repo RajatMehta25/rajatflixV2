@@ -66,7 +66,7 @@ const MoviesBox = () => {
         }
       });
     });
-    observer.observe(document.body.iframe, {
+    observer.observe(document.body, {
       childList: true,
       subtree: true,
     });
