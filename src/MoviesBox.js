@@ -47,13 +47,13 @@ const MoviesBox = () => {
             if (node.nodeName === "IFRAME") {
               if (
                 // node?.src?.includes("ads") || node?.src?.includes("ad") || node?.src?.includes("adsbygoogle")
-                ele?.src?.includes("ads") ||
-                ele?.src?.includes("ad") ||
+                node?.src?.includes("ads") ||
+                node?.src?.includes("ad") ||
                 // ele?.src?.includes("adsbygoogle") ||
-                ele?.src?.includes("soliads") ||
-                ele?.src?.includes("xadsmart") ||
-                ele?.src?.includes("fondisheremian") ||
-                ele?.src?.includes("adsco")
+                node?.src?.includes("soliads") ||
+                node?.src?.includes("xadsmart") ||
+                node?.src?.includes("fondisheremian") ||
+                node?.src?.includes("adsco")
               ) {
                 node.remove();
                 console.log("node-->", node?.src);
