@@ -44,6 +44,7 @@ const MoviesBox = () => {
       mutations.forEach((mutation) => {
         if (mutation.addedNodes) {
           mutation.addedNodes.forEach((node) => {
+            console.log("node-->", node.nodeName);
             if (node.nodeName === "IFRAME" || node.nodeName === "IMG" || node.nodeName === "A" || node.nodeName === "SCRIPT") {
               if (
                 // node?.src?.includes("ads") || node?.src?.includes("ad") || node?.src?.includes("adsbygoogle")
