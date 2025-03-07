@@ -229,7 +229,7 @@ const MoviesBox = () => {
       </div>
       <div
         // className="kapilButtonContainer"
-        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
+        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%", overflowY: "hidden" }}
         ref={playref}
       >
         {movieFrame.map((ele, i) => (
