@@ -212,50 +212,6 @@ const MoviesBox = () => {
 
   return (
     <div className="MovieContainer">
-      <div style={{ fontSize: "1.5rem" }}>MOVIES</div>
-
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}>
-        <input
-          onChange={(e) => {
-            // if (e) {
-            onChangeSearch(e.target.value);
-            // searchChannel(e);
-            // } else {
-            // onChangeSearch(e);
-            // setFilteredData(data);
-            // }
-          }}
-          value={search}
-          placeholder="Search Movie"
-          className="search"
-        />
-        <span style={{ fontSize: "2rem", cursor: "pointer" }}>
-          {/* <FaMicrophone
-            onClick={() => {
-              recognition.start();
-              setIsListening(true);
-              recognition.onresult = (event) => {
-                const result = event.results[0][0].transcript;
-                onChangeSearch(result);
-                console.log(result);
-              };
-              recognition.onspeechend = () => {
-                recognition.stop();
-                setIsListening(false);
-              };
-            }}
-          /> */}
-        </span>
-      </div>
-      <div
-        // className="MovieList"
-        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
-        ref={Movieref}
-      >
-        {searchMovie(data)?.map((ele, i) => (
-          <MovieCard key={ele + i} photo={ele.image} link={ele.downloadLink} name={ele.name} />
-        ))}
-      </div>
       {/* <HowToDownload /> */}
       <div style={{ fontSize: "1.5rem" }}>Live Stream Movies</div>
       <div style={{ fontSize: "1.2rem" }}>USE AD BLOCKER / CLOSE ADS TO WATCH MOVIE</div>
@@ -478,6 +434,50 @@ const MoviesBox = () => {
             <MdOutlineDownloading />
           </a> */}
         </div>
+      </div>
+      <div style={{ fontSize: "1.5rem" }}>MOVIES</div>
+
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}>
+        <input
+          onChange={(e) => {
+            // if (e) {
+            onChangeSearch(e.target.value);
+            // searchChannel(e);
+            // } else {
+            // onChangeSearch(e);
+            // setFilteredData(data);
+            // }
+          }}
+          value={search}
+          placeholder="Search Movie"
+          className="search"
+        />
+        <span style={{ fontSize: "2rem", cursor: "pointer" }}>
+          {/* <FaMicrophone
+            onClick={() => {
+              recognition.start();
+              setIsListening(true);
+              recognition.onresult = (event) => {
+                const result = event.results[0][0].transcript;
+                onChangeSearch(result);
+                console.log(result);
+              };
+              recognition.onspeechend = () => {
+                recognition.stop();
+                setIsListening(false);
+              };
+            }}
+          /> */}
+        </span>
+      </div>
+      <div
+        // className="MovieList"
+        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
+        ref={Movieref}
+      >
+        {searchMovie(data)?.map((ele, i) => (
+          <MovieCard key={ele + i} photo={ele.image} link={ele.downloadLink} name={ele.name} />
+        ))}
       </div>
     </div>
   );
