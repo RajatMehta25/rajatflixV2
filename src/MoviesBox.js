@@ -277,9 +277,30 @@ const MoviesBox = () => {
         ref={playref}
       >
         {movieFrame.map((ele, i) => (
-          <button key={ele.playLink + i} className="downloadButton" onClick={() => setplayLink(ele.playLink)}>
-            {ele.name}
-          </button>
+          // <button key={ele.playLink + i} className="downloadButton" onClick={() => setplayLink(ele.playLink)}>
+          //   {ele.name}
+          // </button>
+          <div style={{ position: "relative" }}>
+            <img
+              style={{ width: "200px", minHeight: "200px", borderRadius: "1rem", padding: "0.5rem", cursor: "pointer" }}
+              key={ele.playLink + i}
+              src={ele.image}
+              alt={ele.name}
+              className="movieFrame"
+              onClick={() => setplayLink(ele.playLink)}
+            />
+            <div
+              style={{
+                position: "absolute",
+                bottom: 0,
+                color: "white",
+                minHeight: "50px",
+                backgroundColor: "rgba(255,255,255,0.5)",
+              }}
+            >
+              {ele.name}
+            </div>
+          </div>
         ))}
       </div>
 
