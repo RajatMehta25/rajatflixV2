@@ -264,6 +264,49 @@ const MoviesBox = () => {
   //     await castSession.loadMedia(request);
   //   } catch (error) {}
   // };
+
+  useEffect(() => {
+    const initializeCast = () => {
+      const castContext = cast.framework.CastContext.getInstance();
+      castContext.setOptions({
+        receiverApplicationId: "YOUR_RECEIVER_APP_ID", // Use the default media receiver or your custom receiver app ID
+        autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED,
+      });
+    };
+
+    window["__onGCastApiAvailable"] = (isAvailable) => {
+      if (isAvailable) {
+        initializeCast();
+      }
+    };
+    if (!window.cast || !window.cast.framework) {
+      const script = document.createElement("script");
+      script.src = "https://www.gstatic.com/cv/js/sender/v1/cast_sender.js";
+      script.onload = () => {
+        if (window["__onGCastApiAvailable"]) {
+          window["__onGCastApiAvailable"](true);
+        }
+      };
+      document.body.appendChild(script);
+    } else {
+      initializeCast();
+    }
+  }, []);
+  const castVideo = () => {
+    const castSession = cast.framework.CastContext.getInstance().getCurrentSession();
+    if (castSession) {
+      const mediaInfo = new chrome.cast.media.MediaInfo("EXTERNAL_VIDEO_URL", "video/mp4");
+      const request = new chrome.cast.media.LoadRequest(mediaInfo);
+      castSession.loadMedia(request).then(
+        () => {
+          console.log("Media loaded successfully");
+        },
+        (error) => {
+          console.error("Error loading media:", error);
+        }
+      );
+    }
+  };
   return (
     <div className="MovieContainer">
       {/* <HowToDownload /> */}
@@ -280,6 +323,9 @@ const MoviesBox = () => {
           // onLoad={handleIframeLoad}
           id="myIframe"
         />
+        <button className="downloadButton" onClick={castVideo}>
+          Cast Video
+        </button>
         {/* <button onClick={handleCast}>{isCasting ? "Stop Cast" : "Cast"}</button> */}
       </div>
       <div
