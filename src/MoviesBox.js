@@ -30,7 +30,7 @@ const MoviesBox = () => {
   const [playingLink, setSongPlayLink] = useState("");
   const [kapils02, setKapilS02] = useState([]);
   const [movieFrame, setMovieFrame] = useState([]);
-  const [playLink, setplayLink] = useState("");
+  const [playLink, setplayLink] = useState(movieFrame[0]?.playLink);
   const [nowPlaying, setNowPlaying] = useState("");
   const [isListening, setIsListening] = useState(false);
   const [iframeLink, setIframeLink] = useState("");
@@ -75,10 +75,11 @@ const MoviesBox = () => {
       });
   }, []);
   useEffect(() => {
+    setMovieFrame;
     fetch("https://raw.githubusercontent.com/RajatMehta25/TV/main/MovieFrame.json")
       .then((res) => res.json())
       .then((data) => {
-        setMovieFrame(data.data);
+        data.data;
         // onChangeSearch("");
       });
   }, []);
