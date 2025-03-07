@@ -248,7 +248,7 @@ const MoviesBox = () => {
               key={ele.playLink + i}
               src={ele.image}
               alt={ele.name}
-              className="movieFrame"
+              // className="movieFrame"
               onClick={() => setplayLink(ele.playLink)}
             />
             <div
