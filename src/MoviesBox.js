@@ -280,9 +280,9 @@ const MoviesBox = () => {
           // <button key={ele.playLink + i} className="downloadButton" onClick={() => setplayLink(ele.playLink)}>
           //   {ele.name}
           // </button>
-          <div style={{ position: "relative" }}>
+          <div style={{ position: "relative", minWidth: "200px", minHeight: "200px" }}>
             <img
-              style={{ width: "200px", minHeight: "200px", borderRadius: "1rem", padding: "0.5rem", cursor: "pointer" }}
+              style={{ borderRadius: "1rem", padding: "0.5rem", cursor: "pointer", width: "100%", height: "100%" }}
               key={ele.playLink + i}
               src={ele.image}
               alt={ele.name}
