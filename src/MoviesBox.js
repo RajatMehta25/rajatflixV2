@@ -217,7 +217,7 @@ const MoviesBox = () => {
   useEffect(() => {
     const initCastApi = async () => {
       try {
-        await window["__onGCastApiAvailable"];
+        await window'__onGCastApiAvailable';
       } catch (e) {
         console.log(e);
       }
@@ -234,10 +234,10 @@ const MoviesBox = () => {
       receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID,
       autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED,
     });
-    context.addEventListener(cast.framework.CastContextEventType.CAST_STATE_CHANGED, (event) => {
-      console.log(event);
-      setIsCasting(event.castState !== "NO_DEVICES_AVAILABLE");
-    });
+    // context.addEventListener(cast.framework.CastContextEventType.CAST_STATE_CHANGED, (event) => {
+    //   console.log(event);
+    //   setIsCasting(event.castState !== "NO_DEVICES_AVAILABLE");
+    // });
   };
 
   const handleCast = async () => {
