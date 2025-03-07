@@ -210,6 +210,25 @@ const MoviesBox = () => {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   const recognition = new SpeechRecognition();
 
+  const handleCast = () => {
+    const cast = window.cast;
+    console.log(cast);
+    cast.framework.CastContext.getInstance().setOptions({
+      receiverApplicationId: "E8C28D3C",
+      autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED,
+    });
+    const context = cast.framework.CastContext.getInstance();
+    context.addEventListener(cast.framework.CastContextEventType.CAST_STATE_CHANGED, (event) => {
+      console.log(event);
+    });
+    context.start();
+    const castSession = context.getCurrentSession();
+    console.log(castSession);
+    const mediaInfo = new chrome.cast.media.MediaInfo(playLink);
+    const request = new chrome.cast.media.LoadRequest(mediaInfo);
+    castSession.loadMedia(request);
+  };
+
   return (
     <div className="MovieContainer">
       {/* <HowToDownload /> */}
@@ -226,6 +245,7 @@ const MoviesBox = () => {
           // onLoad={handleIframeLoad}
           id="myIframe"
         />
+        <button onClick={handleCast}>Cast</button>
       </div>
       <div
         // className="kapilButtonContainer"
