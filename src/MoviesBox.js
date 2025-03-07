@@ -295,8 +295,14 @@ const MoviesBox = () => {
                 bottom: 0,
                 color: "white",
                 minHeight: "50px",
-                backgroundColor: "rgba(255,255,255,0.5)",
+                backgroundColor: "rgba(255,255,255,0.2)",
+                width: "100%",
+                textAlign: "center",
+                borderRadius: "1rem 1rem 0 0",
+                fontFamily: "cursive",
+                cursor: "pointer",
               }}
+              onClick={() => setplayLink(ele.playLink)}
             >
               {ele.name}
             </div>
