@@ -299,7 +299,7 @@ const MoviesBox = () => {
     const cast = window.cast;
     const castSession = cast.framework.CastContext.getInstance().getCurrentSession();
     if (castSession) {
-      const mediaInfo = new window.chrome.cast.media.MediaInfo(playLink, "video/mp4");
+      const mediaInfo = new window.chrome.cast.media.MediaInfo(playLink);
       const request = new window.chrome.cast.media.LoadRequest(mediaInfo);
       castSession.loadMedia(request).then(
         () => {
@@ -347,9 +347,9 @@ const MoviesBox = () => {
         />
         {/* <CastButton /> */}
 
-        <button className="downloadButton" onClick={castVideo}>
+        {/* <button className="downloadButton" onClick={castVideo}>
           Cast Video
-        </button>
+        </button> */}
         {/* <button onClick={handleCast}>{isCasting ? "Stop Cast" : "Cast"}</button> */}
       </div>
       <div
