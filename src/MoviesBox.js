@@ -299,7 +299,7 @@ const MoviesBox = () => {
     const cast = window.cast;
     const castSession = cast.framework.CastContext.getInstance().getCurrentSession();
     if (castSession) {
-      const mediaInfo = new window.chrome.cast.media.MediaInfo(playLink);
+      const mediaInfo = new window.chrome.cast.media.MediaInfo(playLink, "video/mp4");
       const request = new window.chrome.cast.media.LoadRequest(mediaInfo);
       castSession.loadMedia(request).then(
         () => {
