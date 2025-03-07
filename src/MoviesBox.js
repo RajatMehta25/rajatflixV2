@@ -212,58 +212,58 @@ const MoviesBox = () => {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   const recognition = new SpeechRecognition();
 
-  const [isCasting, setIsCasting] = useState(false);
-  const [castSession, setCastSession] = useState(null);
-  useEffect(() => {
-    const initCastApi = async () => {
-      try {
-        await window'__onGCastApiAvailable';
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    initCastApi();
-  }, []);
-  const initializeCastApi = async (isAvailable) => {
-    if (!isAvailable) {
-      console.log("Cast API not available");
-      return;
-    }
-    const context = await window.cast.framework.CastContext.getInstance();
-    context.setOptions({
-      receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID,
-      autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED,
-    });
-    // context.addEventListener(cast.framework.CastContextEventType.CAST_STATE_CHANGED, (event) => {
-    //   console.log(event);
-    //   setIsCasting(event.castState !== "NO_DEVICES_AVAILABLE");
-    // });
-  };
+  // const [isCasting, setIsCasting] = useState(false);
+  // const [castSession, setCastSession] = useState(null);
+  // useEffect(() => {
+  //   const initCastApi = async () => {
+  //     try {
+  //       await window["__onGCastApiAvailable"];
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   };
+  //   initCastApi();
+  // }, []);
+  // const initializeCastApi = async (isAvailable) => {
+  //   if (!isAvailable) {
+  //     console.log("Cast API not available");
+  //     return;
+  //   }
+  //   const context = await window.cast.framework.CastContext.getInstance();
+  //   context.setOptions({
+  //     receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID,
+  //     autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED,
+  //   });
+  //   // context.addEventListener(cast.framework.CastContextEventType.CAST_STATE_CHANGED, (event) => {
+  //   //   console.log(event);
+  //   //   setIsCasting(event.castState !== "NO_DEVICES_AVAILABLE");
+  //   // });
+  // };
 
-  const handleCast = async () => {
-    if (!isCasting) {
-      try {
-        const castSession = await window.cast.framework.CastContext.getInstance().requestSession();
-        setCastSession(castSession);
-        setIsCasting(true);
-        loadMedia(castSession);
-      } catch (e) {
-        console.log(e);
-      }
-    } else {
-      try {
-        await castSession.endSession();
-        setIsCasting(false);
-      } catch (error) {}
-    }
-  };
-  const loadMedia = async (castSession) => {
-    const mediaInfo = new window.cast.framework.MediaInfo(playLink);
-    const request = new window.cast.framework.LoadRequest(mediaInfo);
-    try {
-      await castSession.loadMedia(request);
-    } catch (error) {}
-  };
+  // const handleCast = async () => {
+  //   if (!isCasting) {
+  //     try {
+  //       const castSession = await window.cast.framework.CastContext.getInstance().requestSession();
+  //       setCastSession(castSession);
+  //       setIsCasting(true);
+  //       loadMedia(castSession);
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   } else {
+  //     try {
+  //       await castSession.endSession();
+  //       setIsCasting(false);
+  //     } catch (error) {}
+  //   }
+  // };
+  // const loadMedia = async (castSession) => {
+  //   const mediaInfo = new window.cast.framework.MediaInfo(playLink);
+  //   const request = new window.cast.framework.LoadRequest(mediaInfo);
+  //   try {
+  //     await castSession.loadMedia(request);
+  //   } catch (error) {}
+  // };
   return (
     <div className="MovieContainer">
       {/* <HowToDownload /> */}
@@ -280,7 +280,7 @@ const MoviesBox = () => {
           // onLoad={handleIframeLoad}
           id="myIframe"
         />
-        <button onClick={handleCast}>{isCasting ? "Stop Cast" : "Cast"}</button>
+        {/* <button onClick={handleCast}>{isCasting ? "Stop Cast" : "Cast"}</button> */}
       </div>
       <div
         // className="kapilButtonContainer"
