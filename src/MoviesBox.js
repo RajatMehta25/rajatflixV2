@@ -7,6 +7,7 @@ import SongCard from "./SongCard";
 import { MdOutlineDownloading } from "react-icons/md";
 import { FaMicrophone } from "react-icons/fa";
 import { use } from "react";
+// import { CastButton, useCastSession } from "react-google-cast";
 
 const MoviesBox = () => {
   const Kapilref = useRef();
@@ -75,11 +76,10 @@ const MoviesBox = () => {
       });
   }, []);
   useEffect(() => {
-    setMovieFrame;
     fetch("https://raw.githubusercontent.com/RajatMehta25/TV/main/MovieFrame.json")
       .then((res) => res.json())
       .then((data) => {
-        data.data;
+        setMovieFrame(data.data);
         // onChangeSearch("");
       });
   }, []);
@@ -267,21 +267,24 @@ const MoviesBox = () => {
 
   useEffect(() => {
     const initializeCast = () => {
+      const cast = window.cast;
+      console.log(cast);
       const castContext = cast.framework.CastContext.getInstance();
       castContext.setOptions({
-        receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID, // Use the default media receiver or your custom receiver app ID
-        autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED,
+        receiverApplicationId: cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID, // Use the default media receiver or your custom receiver app ID
+        autoJoinPolicy: cast.AutoJoinPolicy.ORIGIN_SCOPED,
       });
     };
 
     window["__onGCastApiAvailable"] = (isAvailable) => {
       if (isAvailable) {
+        console.log("Cast API available");
         initializeCast();
       }
     };
     if (!window.cast || !window.cast.framework) {
       const script = document.createElement("script");
-      script.src = "https://www.gstatic.com/cv/js/sender/v1/cast_sender.js";
+      script.src = "https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1";
       script.onload = () => {
         if (window["__onGCastApiAvailable"]) {
           window["__onGCastApiAvailable"](true);
@@ -293,10 +296,11 @@ const MoviesBox = () => {
     }
   }, []);
   const castVideo = () => {
+    const cast = window.cast;
     const castSession = cast.framework.CastContext.getInstance().getCurrentSession();
     if (castSession) {
-      const mediaInfo = new chrome.cast.media.MediaInfo(playLink);
-      const request = new chrome.cast.media.LoadRequest(mediaInfo);
+      const mediaInfo = new window.chrome.cast.media.MediaInfo(playLink);
+      const request = new window.chrome.cast.media.LoadRequest(mediaInfo);
       castSession.loadMedia(request).then(
         () => {
           console.log("Media loaded successfully");
@@ -307,6 +311,24 @@ const MoviesBox = () => {
       );
     }
   };
+
+  // const castSession = useCastSession();
+
+  // const castVideo = () => {
+  //   if (castSession) {
+  //     const mediaInfo = new window.chrome.cast.media.MediaInfo(playLink);
+  //     const request = new window.chrome.cast.media.LoadRequest(mediaInfo);
+  //     castSession.loadMedia(request).then(
+  //       () => {
+  //         console.log("Media loaded successfully");
+  //       },
+  //       (error) => {
+  //         console.error("Error loading media:", error);
+  //       }
+  //     );
+  //   }
+  // };
+
   return (
     <div className="MovieContainer">
       {/* <HowToDownload /> */}
@@ -323,6 +345,8 @@ const MoviesBox = () => {
           // onLoad={handleIframeLoad}
           id="myIframe"
         />
+        {/* <CastButton /> */}
+
         <button className="downloadButton" onClick={castVideo}>
           Cast Video
         </button>
