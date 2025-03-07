@@ -30,7 +30,7 @@ const MoviesBox = () => {
   const [playingLink, setSongPlayLink] = useState("");
   const [kapils02, setKapilS02] = useState([]);
   const [movieFrame, setMovieFrame] = useState([]);
-  const [playLink, setplayLink] = useState(movieFrame[0]?.playLink);
+  const [playLink, setplayLink] = useState(movieFrame[0]?.playLink || "https://fino338khhe.com/play/tt0327785");
   const [nowPlaying, setNowPlaying] = useState("");
   const [isListening, setIsListening] = useState(false);
   const [iframeLink, setIframeLink] = useState("");
@@ -269,7 +269,7 @@ const MoviesBox = () => {
     const initializeCast = () => {
       const castContext = cast.framework.CastContext.getInstance();
       castContext.setOptions({
-        receiverApplicationId: "YOUR_RECEIVER_APP_ID", // Use the default media receiver or your custom receiver app ID
+        receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID, // Use the default media receiver or your custom receiver app ID
         autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED,
       });
     };
@@ -295,7 +295,7 @@ const MoviesBox = () => {
   const castVideo = () => {
     const castSession = cast.framework.CastContext.getInstance().getCurrentSession();
     if (castSession) {
-      const mediaInfo = new chrome.cast.media.MediaInfo("EXTERNAL_VIDEO_URL", "video/mp4");
+      const mediaInfo = new chrome.cast.media.MediaInfo(playLink);
       const request = new chrome.cast.media.LoadRequest(mediaInfo);
       castSession.loadMedia(request).then(
         () => {
