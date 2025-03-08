@@ -396,7 +396,7 @@ const MoviesBox = () => {
           </div>
         ))}
       </div>
-      <div style={{ fontSize: "1.5rem" }}>MOVIES</div>
+      <div style={{ fontSize: "1.5rem" }}>DOWNLOAD MOVIES</div>
 
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}>
         <input
