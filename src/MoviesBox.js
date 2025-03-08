@@ -376,7 +376,7 @@ const MoviesBox = () => {
           {count}
         </span>
       </div>
-      <div style={{ fontSize: "1.5rem" }}>Live Stream Movies</div>
+      {/* <div style={{ fontSize: "1.5rem" }}>Live Stream Movies</div>
       <div style={{ fontSize: "1.2rem" }}>USE AD BLOCKER / CLOSE ADS TO WATCH MOVIE</div>
 
       <div style={{ width: "100%" }}>
@@ -389,12 +389,7 @@ const MoviesBox = () => {
           // onLoad={handleIframeLoad}
           id="myIframe"
         />
-        {/* <CastButton /> */}
-
-        {/* <button className="downloadButton" onClick={castVideo}>
-          Cast Video
-        </button> */}
-        {/* <button onClick={handleCast}>{isCasting ? "Stop Cast" : "Cast"}</button> */}
+       
       </div>
       <div
         style={{
@@ -463,7 +458,7 @@ const MoviesBox = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
       <div style={{ fontSize: "1.5rem" }}>DOWNLOAD MOVIES</div>
 
       <div
