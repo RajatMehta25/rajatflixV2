@@ -308,7 +308,7 @@ const MoviesBox = () => {
     const cast = window.cast;
     const castSession = cast.framework.CastContext.getInstance().getCurrentSession();
     if (castSession) {
-      const mediaInfo = new window.chrome.cast.media.MediaInfo(playLink);
+      const mediaInfo = new window.chrome.cast.media.MediaInfo(playingLink, "audio/mp3");
       const request = new window.chrome.cast.media.LoadRequest(mediaInfo);
       castSession.loadMedia(request).then(
         () => {
@@ -548,6 +548,9 @@ const MoviesBox = () => {
         <div>{nowPlaying}</div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", justifyContent: "center", alignItems: "center" }}>
           <audio ref={audioRef} controls loop preload="none" src={playingLink} />
+          <button disabled={playingLink ? false : true} className="downloadButton" onClick={castVideo}>
+            CAST SONG
+          </button>
           {/* <a href={playingLink} download style={{ fontSize: "2rem" }} title="Download">
             <MdOutlineDownloading />
           </a> */}
