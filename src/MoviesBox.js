@@ -277,7 +277,10 @@ const MoviesBox = () => {
   useEffect(() => {
     const initializeCast = () => {
       const cast = window.cast;
+      const chrome = window.chrome;
       console.log(cast);
+      console.log(chrome);
+
       const castContext = cast.framework.CastContext.getInstance();
       castContext.setOptions({
         receiverApplicationId: window.chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID, // Use the default media receiver or your custom receiver app ID
