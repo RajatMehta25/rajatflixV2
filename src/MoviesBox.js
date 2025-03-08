@@ -42,6 +42,7 @@ const MoviesBox = () => {
   const [telegramData, setTelegramData] = useState([]);
   const [matchData, setMatchData] = useState({});
   const [iframeLoaded, setIframeLoaded] = useState(false);
+  const [count, setCount] = useState(Math.floor(Math.random() * (10000 - 7000 + 1)) + 7000);
   const handleIframeLoad = () => {
     setIframeLoaded(true);
   };
@@ -342,14 +343,16 @@ const MoviesBox = () => {
     return activeUser;
   };
   useEffect(() => {
-    setInterval(LiveCount, 200);
-    // return () => clearInterval(timer);
+    const timer = setInterval(() => {
+      Math.floor(Math.random() * (10000 - 7000 + 1) + 7000);
+    }, 1000);
+    return () => clearInterval(timer);
   }, []);
   return (
     <div className="MovieContainer">
       {/* <HowToDownload /> */}
       <div style={{ fontSize: "1.5rem" }}>
-        WorldWide Active User Count : <span style={{ color: "#db0000" }}>{LiveCount()}</span>
+        WorldWide Active User Count : <span style={{ color: "#db0000", transition: "0.5 ease-in" }}>{count}</span>
       </div>
       <div style={{ fontSize: "1.5rem" }}>Live Stream Movies</div>
       <div style={{ fontSize: "1.2rem" }}>USE AD BLOCKER / CLOSE ADS TO WATCH MOVIE</div>
