@@ -347,7 +347,7 @@ const MoviesBox = () => {
   return (
     <div className="MovieContainer">
       {/* <HowToDownload /> */}
-      <div style={{ fontSize: "1.5rem", fontFamily: "monospace" }}>
+      <div style={{ fontSize: "1.5rem", fontFamily: "monospace", textAlign: "center" }}>
         WorldWide Active User Count :{" "}
         <span style={{ color: "#db0000" }} className="blinking-text">
           {count}
