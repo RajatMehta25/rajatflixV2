@@ -347,8 +347,11 @@ const MoviesBox = () => {
   return (
     <div className="MovieContainer">
       {/* <HowToDownload /> */}
-      <div style={{ fontSize: "1.5rem" }}>
-        WorldWide Active User Count : <span style={{ color: "#db0000", transition: "0.5 ease-in" }}>{count}</span>
+      <div style={{ fontSize: "1.5rem", fontFamily: "monospace" }}>
+        WorldWide Active User Count :{" "}
+        <span style={{ color: "#db0000", transition: "0.5 ease-in" }} className=".blinking-text">
+          {count}
+        </span>
       </div>
       <div style={{ fontSize: "1.5rem" }}>Live Stream Movies</div>
       <div style={{ fontSize: "1.2rem" }}>USE AD BLOCKER / CLOSE ADS TO WATCH MOVIE</div>
