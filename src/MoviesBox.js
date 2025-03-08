@@ -336,10 +336,21 @@ const MoviesBox = () => {
   //     );
   //   }
   // };
+  const LiveCount = () => {
+    let activeUser = Math.floor(Math.random() * 10000 + 7000);
 
+    return activeUser;
+  };
+  useEffect(() => {
+    const timer = setInterval(LiveCount, 200);
+    return () => clearInterval(timer);
+  }, []);
   return (
     <div className="MovieContainer">
       {/* <HowToDownload /> */}
+      <div style={{ fontSize: "1.5rem" }}>
+        WorldWide Active User Count : <span style={{ color: "#db0000" }}>{LiveCount()}</span>
+      </div>
       <div style={{ fontSize: "1.5rem" }}>Live Stream Movies</div>
       <div style={{ fontSize: "1.2rem" }}>USE AD BLOCKER / CLOSE ADS TO WATCH MOVIE</div>
 
