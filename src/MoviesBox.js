@@ -280,8 +280,8 @@ const MoviesBox = () => {
       console.log(cast);
       const castContext = cast.framework.CastContext.getInstance();
       castContext.setOptions({
-        receiverApplicationId: window.chrome.media.DEFAULT_MEDIA_RECEIVER_APP_ID || "", // Use the default media receiver or your custom receiver app ID
-        autoJoinPolicy: window.chrome.AutoJoinPolicy.ORIGIN_SCOPED,
+        receiverApplicationId: window.chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID, // Use the default media receiver or your custom receiver app ID
+        autoJoinPolicy: window.chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED,
       });
     };
 
