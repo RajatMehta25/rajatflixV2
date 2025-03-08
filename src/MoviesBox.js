@@ -289,7 +289,7 @@ const MoviesBox = () => {
     };
 
     window["__onGCastApiAvailable"] = (isAvailable) => {
-      if (isAvailable) {
+      if (isAvailable && window.chrome) {
         console.log("Cast API available");
         initializeCast();
       }
