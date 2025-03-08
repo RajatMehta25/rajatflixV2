@@ -8,7 +8,7 @@ const MovieCard = ({ photo, link, name }) => {
           src={photo}
           width="100%"
           height="100%"
-          style={{ borderRadius: "1rem" }}
+          style={{ borderRadius: "1rem", cursor: "pointer" }}
           onClick={() => window.open(link, "_blank")}
         />
         <div

@@ -20,6 +20,8 @@ const MoviesBox = () => {
   const Telegramref = useRef();
   const audioRef = useRef();
   const [search, onChangeSearch] = useState("");
+  const [searchFrame, onChangeSearchFrame] = useState("");
+
   const [channelSearch, onChangeChannelSearch] = useState("");
   const [searchSong, onChangeSearchSong] = useState("");
   const [serachTelegram, onChangeSearchTelegram] = useState("");
@@ -80,7 +82,7 @@ const MoviesBox = () => {
       .then((res) => res.json())
       .then((data) => {
         setMovieFrame(data.data);
-        // onChangeSearch("");
+        onChangeSearchFrame("");
       });
   }, []);
   useEffect(() => {
@@ -170,6 +172,12 @@ const MoviesBox = () => {
   }, []);
   const searchMovie = () => {
     let newData = data?.filter((ele) => ele.name.toLowerCase().includes(search.toLowerCase()));
+
+    // setFilteredData(newData ?? data);
+    return newData;
+  };
+  const searchMovieFrame = () => {
+    let newData = movieFrame?.filter((ele) => ele.name.toLowerCase().includes(searchFrame.toLowerCase()));
 
     // setFilteredData(newData ?? data);
     return newData;
@@ -353,11 +361,35 @@ const MoviesBox = () => {
         {/* <button onClick={handleCast}>{isCasting ? "Stop Cast" : "Cast"}</button> */}
       </div>
       <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "1rem",
+          width: "100%",
+        }}
+      >
+        <input
+          onChange={(e) => {
+            // if (e) {
+            onChangeSearchFrame(e.target.value);
+            // searchChannel(e);
+            // } else {
+            // onChangeSearch(e);
+            // setFilteredData(data);
+            // }
+          }}
+          value={searchFrame}
+          placeholder="Search Movie"
+          className="search"
+        />
+      </div>
+      <div
         // className="kapilButtonContainer"
         style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%", overflowY: "hidden" }}
         ref={playref}
       >
-        {movieFrame.map((ele, i) => (
+        {searchMovieFrame().map((ele, i) => (
           // <button key={ele.playLink + i} className="downloadButton" onClick={() => setplayLink(ele.playLink)}>
           //   {ele.name}
           // </button>
@@ -398,7 +430,15 @@ const MoviesBox = () => {
       </div>
       <div style={{ fontSize: "1.5rem" }}>DOWNLOAD MOVIES</div>
 
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "1rem",
+          width: "100%",
+        }}
+      >
         <input
           onChange={(e) => {
             // if (e) {
@@ -433,7 +473,7 @@ const MoviesBox = () => {
       </div>
       <div
         // className="MovieList"
-        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
+        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%", overflowY: "hidden" }}
         ref={Movieref}
       >
         {searchMovie(data)?.map((ele, i) => (
