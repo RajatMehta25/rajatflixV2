@@ -340,7 +340,7 @@ const MoviesBox = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      Math.floor(Math.random() * (10000 - 7000 + 1) + 7000);
+      setCount(Math.floor(Math.random() * (10000 - 7000 + 1) + 7000));
     }, 1000);
     return () => clearInterval(timer);
   }, []);
