@@ -306,7 +306,7 @@ const MoviesBox = () => {
     } else {
       initializeCast();
     }
-  }, []);
+  }, [window.cast, window.chrome]);
   const showCastDialog = () => {
     if (!window.cast || !window.cast.framework || !window.chrome || !window.chrome.cast) {
       console.error("Cast framework or chrome.cast is not available.");
