@@ -274,39 +274,39 @@ const MoviesBox = () => {
   //   } catch (error) {}
   // };
 
-  useEffect(() => {
-    const initializeCast = () => {
-      const cast = window.cast;
-      const chrome = window.chrome;
-      console.log(cast);
-      console.log(chrome);
+  // useEffect(() => {
+  //   const initializeCast = () => {
+  //     const cast = window.cast;
+  //     const chrome = window.chrome;
+  //     console.log(cast);
+  //     console.log("window.chrome", chrome);
 
-      const castContext = cast.framework.CastContext.getInstance();
-      castContext.setOptions({
-        receiverApplicationId: window.chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID, // Use the default media receiver or your custom receiver app ID
-        autoJoinPolicy: window.chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED,
-      });
-    };
+  //     const castContext = cast.framework.CastContext.getInstance();
+  //     castContext.setOptions({
+  //       receiverApplicationId: window.chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID, // Use the default media receiver or your custom receiver app ID
+  //       autoJoinPolicy: window.chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED,
+  //     });
+  //   };
 
-    window["__onGCastApiAvailable"] = (isAvailable) => {
-      if (isAvailable && window.chrome) {
-        console.log("Cast API available");
-        initializeCast();
-      }
-    };
-    if (!window.cast || !window.cast.framework) {
-      const script = document.createElement("script");
-      script.src = "https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1";
-      script.onload = () => {
-        if (window["__onGCastApiAvailable"]) {
-          window["__onGCastApiAvailable"](true);
-        }
-      };
-      document.body.appendChild(script);
-    } else {
-      initializeCast();
-    }
-  }, [window.cast, window.chrome]);
+  //   window["__onGCastApiAvailable"] = (isAvailable) => {
+  //     if (isAvailable && window.chrome) {
+  //       console.log("Cast API available");
+  //       initializeCast();
+  //     }
+  //   };
+  //   if (!window.cast || !window.cast.framework) {
+  //     const script = document.createElement("script");
+  //     script.src = "https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1";
+  //     script.onload = () => {
+  //       if (window["__onGCastApiAvailable"]) {
+  //         window["__onGCastApiAvailable"](true);
+  //       }
+  //     };
+  //     document.body.appendChild(script);
+  //   } else {
+  //     initializeCast();
+  //   }
+  // }, [window.cast, window.chrome]);
   const showCastDialog = () => {
     if (!window.cast || !window.cast.framework || !window.chrome || !window.chrome.cast) {
       console.error("Cast framework or chrome.cast is not available.");
@@ -570,9 +570,9 @@ const MoviesBox = () => {
         <div>{nowPlaying}</div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", justifyContent: "center", alignItems: "center" }}>
           <audio ref={audioRef} controls loop preload="none" src={playingLink} />
-          <button disabled={playingLink ? false : true} className="downloadButton" onClick={showCastDialog}>
+          {/* <button disabled={playingLink ? false : true} className="downloadButton" onClick={showCastDialog}>
             CAST SONG
-          </button>
+          </button> */}
           {/* <a href={playingLink} download style={{ fontSize: "2rem" }} title="Download">
             <MdOutlineDownloading />
           </a> */}
