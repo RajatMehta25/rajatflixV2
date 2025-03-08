@@ -342,8 +342,8 @@ const MoviesBox = () => {
     return activeUser;
   };
   useEffect(() => {
-    const timer = setInterval(LiveCount, 200);
-    return () => clearInterval(timer);
+    setInterval(LiveCount, 200);
+    // return () => clearInterval(timer);
   }, []);
   return (
     <div className="MovieContainer">
