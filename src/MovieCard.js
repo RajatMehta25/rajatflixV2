@@ -3,7 +3,7 @@ import React from "react";
 const MovieCard = ({ photo, link, name }) => {
   return (
     <div className="MovieCardContainer">
-      <div style={{ width: "200px", height: "200px", borderRadius: "1rem", padding: "0.5rem", position: "relative" }}>
+      <div style={{ width: "200px", height: "200px", position: "relative" }}>
         <img
           src={photo}
           width="100%"
