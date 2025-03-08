@@ -307,41 +307,42 @@ const MoviesBox = () => {
   //     initializeCast();
   //   }
   // }, [window.cast, window.chrome]);
-  const showCastDialog = () => {
-    if (!window.cast || !window.cast.framework || !window.chrome || !window.chrome.cast) {
-      console.error("Cast framework or chrome.cast is not available.");
-      return;
-    }
 
-    const castContext = cast.framework.CastContext.getInstance();
-    castContext.requestSession().then(
-      () => {
-        console.log("Cast session started successfully");
-        castMedia(); // Cast media after the session starts
-      },
-      (error) => {
-        console.error("Error starting Cast session:", error);
-      }
-    );
-  };
-  const castMedia = () => {
-    const cast = window.cast;
-    const castSession = cast.framework.CastContext.getInstance().getCurrentSession();
-    if (castSession) {
-      const mediaInfo = new window.chrome.cast.media.MediaInfo(playingLink, "audio/mp3");
-      const request = new window.chrome.cast.media.LoadRequest(mediaInfo);
-      castSession.loadMedia(request).then(
-        () => {
-          console.log("Media loaded successfully");
-        },
-        (error) => {
-          console.error("Error loading media:", error);
-        }
-      );
-    } else {
-      console.log("No session");
-    }
-  };
+  // const showCastDialog = () => {
+  //   if (!window.cast || !window.cast.framework || !window.chrome || !window.chrome.cast) {
+  //     console.error("Cast framework or chrome.cast is not available.");
+  //     return;
+  //   }
+
+  //   const castContext = cast.framework.CastContext.getInstance();
+  //   castContext.requestSession().then(
+  //     () => {
+  //       console.log("Cast session started successfully");
+  //       castMedia(); // Cast media after the session starts
+  //     },
+  //     (error) => {
+  //       console.error("Error starting Cast session:", error);
+  //     }
+  //   );
+  // };
+  // const castMedia = () => {
+  //   const cast = window.cast;
+  //   const castSession = cast.framework.CastContext.getInstance().getCurrentSession();
+  //   if (castSession) {
+  //     const mediaInfo = new window.chrome.cast.media.MediaInfo(playingLink, "audio/mp3");
+  //     const request = new window.chrome.cast.media.LoadRequest(mediaInfo);
+  //     castSession.loadMedia(request).then(
+  //       () => {
+  //         console.log("Media loaded successfully");
+  //       },
+  //       (error) => {
+  //         console.error("Error loading media:", error);
+  //       }
+  //     );
+  //   } else {
+  //     console.log("No session");
+  //   }
+  // };
 
   // const castSession = useCastSession();
 
