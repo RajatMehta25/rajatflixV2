@@ -291,18 +291,18 @@ const MoviesBox = () => {
         initializeCast();
       }
     };
-    // if (!window.cast || !window.cast.framework) {
-    //   const script = document.createElement("script");
-    //   script.src = "https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1";
-    //   script.onload = () => {
-    //     if (window["__onGCastApiAvailable"]) {
-    //       window["__onGCastApiAvailable"](true);
-    //     }
-    //   };
-    //   document.body.appendChild(script);
-    // } else {
-    //   initializeCast();
-    // }
+    if (!window.cast || !window.cast.framework) {
+      const script = document.createElement("script");
+      script.src = "https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1";
+      script.onload = () => {
+        if (window["__onGCastApiAvailable"]) {
+          window["__onGCastApiAvailable"](true);
+        }
+      };
+      document.body.appendChild(script);
+    } else {
+      initializeCast();
+    }
   }, []);
   const castVideo = () => {
     const cast = window.cast;
