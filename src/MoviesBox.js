@@ -337,11 +337,7 @@ const MoviesBox = () => {
   //     );
   //   }
   // };
-  const LiveCount = () => {
-    let activeUser = Math.floor(Math.random() * 10000 + 7000);
 
-    return activeUser;
-  };
   useEffect(() => {
     const timer = setInterval(() => {
       Math.floor(Math.random() * (10000 - 7000 + 1) + 7000);
