@@ -304,7 +304,24 @@ const MoviesBox = () => {
       initializeCast();
     }
   }, []);
-  const castVideo = () => {
+  const showCastDialog = () => {
+    if (!window.cast || !window.cast.framework || !window.chrome || !window.chrome.cast) {
+      console.error("Cast framework or chrome.cast is not available.");
+      return;
+    }
+
+    const castContext = cast.framework.CastContext.getInstance();
+    castContext.requestSession().then(
+      () => {
+        console.log("Cast session started successfully");
+        castMedia(); // Cast media after the session starts
+      },
+      (error) => {
+        console.error("Error starting Cast session:", error);
+      }
+    );
+  };
+  const castMedia = () => {
     const cast = window.cast;
     const castSession = cast.framework.CastContext.getInstance().getCurrentSession();
     if (castSession) {
@@ -550,7 +567,7 @@ const MoviesBox = () => {
         <div>{nowPlaying}</div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", justifyContent: "center", alignItems: "center" }}>
           <audio ref={audioRef} controls loop preload="none" src={playingLink} />
-          <button disabled={playingLink ? false : true} className="downloadButton" onClick={castVideo}>
+          <button disabled={playingLink ? false : true} className="downloadButton" onClick={showCastDialog}>
             CAST SONG
           </button>
           {/* <a href={playingLink} download style={{ fontSize: "2rem" }} title="Download">
