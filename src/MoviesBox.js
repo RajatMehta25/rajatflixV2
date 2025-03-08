@@ -318,6 +318,8 @@ const MoviesBox = () => {
           console.error("Error loading media:", error);
         }
       );
+    } else {
+      console.log("No session");
     }
   };
 
