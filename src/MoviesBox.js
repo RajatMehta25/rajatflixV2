@@ -107,6 +107,7 @@ const MoviesBox = () => {
       .then((data) => {
         setSongData(data.data);
         setSongPlayLink(data.data[0].downloadLink);
+        setNowPlaying(data.data[0].name);
       });
   }, []);
   useEffect(() => {
@@ -609,7 +610,7 @@ const MoviesBox = () => {
         <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", justifyContent: "center", alignItems: "center" }}>
           <audio ref={audioRef} controls loop preload="none" src={playingLink} />
           <button className="downloadButton" onClick={showCastDialog}>
-            Play on TV
+            Play on TV (Android/PC)
           </button>
           {/* <a href={playingLink} download style={{ fontSize: "2rem" }} title="Download">
             <MdOutlineDownloading />
