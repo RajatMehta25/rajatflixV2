@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import MovieCard from "./MovieCard";
 import moment from "moment";
 import FootballCard from "./FootballCard";
@@ -356,7 +356,7 @@ const MoviesBox = () => {
       }
     );
   };
-  const castMedia = () => {
+  const castMedia = useCallback(() => {
     const cast = window.cast;
     const castSession = cast.framework.CastContext.getInstance().getCurrentSession();
     if (castSession) {
@@ -390,7 +390,7 @@ const MoviesBox = () => {
     } else {
       console.log("No session");
     }
-  };
+  }, [playingLink]);
 
   // const castSession = useCastSession();
 
