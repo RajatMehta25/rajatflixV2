@@ -300,8 +300,10 @@ const MoviesBox = () => {
 
             if (mediaStatus.playerState === "PLAYING") {
               console.log("Media is playing");
+              audioRef.current.play();
             } else if (mediaStatus.playerState === "PAUSED") {
               console.log("Media is paused");
+              audioRef.current.pause();
             } else if (mediaStatus.playerState === "IDLE") {
               if (mediaStatus.idleReason === "FINISHED") {
                 console.log("Media has ended");
@@ -310,6 +312,7 @@ const MoviesBox = () => {
               } else {
                 console.log("Media is idle");
               }
+              audioRef.current.currentTime = mediaStatus.currentTime;
             }
           });
         }
@@ -375,7 +378,9 @@ const MoviesBox = () => {
         () => {
           console.log("Media loaded successfully");
           if (audioRef.current.src === playingLink) {
-            audioRef.current.pause();
+            // audioRef.current.pause();
+            audioRef.current.volume = 0; // Mute the local audio
+            audioRef.current.removeAttribute("controls"); // Remove default controls
           }
         },
         (error) => {
@@ -608,7 +613,7 @@ const MoviesBox = () => {
       <div style={{ display: "flex", flexDirection: "column", gap: "1rem", justifyContent: "center", alignItems: "center" }}>
         <div>{nowPlaying}</div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", justifyContent: "center", alignItems: "center" }}>
-          <audio ref={audioRef} controls loop preload="none" src={playingLink} />
+          <audio ref={audioRef} controls loop preload="none" src={playingLink} playsinline webkit-playsinline />
           <button className="downloadButton" onClick={showCastDialog}>
             Play on TV (Android/PC)
           </button>
