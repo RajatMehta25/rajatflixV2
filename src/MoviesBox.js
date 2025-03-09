@@ -106,6 +106,7 @@ const MoviesBox = () => {
       .then((res) => res.json())
       .then((data) => {
         setSongData(data.data);
+        setSongPlayLink(data.data[0].downloadLink);
       });
   }, []);
   useEffect(() => {
@@ -286,6 +287,32 @@ const MoviesBox = () => {
         receiverApplicationId: window.chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID, // Use the default media receiver or your custom receiver app ID
         autoJoinPolicy: window.chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED,
       });
+
+      // Add event listeners for media status changes
+      const castSession = castContext.getCurrentSession();
+      if (castSession) {
+        const mediaManager = castSession.getMediaSession();
+        if (mediaManager) {
+          mediaManager.addEventListener(cast.framework.events.EventType.MEDIA_STATUS, (event) => {
+            const mediaStatus = event.mediaStatus;
+            console.log("Media status:", mediaStatus);
+
+            if (mediaStatus.playerState === "PLAYING") {
+              console.log("Media is playing");
+            } else if (mediaStatus.playerState === "PAUSED") {
+              console.log("Media is paused");
+            } else if (mediaStatus.playerState === "IDLE") {
+              if (mediaStatus.idleReason === "FINISHED") {
+                console.log("Media has ended");
+              } else if (mediaStatus.idleReason === "CANCELLED") {
+                console.log("Media playback was cancelled");
+              } else {
+                console.log("Media is idle");
+              }
+            }
+          });
+        }
+      }
     };
 
     window["__onGCastApiAvailable"] = (isAvailable) => {
@@ -330,7 +357,8 @@ const MoviesBox = () => {
     const castSession = cast.framework.CastContext.getInstance().getCurrentSession();
     if (castSession) {
       const mediaInfo = new window.chrome.cast.media.MediaInfo(playingLink, "audio/mp3");
-
+      // Set repeat mode to loop the current media item
+      mediaInfo.repeatMode = window.chrome.cast.media.RepeatMode.REPEAT_SINGLE;
       // Optional: Add metadata
       mediaInfo.metadata = new window.chrome.cast.media.MusicTrackMediaMetadata();
       let title = SongData?.filter((ele) => ele.downloadLink === playingLink)[0]?.name;
@@ -345,6 +373,9 @@ const MoviesBox = () => {
       castSession.loadMedia(request).then(
         () => {
           console.log("Media loaded successfully");
+          if (audioRef.current.src === playingLink) {
+            audioRef.current.pause();
+          }
         },
         (error) => {
           console.error("Error loading media:", error);
@@ -559,7 +590,7 @@ const MoviesBox = () => {
       </div>
       <div
         // className="MovieList"
-        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
+        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%", overflowY: "hidden" }}
         ref={Songref}
       >
         {searchSongs(SongData)?.map((ele, i) => (
@@ -578,7 +609,7 @@ const MoviesBox = () => {
         <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", justifyContent: "center", alignItems: "center" }}>
           <audio ref={audioRef} controls loop preload="none" src={playingLink} />
           <button className="downloadButton" onClick={showCastDialog}>
-            CAST SONG
+            Play on TV
           </button>
           {/* <a href={playingLink} download style={{ fontSize: "2rem" }} title="Download">
             <MdOutlineDownloading />
