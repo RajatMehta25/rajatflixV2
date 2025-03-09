@@ -17,7 +17,7 @@ firebase.initializeApp(firebaseConfig);
 
 // Retrieve firebase messaging
 const messaging = firebase.messaging();
-const link = payload.data?.link || "https://rajatflix.vercel.app/Home";
+const link = payload?.data?.link || "https://rajatflix.vercel.app/Home";
 messaging.onBackgroundMessage(function (payload) {
   console.log("Received background message ", payload);
   // Customize notification here
