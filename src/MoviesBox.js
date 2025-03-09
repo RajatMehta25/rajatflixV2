@@ -7,6 +7,7 @@ import SongCard from "./SongCard";
 import { MdOutlineDownloading } from "react-icons/md";
 import { FaMicrophone } from "react-icons/fa";
 import { use } from "react";
+import { TiChartLine } from "react-icons/ti";
 // import { CastButton, useCastSession } from "react-google-cast";
 
 const MoviesBox = () => {
@@ -329,6 +330,17 @@ const MoviesBox = () => {
     const castSession = cast.framework.CastContext.getInstance().getCurrentSession();
     if (castSession) {
       const mediaInfo = new window.chrome.cast.media.MediaInfo(playingLink, "audio/mp3");
+
+      // Optional: Add metadata
+      mediaInfo.metadata = new window.chrome.cast.media.MusicTrackMediaMetadata();
+      let title = SongData?.filter((ele) => ele.downloadLink === playingLink)[0]?.name;
+      console.log("title--", title);
+      mediaInfo.metadata.title = title || "Song Title";
+      mediaInfo.metadata.artist = "RAJAT MEHTA";
+      let image = SongData?.filter((ele) => ele.downloadLink === playingLink)[0]?.image;
+      console.log("image--", image);
+      mediaInfo.metadata.images = [new window.chrome.cast.Image(image)];
+
       const request = new window.chrome.cast.media.LoadRequest(mediaInfo);
       castSession.loadMedia(request).then(
         () => {
