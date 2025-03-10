@@ -378,9 +378,9 @@ const MoviesBox = () => {
         () => {
           console.log("Media loaded successfully");
           if (audioRef.current.src === playingLink) {
-            // audioRef.current.pause();
+            audioRef.current.pause();
             audioRef.current.volume = 0; // Mute the local audio
-            audioRef.current.removeAttribute("controls"); // Remove default controls
+            // audioRef.setAttribute("disabled", "true"); // Remove default controls
           }
         },
         (error) => {
@@ -424,89 +424,6 @@ const MoviesBox = () => {
           {count}
         </span>
       </div>
-      {/* <div style={{ fontSize: "1.5rem" }}>Live Stream Movies</div>
-      <div style={{ fontSize: "1.2rem" }}>USE AD BLOCKER / CLOSE ADS TO WATCH MOVIE</div>
-
-      <div style={{ width: "100%" }}>
-        <iframe
-          className="iframe"
-          src={playLink}
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen ; download"
-          allowFullScreen
-          allowfullscreen="true"
-          // onLoad={handleIframeLoad}
-          id="myIframe"
-        />
-       
-      </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "1rem",
-          width: "100%",
-        }}
-      >
-        <input
-          onChange={(e) => {
-            // if (e) {
-            onChangeSearchFrame(e.target.value);
-            // searchChannel(e);
-            // } else {
-            // onChangeSearch(e);
-            // setFilteredData(data);
-            // }
-          }}
-          value={searchFrame}
-          placeholder="Search Movie"
-          className="search"
-        />
-      </div>
-      <div
-        // className="kapilButtonContainer"
-        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%", overflowY: "hidden" }}
-        ref={playref}
-      >
-        {searchMovieFrame().map((ele, i) => (
-          // <button key={ele.playLink + i} className="downloadButton" onClick={() => setplayLink(ele.playLink)}>
-          //   {ele.name}
-          // </button>
-          <div style={{ position: "relative", minWidth: "200px", minHeight: "300px", maxHeight: "300px", maxWidth: "200px" }}>
-            <img
-              style={{
-                borderRadius: "1rem",
-                // padding: "0.5rem",
-                cursor: "pointer",
-                width: "100%",
-                height: "100%",
-              }}
-              key={ele.playLink + i}
-              src={ele.image}
-              alt={ele.name}
-              // className="movieFrame"
-              onClick={() => setplayLink(ele.playLink)}
-            />
-            <div
-              style={{
-                position: "absolute",
-                bottom: 0,
-                color: "white",
-                minHeight: "50px",
-                backgroundColor: "rgba(255,255,255,0.2)",
-                width: "100%",
-                textAlign: "center",
-                borderRadius: "1rem 1rem 0 0",
-                fontFamily: "cursive",
-                cursor: "pointer",
-              }}
-              onClick={() => setplayLink(ele.playLink)}
-            >
-              {ele.name}
-            </div>
-          </div>
-        ))}
-      </div> */}
       <div style={{ fontSize: "1.5rem" }}>DOWNLOAD MOVIES</div>
 
       <div
@@ -607,6 +524,7 @@ const MoviesBox = () => {
             key={ele.name + i}
             setSongPlayLink={setSongPlayLink}
             setNowPlaying={setNowPlaying}
+            currentAudio={audioRef.current.src}
           />
         ))}
       </div>
@@ -621,6 +539,88 @@ const MoviesBox = () => {
             <MdOutlineDownloading />
           </a> */}
         </div>
+      </div>
+      <div style={{ fontSize: "1.5rem" }}>Live Stream Movies</div>
+      <div style={{ fontSize: "1.2rem" }}>USE AD BLOCKER / CLOSE ADS TO WATCH MOVIE</div>
+
+      <div style={{ width: "100%" }}>
+        <iframe
+          className="iframe"
+          src={playLink}
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen ; download"
+          allowFullScreen
+          allowfullscreen="true"
+          // onLoad={handleIframeLoad}
+          id="myIframe"
+        />
+      </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "1rem",
+          width: "100%",
+        }}
+      >
+        <input
+          onChange={(e) => {
+            // if (e) {
+            onChangeSearchFrame(e.target.value);
+            // searchChannel(e);
+            // } else {
+            // onChangeSearch(e);
+            // setFilteredData(data);
+            // }
+          }}
+          value={searchFrame}
+          placeholder="Search Movie"
+          className="search"
+        />
+      </div>
+      <div
+        // className="kapilButtonContainer"
+        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%", overflowY: "hidden" }}
+        ref={playref}
+      >
+        {searchMovieFrame().map((ele, i) => (
+          // <button key={ele.playLink + i} className="downloadButton" onClick={() => setplayLink(ele.playLink)}>
+          //   {ele.name}
+          // </button>
+          <div style={{ position: "relative", minWidth: "200px", minHeight: "300px", maxHeight: "300px", maxWidth: "200px" }}>
+            <img
+              style={{
+                borderRadius: "1rem",
+                // padding: "0.5rem",
+                cursor: "pointer",
+                width: "100%",
+                height: "100%",
+              }}
+              key={ele.playLink + i}
+              src={ele.image}
+              alt={ele.name}
+              // className="movieFrame"
+              onClick={() => setplayLink(ele.playLink)}
+            />
+            <div
+              style={{
+                position: "absolute",
+                bottom: 0,
+                color: "white",
+                minHeight: "50px",
+                backgroundColor: "rgba(255,255,255,0.2)",
+                width: "100%",
+                textAlign: "center",
+                borderRadius: "1rem 1rem 0 0",
+                fontFamily: "cursive",
+                cursor: "pointer",
+              }}
+              onClick={() => setplayLink(ele.playLink)}
+            >
+              {ele.name}
+            </div>
+          </div>
+        ))}
       </div>
 
       <div style={{ fontSize: "1.5rem" }}>Kapil Season 2</div>

@@ -1,8 +1,11 @@
 import React from "react";
 
-const SongCard = ({ photo, name, link, setSongPlayLink, setNowPlaying }) => {
+const SongCard = ({ photo, name, link, setSongPlayLink, setNowPlaying, currentAudio }) => {
   return (
-    <div className="MovieCardContainer">
+    <div
+      className="MovieCardContainer"
+      // style={currentAudio === link ? { border: "1px solid rgba(255,255,255,0.2)", borderRadius: "10px" } : ""}
+    >
       <div style={{ minWidth: "200px", minHeight: "300px", position: "relative", maxHeight: "300px", maxWidth: "200px" }}>
         <img
           src={photo}
