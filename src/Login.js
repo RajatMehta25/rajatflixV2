@@ -16,6 +16,20 @@ const Login = () => {
         setUser(true);
         // setLoading(true);
         navigate("/Home");
+        Notification.requestPermission().then((permission) => {
+          if (permission === "granted") {
+            console.log("Notification permission granted.");
+            // Subscribe to push notifications or perform other actions
+          } else {
+            console.log("Notification permission denied.");
+          }
+        });
+        if ("vibrate" in navigator) {
+          // Vibration API is supported
+          navigator.vibrate(200); // Vibrate for 200ms
+        } else {
+          console.log("Vibration API is not supported in this browser.");
+        }
       } else {
       }
     });
@@ -83,7 +97,14 @@ const Login = () => {
       }
       setUser(true);
       setLoading(true);
+
       navigate("/Home");
+      if ("vibrate" in navigator) {
+        // Vibration API is supported
+        navigator.vibrate(200); // Vibrate for 200ms
+      } else {
+        console.log("Vibration API is not supported in this browser.");
+      }
       toast.success("Logged In Successfully!", {
         position: "top-right",
         autoClose: 5000,
