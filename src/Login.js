@@ -92,7 +92,7 @@ const Login = () => {
     //   }
     // localStorage.setItem("user", true);
     const provider = new GoogleAuthProvider();
-    provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
+    // provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
 
     try {
       const result = await signInWithPopup(auth, provider);
