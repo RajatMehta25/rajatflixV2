@@ -97,7 +97,15 @@
   justify-content: center;
   align-items: center;
 }
-
+.MovieCardContainer:hover {
+  /* box-shadow: 0 0 10px 0 #db0000; */
+  scale: 1.1;
+  transition: 0.3s;
+}
+#hoverMovieFrame:hover {
+  scale: 1.1;
+  transition: 0.3s;
+}
 .MovieList {
   display: flex;
   flex-direction: row;

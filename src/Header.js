@@ -15,6 +15,7 @@ const Header = ({ userDetails, handleLogout }) => {
           </button>
         </div>
       </div>
+      <div>(Subscription Valid Till : {userDetails?.expiryTime})</div>
     </div>
   );
 };

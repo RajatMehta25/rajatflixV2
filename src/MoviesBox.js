@@ -587,7 +587,10 @@ const MoviesBox = () => {
           // <button key={ele.playLink + i} className="downloadButton" onClick={() => setplayLink(ele.playLink)}>
           //   {ele.name}
           // </button>
-          <div style={{ position: "relative", minWidth: "200px", minHeight: "300px", maxHeight: "300px", maxWidth: "200px" }}>
+          <div
+            style={{ position: "relative", minWidth: "200px", minHeight: "300px", maxHeight: "300px", maxWidth: "200px" }}
+            id="hoverMovieFrame"
+          >
             <img
               style={{
                 borderRadius: "1rem",
