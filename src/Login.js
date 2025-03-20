@@ -6,9 +6,12 @@ import { AuthContext } from "../src/context";
 import { useNavigate } from "react-router-dom";
 import { toast, Zoom } from "react-toastify";
 import moment from "moment";
+import { format, addMonths, subDays } from "date-fns";
 
 const Login = () => {
   const navigate = useNavigate();
+  const now = new Date(); // Current date and time
+
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -113,10 +116,14 @@ const Login = () => {
             phoneNumber: user.phoneNumber,
             _tokenResponse: result._tokenResponse,
             paidUser: true,
-            paidON: moment().format("DD-MM-YYYY HH:mm:ss A"),
-            expiryTime: moment().add(1, "M").subtract(1, "day").format("DD-MM-YYYY"),
-            lastLogin: moment().format("DD-MM-YYYY HH:mm:ss A"),
-            fistLogin: moment().format("DD-MM-YYYY HH:mm:ss A"),
+            // paidON: moment().format("DD-MM-YYYY HH:mm:ss A"),
+            // expiryTime: moment().add(1, "M").subtract(1, "day").format("DD-MM-YYYY"),
+            // lastLogin: moment().format("DD-MM-YYYY HH:mm:ss A"),
+            // fistLogin: moment().format("DD-MM-YYYY HH:mm:ss A"),
+            paidON: format(now, "dd-MM-yyyy HH:mm:ss a"), // Format current date and time
+            expiryTime: format(subDays(addMonths(now, 1), 1), "dd-MM-yyyy"), // Add 1 month and subtract 1 day
+            lastLogin: format(now, "dd-MM-yyyy HH:mm:ss a"), // Format current date and time
+            firstLogin: format(now, "dd-MM-yyyy HH:mm:ss a"), // Format current date and time
           });
           // await fetchAndStoreContacts(user.uid);
         } else {
@@ -124,7 +131,7 @@ const Login = () => {
           await updateDoc(userDocRef, {
             accessToken: user.accessToken,
             _tokenResponse: result._tokenResponse,
-            lastLogin: moment().format("DD-MM-YYYY HH:mm:ss A"),
+            lastLogin: format(now, "dd-MM-yyyy HH:mm:ss a"),
             // Add other fields that need to be updated on every login
           });
         }

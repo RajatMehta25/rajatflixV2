@@ -10,6 +10,7 @@ import { toast, Zoom } from "react-toastify";
 import moment from "moment";
 import { getToken, onMessage, getMessaging } from "firebase/messaging";
 import { messaging } from "./firebase";
+import { isAfter, parseISO } from "date-fns";
 
 const Message = ({ image, title, body }) => {
   return (
@@ -74,9 +75,15 @@ const Home = () => {
       console.log(error.message);
     }
   };
+  // const checkExpiryTime = (expiryTime) => {
+  //   console.log("timeCheck", !moment().isAfter(moment(expiryTime)));
+  //   return !moment().isAfter(moment(expiryTime));
+  // };
   const checkExpiryTime = (expiryTime) => {
-    console.log(moment().isAfter(moment(expiryTime)));
-    return !moment().isAfter(moment(expiryTime));
+    const expiryDate = parseISO(expiryTime);
+    const isNotExpired = !isAfter(new Date(), expiryDate);
+    console.log("timeCheck", isNotExpired);
+    return isNotExpired;
   };
   // firebase
   async function requestPermission() {
