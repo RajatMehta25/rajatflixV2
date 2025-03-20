@@ -76,7 +76,7 @@ const Home = () => {
   };
   const checkExpiryTime = (expiryTime) => {
     console.log(moment().isAfter(moment(expiryTime)));
-    return moment().isAfter(moment(expiryTime));
+    return !moment().isAfter(moment(expiryTime));
   };
   // firebase
   async function requestPermission() {
