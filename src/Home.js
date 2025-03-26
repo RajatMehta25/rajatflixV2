@@ -182,9 +182,10 @@ const Home = () => {
             <MoviesBox />
           ) : (
             <div style={{ textAlign: "center", padding: "1rem", fontSize: "1.5rem" }}>
-              Send 1 plate MOMO/DIMSUM MONEY ₹60 to UPI ID : rjt25881-1@okaxis and Whatsapp the Screenshot with your EMAIL ID to
+              Free Trial is Over.
+              {/* ₹60 to UPI ID : rjt25881-1@okaxis and Whatsapp the Screenshot with your EMAIL ID to
               :<a href="https://wa.me/916372773008">+91-6372773008</a>
-              &nbsp; to activate Subscription for 1 Month.
+              &nbsp; to activate Subscription for 1 Month. */}
             </div>
           )}
         </>
