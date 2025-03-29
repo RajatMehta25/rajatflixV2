@@ -424,122 +424,6 @@ const MoviesBox = () => {
           {count}
         </span>
       </div>
-      <div style={{ fontSize: "1.5rem" }}>DOWNLOAD MOVIES</div>
-
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "1rem",
-          width: "100%",
-        }}
-      >
-        <input
-          onChange={(e) => {
-            // if (e) {
-            onChangeSearch(e.target.value);
-            // searchChannel(e);
-            // } else {
-            // onChangeSearch(e);
-            // setFilteredData(data);
-            // }
-          }}
-          value={search}
-          placeholder="Search Movie"
-          className="search"
-        />
-        <span style={{ fontSize: "2rem", cursor: "pointer" }}>
-          {/* <FaMicrophone
-            onClick={() => {
-              recognition.start();
-              setIsListening(true);
-              recognition.onresult = (event) => {
-                const result = event.results[0][0].transcript;
-                onChangeSearch(result);
-                console.log(result);
-              };
-              recognition.onspeechend = () => {
-                recognition.stop();
-                setIsListening(false);
-              };
-            }}
-          /> */}
-        </span>
-      </div>
-      <div
-        // className="MovieList"
-        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%", overflowY: "hidden" }}
-        ref={Movieref}
-      >
-        {searchMovie(data)?.map((ele, i) => (
-          <MovieCard key={ele + i} photo={ele.image} link={ele.downloadLink} name={ele.name} />
-        ))}
-      </div>
-
-      <div style={{ fontSize: "1.5rem" }}>Songs</div>
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}>
-        <input
-          onChange={(e) => {
-            // if (e) {
-            onChangeSearchSong(e.target.value);
-            // searchChannel(e);
-            // } else {
-            // onChangeSearch(e);
-            // setFilteredData(data);
-            // }
-          }}
-          value={searchSong}
-          placeholder="Search Song Name"
-          className="search"
-        />
-        <span style={{ fontSize: "2rem", cursor: "pointer" }}>
-          {/* <FaMicrophone
-            onClick={() => {
-              recognition.start();
-              setIsListening(true);
-              recognition.onresult = (event) => {
-                const result = event.results[0][0].transcript;
-                onChangeSearchSong(result);
-                console.log(result);
-              };
-              recognition.onspeechend = () => {
-                recognition.stop();
-                setIsListening(false);
-              };
-            }}
-          /> */}
-        </span>
-      </div>
-      <div
-        // className="MovieList"
-        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%", overflowY: "hidden" }}
-        ref={Songref}
-      >
-        {searchSongs(SongData)?.map((ele, i) => (
-          <SongCard
-            photo={ele.image}
-            link={ele.downloadLink}
-            name={ele.name}
-            key={ele.name + i}
-            setSongPlayLink={setSongPlayLink}
-            setNowPlaying={setNowPlaying}
-            currentAudio={audioRef.current.src}
-          />
-        ))}
-      </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: "1rem", justifyContent: "center", alignItems: "center" }}>
-        <div>{nowPlaying}</div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", justifyContent: "center", alignItems: "center" }}>
-          <audio ref={audioRef} controls loop preload="none" src={playingLink} playsinline webkit-playsinline />
-          <button className="downloadButton" onClick={showCastDialog}>
-            Play on TV (Android/PC)
-          </button>
-          {/* <a href={playingLink} download style={{ fontSize: "2rem" }} title="Download">
-            <MdOutlineDownloading />
-          </a> */}
-        </div>
-      </div>
       <div style={{ fontSize: "1.5rem" }}>Live Stream Movies</div>
       <div style={{ fontSize: "1.2rem" }}>USE AD BLOCKER / CLOSE ADS TO WATCH MOVIE</div>
 
@@ -624,6 +508,108 @@ const MoviesBox = () => {
             </div>
           </div>
         ))}
+      </div>
+      {/* <div style={{ fontSize: "1.5rem" }}>DOWNLOAD MOVIES</div>
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "1rem",
+          width: "100%",
+        }}
+      >
+        <input
+          onChange={(e) => {
+            // if (e) {
+            onChangeSearch(e.target.value);
+            // searchChannel(e);
+            // } else {
+            // onChangeSearch(e);
+            // setFilteredData(data);
+            // }
+          }}
+          value={search}
+          placeholder="Search Movie"
+          className="search"
+        />
+        <span style={{ fontSize: "2rem", cursor: "pointer" }}>
+        
+        </span>
+      </div>
+      <div
+        // className="MovieList"
+        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%", overflowY: "hidden" }}
+        ref={Movieref}
+      >
+        {searchMovie(data)?.map((ele, i) => (
+          <MovieCard key={ele + i} photo={ele.image} link={ele.downloadLink} name={ele.name} />
+        ))}
+      </div> */}
+
+      <div style={{ fontSize: "1.5rem" }}>Songs</div>
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}>
+        <input
+          onChange={(e) => {
+            // if (e) {
+            onChangeSearchSong(e.target.value);
+            // searchChannel(e);
+            // } else {
+            // onChangeSearch(e);
+            // setFilteredData(data);
+            // }
+          }}
+          value={searchSong}
+          placeholder="Search Song Name"
+          className="search"
+        />
+        <span style={{ fontSize: "2rem", cursor: "pointer" }}>
+          {/* <FaMicrophone
+            onClick={() => {
+              recognition.start();
+              setIsListening(true);
+              recognition.onresult = (event) => {
+                const result = event.results[0][0].transcript;
+                onChangeSearchSong(result);
+                console.log(result);
+              };
+              recognition.onspeechend = () => {
+                recognition.stop();
+                setIsListening(false);
+              };
+            }}
+          /> */}
+        </span>
+      </div>
+      <div
+        // className="MovieList"
+        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%", overflowY: "hidden" }}
+        ref={Songref}
+      >
+        {searchSongs(SongData)?.map((ele, i) => (
+          <SongCard
+            photo={ele.image}
+            link={ele.downloadLink}
+            name={ele.name}
+            key={ele.name + i}
+            setSongPlayLink={setSongPlayLink}
+            setNowPlaying={setNowPlaying}
+            currentAudio={audioRef.current.src}
+          />
+        ))}
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: "1rem", justifyContent: "center", alignItems: "center" }}>
+        <div>{nowPlaying}</div>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", justifyContent: "center", alignItems: "center" }}>
+          <audio ref={audioRef} controls loop preload="none" src={playingLink} playsinline webkit-playsinline />
+          <button className="downloadButton" onClick={showCastDialog}>
+            Play on TV (Android/PC)
+          </button>
+          {/* <a href={playingLink} download style={{ fontSize: "2rem" }} title="Download">
+            <MdOutlineDownloading />
+          </a> */}
+        </div>
       </div>
 
       <div style={{ fontSize: "1.5rem" }}>Kapil Season 2</div>
