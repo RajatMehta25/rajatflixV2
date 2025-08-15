@@ -9,11 +9,13 @@ import { FaMicrophone } from "react-icons/fa";
 import { use } from "react";
 import { TiChartLine } from "react-icons/ti";
 // import { CastButton, useCastSession } from "react-google-cast";
+import { motion } from "motion/react";
 
 const MoviesBox = () => {
   const Kapilref = useRef();
   const Movieref = useRef();
   const playref = useRef();
+  const iframeRef = useRef(null);
 
   const Footballref = useRef();
   const Songref = useRef();
@@ -415,6 +417,13 @@ const MoviesBox = () => {
     }, 2000);
     return () => clearInterval(timer);
   }, []);
+
+  useEffect(() => {
+    if (playLink && iframeRef.current) {
+      iframeRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [playLink]);
+
   return (
     <div className="MovieContainer">
       {/* <HowToDownload /> */}
@@ -532,6 +541,7 @@ const MoviesBox = () => {
       <div style={{ width: "100%" }}>
         <iframe
           className="iframe"
+          ref={iframeRef}
           src={playLink}
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen ; download"
           allowFullScreen
@@ -565,46 +575,69 @@ const MoviesBox = () => {
         />
       </div>
       <div
-        // className="kapilButtonContainer"
-        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%", overflowY: "hidden" }}
+        style={{
+          display: "flex",
+          overflowX: "auto",
+          gap: "1rem",
+          width: "100%",
+          padding: "0.5rem 0", // Optional: add a little vertical breathing room
+          scrollBehavior: "smooth", // Optional: smooth scrolling
+          scrollbarWidth: "thin", // Better scrollbar on Firefox
+          msOverflowStyle: "none", // Hide scrollbar in IE/Edge
+        }}
         ref={playref}
       >
         {searchMovieFrame().map((ele, i) => (
-          // <button key={ele.playLink + i} className="downloadButton" onClick={() => setplayLink(ele.playLink)}>
-          //   {ele.name}
-          // </button>
           <div
-            style={{ position: "relative", minWidth: "200px", minHeight: "300px", maxHeight: "300px", maxWidth: "200px" }}
-            id="hoverMovieFrame"
+            key={ele.playLink + i} // ✅ Move key to the outermost element
+            style={{
+              position: "relative",
+              minWidth: "200px",
+              width: "200px",
+              height: "300px",
+              borderRadius: "1rem",
+              overflow: "hidden", // Keeps everything inside the rounded corners
+              flexShrink: 0, // 👈 Prevents shrinking when scrolling
+              cursor: "pointer",
+            }}
+            onClick={() => setplayLink(ele.playLink)}
+            role="button"
+            tabIndex="0"
+            aria-label={`Play ${ele.name}`}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                setplayLink(ele.playLink);
+              }
+            }}
           >
+            {/* Movie Image */}
             <img
-              style={{
-                borderRadius: "1rem",
-                // padding: "0.5rem",
-                cursor: "pointer",
-                width: "100%",
-                height: "100%",
-              }}
-              key={ele.playLink + i}
               src={ele.image}
               alt={ele.name}
-              // className="movieFrame"
-              onClick={() => setplayLink(ele.playLink)}
+              loading="lazy" // 👈 Improves performance
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover", // Prevents distortion
+              }}
             />
+
+            {/* Title Overlay */}
             <div
               style={{
                 position: "absolute",
                 bottom: 0,
-                color: "white",
-                minHeight: "50px",
-                backgroundColor: "rgba(255,255,255,0.2)",
+                left: 0,
                 width: "100%",
+                backgroundColor: "rgba(0, 0, 0, 0.7)", // Better contrast
+                color: "white",
+                padding: "0.75rem 0.5rem",
                 textAlign: "center",
-                borderRadius: "1rem 1rem 0 0",
                 fontFamily: "cursive",
-                cursor: "pointer",
+                fontSize: "0.95rem",
+                fontWeight: "bold",
+                borderRadius: "0 0 1rem 1rem", // Matches container
               }}
-              onClick={() => setplayLink(ele.playLink)}
             >
               {ele.name}
             </div>
