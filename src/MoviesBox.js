@@ -574,76 +574,114 @@ const MoviesBox = () => {
           className="search"
         />
       </div>
-      <div
-        style={{
-          display: "flex",
-          overflowX: "auto",
-          gap: "1rem",
-          width: "100%",
-          padding: "0.5rem 0", // Optional: add a little vertical breathing room
-          scrollBehavior: "smooth", // Optional: smooth scrolling
-          scrollbarWidth: "thin", // Better scrollbar on Firefox
-          msOverflowStyle: "none", // Hide scrollbar in IE/Edge
-        }}
-        ref={playref}
-      >
-        {searchMovieFrame().map((ele, i) => (
+      <>
+        {/* Movie Cards - Horizontal Scroll */}
+        <div
+          style={{
+            display: "flex",
+            overflowX: "auto",
+            gap: "1rem",
+            width: "100%",
+            padding: "1rem 0",
+            scrollBehavior: "smooth",
+          }}
+          ref={playref}
+        >
+          {searchMovieFrame().map((ele, i) => (
+            <div
+              key={ele.playLink + i}
+              style={{
+                position: "relative",
+                minWidth: "200px",
+                width: "200px",
+                height: "300px",
+                borderRadius: "1rem",
+                overflow: "hidden",
+                flexShrink: 0,
+                cursor: "pointer",
+
+                // ✅ Dynamic border/glow for active card
+                border: playLink === ele.playLink ? "3px solid #e50914" : "3px solid transparent",
+                // boxShadow:
+                //   playLink === ele.playLink
+                //     ? "0 0 0 4px #bfdbfe, 0 4px 6px -1px #3b82f6" // Glow effect
+                //     : "none",
+                boxShadow:
+                  playLink === ele.playLink
+                    ? "0 0 0 4px #fff, 0 0 0 8px #e50914" // Red-white border
+                    : "none",
+                transition: "all 0.3s ease", // Smooth animation
+                transform: playLink === ele.playLink ? "scale(1.03)" : "scale(1)",
+              }}
+              onClick={() => setplayLink(ele.playLink)}
+            >
+              <img
+                src={ele.image}
+                alt={ele.name}
+                loading="lazy"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+              />
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  width: "100%",
+                  backgroundColor: "rgba(0, 0, 0, 0.7)",
+                  color: "white",
+                  padding: "0.75rem 0.5rem",
+                  textAlign: "center",
+                  fontFamily: "cursive",
+                  fontWeight: "bold",
+                  fontSize: "0.95rem",
+                  // Match the outer borderRadius
+                  borderRadius: "0 0 1rem 1rem",
+                }}
+              >
+                {ele.name}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Dot Indicators */}
+        <div style={{ width: "100%", marginTop: "0.5rem", textAlign: "center" }}>
           <div
-            key={ele.playLink + i} // ✅ Move key to the outermost element
             style={{
-              position: "relative",
-              minWidth: "200px",
-              width: "200px",
-              height: "300px",
-              borderRadius: "1rem",
-              overflow: "hidden", // Keeps everything inside the rounded corners
-              flexShrink: 0, // 👈 Prevents shrinking when scrolling
-              cursor: "pointer",
-            }}
-            onClick={() => setplayLink(ele.playLink)}
-            role="button"
-            tabIndex="0"
-            aria-label={`Play ${ele.name}`}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                setplayLink(ele.playLink);
-              }
+              display: "flex",
+              justifyContent: "center",
+              gap: "0.5rem",
+              padding: "0.25rem 0",
             }}
           >
-            {/* Movie Image */}
-            <img
-              src={ele.image}
-              alt={ele.name}
-              loading="lazy" // 👈 Improves performance
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover", // Prevents distortion
-              }}
-            />
-
-            {/* Title Overlay */}
-            <div
-              style={{
-                position: "absolute",
-                bottom: 0,
-                left: 0,
-                width: "100%",
-                backgroundColor: "rgba(0, 0, 0, 0.7)", // Better contrast
-                color: "white",
-                padding: "0.75rem 0.5rem",
-                textAlign: "center",
-                fontFamily: "cursive",
-                fontSize: "0.95rem",
-                fontWeight: "bold",
-                borderRadius: "0 0 1rem 1rem", // Matches container
-              }}
-            >
-              {ele.name}
-            </div>
+            {searchMovieFrame().map((ele, i) => {
+              const isActive = playLink === ele.playLink;
+              return (
+                <button
+                  key={ele.playLink}
+                  aria-label={`Select ${ele.name}`}
+                  onClick={() => setplayLink(ele.playLink)}
+                  style={{
+                    width: isActive ? "12px" : "8px",
+                    height: isActive ? "12px" : "8px",
+                    borderRadius: "50%",
+                    backgroundColor: isActive ? "#e50914" : "#e5e7eb",
+                    border: "2px solid #fff",
+                    boxShadow: isActive ? "0 0 0 2px #ddd" : "none",
+                    padding: 0,
+                    cursor: "pointer",
+                    transition: "all 0.3s ease",
+                  }}
+                />
+              );
+            })}
           </div>
-        ))}
-      </div>
+        </div>
+      </>
 
       <div style={{ fontSize: "1.5rem" }}>Kapil Season 2</div>
       <div style={{ width: "100%" }}>
