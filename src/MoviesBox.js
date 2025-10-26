@@ -922,10 +922,10 @@ const MoviesBox = () => {
         {FootballCardData.map((ele, i) => (
           <FootballCard
             key={ele.id}
-            homeLogo={ele.teams.home.badge}
-            awayLogo={ele.teams.away.badge}
-            homeName={ele.teams.home.name}
-            awayName={ele.teams.away.name}
+            homeLogo={ele?.teams?.home?.badge}
+            awayLogo={ele?.teams?.away?.badge}
+            homeName={ele?.teams?.home?.name}
+            awayName={ele?.teams?.away?.name}
             // status={ele.status}
             time={ele.date}
             // score={ele.score}
