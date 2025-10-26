@@ -27,7 +27,7 @@ const FootballCard = ({ homeLogo, awayLogo, homeName, awayName, status, time, sc
           <span>{homeName}</span>
           <img
             style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-            // src={`https://ws.kora-api.top/uploads/team/${homeLogo}`}
+            src={`https://streamed.pk/api/images/proxy/${homeLogo}.webp`}
           />
         </div>
         <span>VS</span>
@@ -37,7 +37,7 @@ const FootballCard = ({ homeLogo, awayLogo, homeName, awayName, status, time, sc
           <span>{awayName}</span>
           <img
             style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-            // src={`https://ws.kora-api.top/uploads/team/${awayLogo}`}
+            src={`https://streamed.pk/api/images/proxy/${awayLogo}.webp`}
           />
         </div>
       </div>

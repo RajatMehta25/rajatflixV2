@@ -236,7 +236,7 @@ const MoviesBox = () => {
       .then((res) => res.json())
       .then((data) => {
         setFootballCardData(data);
-        // console.log("FootballCardDataV2", data);
+        onChangeChannelSearch(""); // console.log("FootballCardDataV2", data);
       });
   };
 
@@ -504,9 +504,16 @@ const MoviesBox = () => {
   }, [movieFrame, searchFrame]);
   */
   const fetchFootballSources = async (sources) => {
-    const response = await fetch(`https://streamed.pk/api/stream/${sources[0].source}/${sources[0].id}`);
-    const data = await response.json();
-    setFootballCardSources(data);
+    const finalData = [];
+    for (let i = 0; i < sources.length; i++) {
+      const response = await fetch(`https://streamed.pk/api/stream/${sources[i].source}/${sources[i].id}`);
+      const data = await response.json();
+      finalData.push(data);
+    }
+    // console.log("finalData", finalData);
+    const FD = finalData.flat(Infinity);
+    // console.log("FD", FD);
+    setFootballCardSources(FD);
     setChannel("");
     console.log("FootballCardSources", data);
   };
@@ -733,94 +740,6 @@ const MoviesBox = () => {
             </div>
           ))}
         </div>
-
-        {/* Dot Indicators */}
-        <div style={{ width: "100%", marginTop: "0.5rem", textAlign: "center" }}>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              gap: "0.5rem",
-              padding: "0.25rem 0",
-              alignItems: "center",
-            }}
-          >
-            {searchMovieFrame().map((ele, i) => {
-              const isActive = activeIndex === i;
-              return (
-                <button
-                  key={ele.playLink}
-                  aria-label={`Select ${ele.name}`}
-                  aria-current={isActive ? "true" : undefined}
-                  onClick={() => setActiveIndex(i)}
-                  style={{
-                    // let inner pill control width to avoid layout shifts when progress animates
-                    borderRadius: 999,
-                    background: "transparent",
-                    border: "none",
-                    padding: 0,
-                    cursor: "pointer",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    transition: "transform 300ms ease",
-                  }}
-                >
-                  <div
-                    style={{
-                      position: "relative",
-                      // active width should be 50px as requested
-                      width: isActive ? 30 : 12,
-                      height: 12,
-                      borderRadius: 999,
-                      // border: "1px solid #e50914",
-                      // padding: 2,
-                      // red background by default (light) so dot appears red even when inactive
-                      background: "rgba(229,9,20,0.12)",
-                      // smoother expansion animation + small horizontal grow
-                      transform: isActive ? "scaleX(1.06)" : "scaleX(1)",
-                      transition: "width 300ms ease, background 300ms ease, transform 300ms ease",
-                      display: "flex",
-                      alignItems: "center",
-                      padding: 2,
-                      overflow: "hidden",
-                    }}
-                  >
-                    {/* progress bar inside */}
-                    <div
-                      style={{
-                        position: "absolute",
-                        left: 2,
-                        top: 2,
-                        bottom: 2,
-                        width: isActive ? `${progress}%` : "0%",
-                        background: "#ffffff",
-                        borderRadius: 999,
-                        // use ease timing for a smooth fill animation as requested
-                        transition: isActive ? `width ${slideDuration}ms ease` : "width 250ms ease",
-                        willChange: "width",
-                      }}
-                    />
-                    {/* center dot */}
-                    <div
-                      style={{
-                        position: "relative",
-                        width: 8,
-                        height: 8,
-                        borderRadius: 999,
-                        // show red dot by default; when active highlight with white center
-                        background: isActive ? "#ffffff" : "#e50914",
-                        boxShadow: isActive ? "0 0 0 3px rgba(229,9,20,0.18)" : "0 0 0 0 rgba(0,0,0,0)",
-                        transition: "background 250ms ease, box-shadow 250ms ease, transform 250ms ease",
-                        transform: isActive ? "scale(1.2)" : "scale(1)",
-                      }}
-                    />
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        </div>
       </>
 
       <div style={{ fontSize: "1.5rem" }}>Kapil Season 2</div>
@@ -859,7 +778,7 @@ const MoviesBox = () => {
             className="downloadButton"
             onClick={() => setChannel(ele.embedUrl)}
           >
-            {"Channel" + " " + ele.streamNo}
+            {ele.language + " " + ele.source + " " + ele.streamNo}
           </button>
         ))}
       </div>
