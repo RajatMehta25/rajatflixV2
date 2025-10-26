@@ -769,7 +769,14 @@ const MoviesBox = () => {
 
       <div
         ref={FootballNewref}
-        style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "1rem",
+          width: "100%",
+          flexWrap: "wrap",
+        }}
       >
         {FootballCardSources.map((ele, i) => (
           <button
