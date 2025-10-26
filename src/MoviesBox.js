@@ -234,7 +234,10 @@ const MoviesBox = () => {
   const FootballCardDataApiV2 = () => {
     fetch(`https://streamed.pk/api/matches/football`)
       .then((res) => res.json())
-      .then((data) => setFootballCardData(data));
+      .then((data) => {
+        setFootballCardData(data);
+        // console.log("FootballCardDataV2", data);
+      });
   };
 
   const MatchDetails = (id) => {
@@ -504,6 +507,7 @@ const MoviesBox = () => {
     const response = await fetch(`https://streamed.pk/api/stream/${sources[0].source}/${sources[0].id}`);
     const data = await response.json();
     setFootballCardSources(data);
+    console.log("FootballCardSources", data);
   };
   return (
     <div className="MovieContainer">
@@ -923,7 +927,7 @@ const MoviesBox = () => {
             homeName={ele.teams.home.name}
             awayName={ele.teams.away.name}
             // status={ele.status}
-            time={moment(ele.date).format("MMMM Do YYYY, h:mm a")}
+            time={ele.date}
             // score={ele.score}
             // league={ele.league_en}
             onClick={() => {
