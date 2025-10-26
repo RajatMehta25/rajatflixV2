@@ -507,6 +507,7 @@ const MoviesBox = () => {
     const response = await fetch(`https://streamed.pk/api/stream/${sources[0].source}/${sources[0].id}`);
     const data = await response.json();
     setFootballCardSources(data);
+    setChannel("");
     console.log("FootballCardSources", data);
   };
   return (
