@@ -16,7 +16,7 @@ const MoviesBox = () => {
   const Movieref = useRef();
   const playref = useRef();
   const iframeRef = useRef(null);
-
+  const FootballNewref = useRef();
   const Footballref = useRef();
   const Songref = useRef();
   const FootballCardref = useRef();
@@ -36,8 +36,15 @@ const MoviesBox = () => {
   const [playingLink, setSongPlayLink] = useState("");
   const [kapils02, setKapilS02] = useState([]);
   const [movieFrame, setMovieFrame] = useState([]);
-  const [playLink, setplayLink] = useState(movieFrame[0]?.playLink || "https://fino338khhe.com/play/tt0327785");
+  // we'll set playLink once movieFrame loads (skip 0th index)
+  const [playLink, setplayLink] = useState("");
   const [nowPlaying, setNowPlaying] = useState("");
+  // Carousel state for MovieFrame cards
+  const [activeIndex, setActiveIndex] = useState(0);
+  const slideDuration = 5000; // ms per slide
+  const [progress, setProgress] = useState(0); // 0-100 for progress animation
+  const progressTimerRef = useRef(null);
+  const autoplayRef = useRef(null);
   const [isListening, setIsListening] = useState(false);
   const [iframeLink, setIframeLink] = useState("");
   const [episode, setEpisode] = useState("https://drive.google.com/file/d/15PBFDR6x-ncSwuBNWKF7gW-BUlvnJPeL/preview");
@@ -72,6 +79,7 @@ const MoviesBox = () => {
   //     });
   //   }
   // }, [iframeLoaded]);
+  const [FootballCardSources, setFootballCardSources] = useState([]);
 
   useEffect(() => {
     fetch("https://raw.githubusercontent.com/RajatMehta25/TV/main/Movie.json")
@@ -89,6 +97,17 @@ const MoviesBox = () => {
         onChangeSearchFrame("");
       });
   }, []);
+
+  // when movieFrame loads, set initial playLink and activeIndex using the sliced frames
+  useEffect(() => {
+    const frames = movieFrame?.slice(1) || [];
+    if (frames.length > 0) {
+      setplayLink(frames[0].playLink);
+      setActiveIndex(0);
+      // start progress for initial slide
+      setProgress(100);
+    }
+  }, [movieFrame]);
   useEffect(() => {
     fetch("https://raw.githubusercontent.com/RajatMehta25/TV/main/Kapil.json")
       .then((res) => res.json())
@@ -183,9 +202,11 @@ const MoviesBox = () => {
     return newData;
   };
   const searchMovieFrame = () => {
+    // filter by searchFrame, then skip the 0th index from the resulting array
     let newData = movieFrame?.filter((ele) => ele.name.toLowerCase().includes(searchFrame.toLowerCase()));
-
-    return newData;
+    if (!newData) return [];
+    // skip the first element (0th) from the array
+    return newData.slice(1);
   };
   const searchChannel = () => {
     let newData = footballData?.filter((ele) => ele.channel_name.toLowerCase().includes(channelSearch.toLowerCase()));
@@ -202,11 +223,16 @@ const MoviesBox = () => {
 
   //Football
   useEffect(() => {
-    FootballCardDataApi();
+    FootballCardDataApiV2();
   }, []);
 
   const FootballCardDataApi = () => {
     fetch(`https://ws.kora-api.top/api/matches/${moment().format("YYYY-MM-DD")}?t=59`)
+      .then((res) => res.json())
+      .then((data) => setFootballCardData(data));
+  };
+  const FootballCardDataApiV2 = () => {
+    fetch(`https://streamed.pk/api/matches/football`)
       .then((res) => res.json())
       .then((data) => setFootballCardData(data));
   };
@@ -423,7 +449,62 @@ const MoviesBox = () => {
       iframeRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   }, [playLink]);
+  useEffect(() => {
+    if (FootballCardSources && FootballNewref.current) {
+      FootballNewref.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [FootballCardSources]);
 
+  // Keep activeIndex in sync with playLink (handles manual clicks from user)
+  useEffect(() => {
+    const frames = searchMovieFrame();
+    const idx = frames.findIndex((f) => f.playLink === playLink);
+    if (idx >= 0) setActiveIndex(idx);
+  }, [playLink]);
+
+  // Update playLink when activeIndex changes and animate progress
+  useEffect(() => {
+    const frames = searchMovieFrame();
+    if (!frames || frames.length === 0) return;
+
+    const current = frames[activeIndex % frames.length];
+    if (current && current.playLink) setplayLink(current.playLink);
+
+    // reset and animate progress bar
+    setProgress(0);
+    if (progressTimerRef.current) clearTimeout(progressTimerRef.current);
+    // small timeout to allow CSS transition from 0 -> 100
+    progressTimerRef.current = setTimeout(() => setProgress(100), 50);
+
+    return () => {
+      if (progressTimerRef.current) clearTimeout(progressTimerRef.current);
+    };
+  }, [activeIndex]);
+
+  /*
+  // Autoplay: advance slide every slideDuration
+  useEffect(() => {
+    const frames = searchMovieFrame();
+    if (!frames || frames.length === 0) return;
+
+    if (autoplayRef.current) clearInterval(autoplayRef.current);
+    autoplayRef.current = setInterval(() => {
+      setActiveIndex((prev) => {
+        const next = (prev + 1) % frames.length;
+        return next;
+      });
+    }, slideDuration);
+
+    return () => {
+      if (autoplayRef.current) clearInterval(autoplayRef.current);
+    };
+  }, [movieFrame, searchFrame]);
+  */
+  const fetchFootballSources = async (sources) => {
+    const response = await fetch(`https://streamed.pk/api/stream/${sources[0].source}/${sources[0].id}`);
+    const data = await response.json();
+    setFootballCardSources(data);
+  };
   return (
     <div className="MovieContainer">
       {/* <HowToDownload /> */}
@@ -613,7 +694,7 @@ const MoviesBox = () => {
                 transition: "all 0.3s ease", // Smooth animation
                 transform: playLink === ele.playLink ? "scale(1.03)" : "scale(1)",
               }}
-              onClick={() => setplayLink(ele.playLink)}
+              onClick={() => setActiveIndex(i)}
             >
               <img
                 src={ele.image}
@@ -656,27 +737,81 @@ const MoviesBox = () => {
               justifyContent: "center",
               gap: "0.5rem",
               padding: "0.25rem 0",
+              alignItems: "center",
             }}
           >
             {searchMovieFrame().map((ele, i) => {
-              const isActive = playLink === ele.playLink;
+              const isActive = activeIndex === i;
               return (
                 <button
                   key={ele.playLink}
                   aria-label={`Select ${ele.name}`}
-                  onClick={() => setplayLink(ele.playLink)}
+                  aria-current={isActive ? "true" : undefined}
+                  onClick={() => setActiveIndex(i)}
                   style={{
-                    width: isActive ? "12px" : "8px",
-                    height: isActive ? "12px" : "8px",
-                    borderRadius: "50%",
-                    backgroundColor: isActive ? "#e50914" : "#e5e7eb",
-                    border: "2px solid #fff",
-                    boxShadow: isActive ? "0 0 0 2px #ddd" : "none",
+                    // let inner pill control width to avoid layout shifts when progress animates
+                    borderRadius: 999,
+                    background: "transparent",
+                    border: "none",
                     padding: 0,
                     cursor: "pointer",
-                    transition: "all 0.3s ease",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    transition: "transform 300ms ease",
                   }}
-                />
+                >
+                  <div
+                    style={{
+                      position: "relative",
+                      // active width should be 50px as requested
+                      width: isActive ? 30 : 12,
+                      height: 12,
+                      borderRadius: 999,
+                      // border: "1px solid #e50914",
+                      // padding: 2,
+                      // red background by default (light) so dot appears red even when inactive
+                      background: "rgba(229,9,20,0.12)",
+                      // smoother expansion animation + small horizontal grow
+                      transform: isActive ? "scaleX(1.06)" : "scaleX(1)",
+                      transition: "width 300ms ease, background 300ms ease, transform 300ms ease",
+                      display: "flex",
+                      alignItems: "center",
+                      padding: 2,
+                      overflow: "hidden",
+                    }}
+                  >
+                    {/* progress bar inside */}
+                    <div
+                      style={{
+                        position: "absolute",
+                        left: 2,
+                        top: 2,
+                        bottom: 2,
+                        width: isActive ? `${progress}%` : "0%",
+                        background: "#ffffff",
+                        borderRadius: 999,
+                        // use ease timing for a smooth fill animation as requested
+                        transition: isActive ? `width ${slideDuration}ms ease` : "width 250ms ease",
+                        willChange: "width",
+                      }}
+                    />
+                    {/* center dot */}
+                    <div
+                      style={{
+                        position: "relative",
+                        width: 8,
+                        height: 8,
+                        borderRadius: 999,
+                        // show red dot by default; when active highlight with white center
+                        background: isActive ? "#ffffff" : "#e50914",
+                        boxShadow: isActive ? "0 0 0 3px rgba(229,9,20,0.18)" : "0 0 0 0 rgba(0,0,0,0)",
+                        transition: "background 250ms ease, box-shadow 250ms ease, transform 250ms ease",
+                        transform: isActive ? "scale(1.2)" : "scale(1)",
+                      }}
+                    />
+                  </div>
+                </button>
               );
             })}
           </div>
@@ -707,28 +842,17 @@ const MoviesBox = () => {
       <div style={{ fontSize: "1.5rem" }}>Live Stream Football</div>
       {/* <div style={{ fontSize: "1rem" }}>(Use Ad Blocker)</div> */}
 
-      <div style={{ width: "100%" }}>
-        <iframe
-          className="iframe"
-          src={channel}
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen ; download"
-          allowFullScreen
-        />
+      <div style={{ width: "100%" }} ref={FootballNewref}>
+        <video src={channel}></video>
       </div>
 
-      <div style={{ fontSize: "1rem" }}>TV Channels (Click To Watch Live)</div>
+      <div style={{ fontSize: "1rem" }}>Click To Watch Live (close ads)</div>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}>
         <input
-          onChange={(e) => {
-            // if (e) {
-            onChangeChannelSearch(e.target.value);
-            // searchChannel(e);
-            // } else {
-            // onChangeSearch(e);
-            // setFilteredData(data);
-            // }
-          }}
-          value={channelSearch}
+          // onChange={(e) => {
+          //   onChangeChannelSearch(e.target.value);
+          // }}
+          // value={channelSearch}
           placeholder="Search Channel Name"
           className="search"
         />
@@ -750,6 +874,19 @@ const MoviesBox = () => {
           /> */}
         </span>
       </div>
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}>
+        {FootballCardSources.map((ele, i) => (
+          <button
+            style={{ textWrap: "nowrap", textTransform: "uppercase" }}
+            key={ele.id + i}
+            className="downloadButton"
+            onClick={() => setChannel(ele.embedUrl)}
+          >
+            {"Channel" + " " + ele.streamNo}
+          </button>
+        ))}
+      </div>
+
       <div
         className="HideScroll"
         style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
@@ -760,7 +897,7 @@ const MoviesBox = () => {
             style={{ textWrap: "nowrap", textTransform: "uppercase" }}
             key={ele.link + i}
             className="downloadButton"
-            onClick={() => setChannel(ele.link)}
+            // onClick={() => setChannel(ele.link)}
           >
             {ele.channel_name}
           </button>
@@ -768,7 +905,7 @@ const MoviesBox = () => {
       </div>
       <div style={{ fontSize: "1rem" }}>Today Matches</div>
       <div style={{ fontSize: "1rem" }}>
-        <button className="downloadButton" onClick={() => FootballCardDataApi()}>
+        <button className="downloadButton" onClick={() => FootballCardDataApiV2()}>
           Refresh Score Cards
         </button>
       </div>
@@ -781,14 +918,17 @@ const MoviesBox = () => {
         {FootballCardData.map((ele, i) => (
           <FootballCard
             key={ele.id}
-            homeLogo={ele.home_logo}
-            awayLogo={ele.away_logo}
-            homeName={ele.home_en}
-            awayName={ele.away_en}
-            status={ele.status}
-            time={ele.time}
-            score={ele.score}
-            league={ele.league_en}
+            homeLogo={ele.teams.home.badge}
+            awayLogo={ele.teams.away.badge}
+            homeName={ele.teams.home.name}
+            awayName={ele.teams.away.name}
+            // status={ele.status}
+            time={moment(ele.date).format("MMMM Do YYYY, h:mm a")}
+            // score={ele.score}
+            // league={ele.league_en}
+            onClick={() => {
+              fetchFootballSources(ele.sources);
+            }}
           />
         ))}
       </div>
