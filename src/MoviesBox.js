@@ -48,7 +48,7 @@ const MoviesBox = () => {
   const [isListening, setIsListening] = useState(false);
   const [iframeLink, setIframeLink] = useState("");
   const [episode, setEpisode] = useState("https://drive.google.com/file/d/15PBFDR6x-ncSwuBNWKF7gW-BUlvnJPeL/preview");
-  const [channel, setChannel] = useState("https://koora.vip/share.php?ch=b1_1");
+  const [channel, setChannel] = useState("");
   const [telegramData, setTelegramData] = useState([]);
   const [matchData, setMatchData] = useState({});
   const [iframeLoaded, setIframeLoaded] = useState(false);
@@ -183,9 +183,9 @@ const MoviesBox = () => {
   // useEffect(() => {
   //   Movieref.current.addEventListener("wheel", handleWheelMovie);
   // }, []);
-  useEffect(() => {
-    Footballref.current.addEventListener("wheel", handleWheelFootball);
-  }, []);
+  // useEffect(() => {
+  //   Footballref.current.addEventListener("wheel", handleWheelFootball);
+  // }, []);
   useEffect(() => {
     FootballCardref.current.addEventListener("wheel", handleWheelFootballCard);
   }, []);
@@ -209,7 +209,7 @@ const MoviesBox = () => {
     return newData.slice(1);
   };
   const searchChannel = () => {
-    let newData = footballData?.filter((ele) => ele.channel_name.toLowerCase().includes(channelSearch.toLowerCase()));
+    let newData = FootballCardData?.filter((ele) => ele?.id.toLowerCase().includes(channelSearch.toLowerCase()));
 
     // setFilteredData(newData ?? data);
     return newData;
@@ -845,19 +845,41 @@ const MoviesBox = () => {
 
       <div style={{ fontSize: "1.5rem" }}>Live Stream Football</div>
       {/* <div style={{ fontSize: "1rem" }}>(Use Ad Blocker)</div> */}
+      <div style={{ fontSize: "1rem" }}>Click on Channel to load match below</div>
 
-      <div style={{ width: "100%" }} ref={FootballNewref}>
-        <video src={channel}></video>
+      <div
+        ref={FootballNewref}
+        style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}
+      >
+        {FootballCardSources.map((ele, i) => (
+          <button
+            style={{ textWrap: "nowrap", textTransform: "uppercase" }}
+            key={ele.id + i}
+            className="downloadButton"
+            onClick={() => setChannel(ele.embedUrl)}
+          >
+            {"Channel" + " " + ele.streamNo}
+          </button>
+        ))}
+      </div>
+      <div style={{ width: "100%" }}>
+        {/* <video style={{ minHeight: 200 }} src={channel}></video> */}
+        <iframe
+          className="iframe"
+          src={channel}
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen ; download"
+          allowFullScreen
+        />
       </div>
 
       <div style={{ fontSize: "1rem" }}>Click To Watch Live (close ads)</div>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}>
         <input
-          // onChange={(e) => {
-          //   onChangeChannelSearch(e.target.value);
-          // }}
-          // value={channelSearch}
-          placeholder="Search Channel Name"
+          onChange={(e) => {
+            onChangeChannelSearch(e.target.value);
+          }}
+          value={channelSearch}
+          placeholder="Search Team Name"
           className="search"
         />
         <span style={{ fontSize: "2rem", cursor: "pointer" }}>
@@ -878,39 +900,22 @@ const MoviesBox = () => {
           /> */}
         </span>
       </div>
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}>
-        {FootballCardSources.map((ele, i) => (
-          <button
-            style={{ textWrap: "nowrap", textTransform: "uppercase" }}
-            key={ele.id + i}
-            className="downloadButton"
-            onClick={() => setChannel(ele.embedUrl)}
-          >
-            {"Channel" + " " + ele.streamNo}
-          </button>
-        ))}
-      </div>
 
-      <div
+      {/* <div
         className="HideScroll"
         style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
         ref={Footballref}
       >
         {searchChannel().map((ele, i) => (
-          <button
-            style={{ textWrap: "nowrap", textTransform: "uppercase" }}
-            key={ele.link + i}
-            className="downloadButton"
-            // onClick={() => setChannel(ele.link)}
-          >
+          <button style={{ textWrap: "nowrap", textTransform: "uppercase" }} key={ele.link + i} className="downloadButton">
             {ele.channel_name}
           </button>
         ))}
-      </div>
+      </div> */}
       <div style={{ fontSize: "1rem" }}>Today Matches</div>
       <div style={{ fontSize: "1rem" }}>
         <button className="downloadButton" onClick={() => FootballCardDataApiV2()}>
-          Refresh Score Cards
+          Refresh Match List
         </button>
       </div>
 
@@ -919,7 +924,7 @@ const MoviesBox = () => {
         style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
         ref={FootballCardref}
       >
-        {FootballCardData.map((ele, i) => (
+        {searchChannel().map((ele, i) => (
           <FootballCard
             key={ele.id}
             homeLogo={ele?.teams?.home?.badge}
@@ -930,9 +935,7 @@ const MoviesBox = () => {
             time={ele.date}
             // score={ele.score}
             // league={ele.league_en}
-            onClick={() => {
-              fetchFootballSources(ele.sources);
-            }}
+            onClick={() => fetchFootballSources(ele.sources)}
           />
         ))}
       </div>

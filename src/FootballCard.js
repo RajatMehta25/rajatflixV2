@@ -1,7 +1,7 @@
 import moment from "moment";
 import React from "react";
 
-const FootballCard = ({ homeLogo, awayLogo, homeName, awayName, status, time, score, league }) => {
+const FootballCard = ({ homeLogo, awayLogo, homeName, awayName, status, time, score, league, onClick }) => {
   return (
     <div
       style={{
@@ -13,9 +13,11 @@ const FootballCard = ({ homeLogo, awayLogo, homeName, awayName, status, time, sc
         padding: "1rem",
         border: "1px solid #373b44",
         borderRadius: "1rem",
-        pointerEvents: "none",
+        // pointerEvents: "none",
         textWrap: "nowrap",
+        cursor: "pointer",
       }}
+      onClick={onClick}
     >
       <div>{league}</div>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "0.5rem" }}>
@@ -40,11 +42,7 @@ const FootballCard = ({ homeLogo, awayLogo, homeName, awayName, status, time, sc
         </div>
       </div>
 
-      {status === 1 ? (
-        <span style={{ color: "red" }}>Live</span>
-      ) : (
-        <span>{moment.utc(time, "HH:mm:ss").local().format("hh:mm A")}</span>
-      )}
+      {status === 1 ? <span style={{ color: "red" }}>Live</span> : <span>{moment(time).format("MMMM Do YYYY, h:mm a")}</span>}
       {status === 1 ? <div>{score}</div> : false}
     </div>
   );
