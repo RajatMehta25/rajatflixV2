@@ -22,6 +22,7 @@ const MoviesBox = () => {
   const FootballCardref = useRef();
   const Telegramref = useRef();
   const audioRef = useRef();
+  const footballFrameref = useRef();
   const [search, onChangeSearch] = useState("");
   const [searchFrame, onChangeSearchFrame] = useState("");
 
@@ -152,7 +153,7 @@ const MoviesBox = () => {
   const handleWheelFootball = (event) => {
     event.preventDefault();
 
-    Footballref.current.scrollLeft += event.deltaY;
+    FootballNewref.current.scrollLeft += event.deltaY;
 
     // console.log((ref.current.scrollLeft += event.deltaY));
   };
@@ -187,6 +188,9 @@ const MoviesBox = () => {
   //   Footballref.current.addEventListener("wheel", handleWheelFootball);
   // }, []);
   useEffect(() => {
+    FootballNewref.current.addEventListener("wheel", handleWheelFootball);
+  }, []);
+  useEffect(() => {
     FootballCardref.current.addEventListener("wheel", handleWheelFootballCard);
   }, []);
   useEffect(() => {
@@ -208,11 +212,25 @@ const MoviesBox = () => {
     // skip the first element (0th) from the array
     return newData.slice(1);
   };
-  const searchChannel = () => {
-    let newData = FootballCardData?.filter((ele) => ele?.id.toLowerCase().includes(channelSearch.toLowerCase()));
+  // const searchChannel = () => {
+  //   let newData = FootballCardData?.filter((ele) => ele?.teams?.home?.name.toLowerCase().includes(channelSearch.toLowerCase()));
 
-    // setFilteredData(newData ?? data);
-    return newData;
+  //   // setFilteredData(newData ?? data);
+  //   return newData;
+  // };
+  const searchChannel = () => {
+    if (!channelSearch?.trim()) return FootballCardData;
+
+    const searchTerm = channelSearch.toLowerCase();
+
+    const newData = FootballCardData?.filter((ele) => {
+      const homeName = ele?.teams?.home?.name?.toLowerCase() || "";
+      const awayName = ele?.teams?.away?.name?.toLowerCase() || "";
+
+      return homeName.includes(searchTerm) || awayName.includes(searchTerm);
+    });
+
+    return newData ?? [];
   };
   const searchSongs = () => {
     let newData = SongData?.filter((ele) => ele.name.toLowerCase().includes(searchSong.toLowerCase()));
@@ -503,19 +521,38 @@ const MoviesBox = () => {
     };
   }, [movieFrame, searchFrame]);
   */
+  // const fetchFootballSources = async (sources) => {
+  //   const finalData = [];
+  //   for (let i = 0; i < sources.length; i++) {
+  //     const response = await fetch(`https://streamed.pk/api/stream/${sources[i].source}/${sources[i].id}`);
+  //     const data = await response.json();
+  //     finalData.push(data);
+  //   }
+  //   // console.log("finalData", finalData);
+  //   const FD = finalData.flat(Infinity);
+  //   // console.log("FD", FD);
+  //   setFootballCardSources(FD);
+  //   setChannel("");
+  //   console.log("FootballCardSources", data);
+  // };
   const fetchFootballSources = async (sources) => {
-    const finalData = [];
-    for (let i = 0; i < sources.length; i++) {
-      const response = await fetch(`https://streamed.pk/api/stream/${sources[i].source}/${sources[i].id}`);
-      const data = await response.json();
-      finalData.push(data);
-    }
-    // console.log("finalData", finalData);
-    const FD = finalData.flat(Infinity);
-    // console.log("FD", FD);
+    const results = await Promise.allSettled(
+      sources.map(({ source, id }) =>
+        fetch(`https://streamed.pk/api/stream/${source}/${id}`).then((r) => {
+          if (!r.ok) throw new Error(`HTTP ${r.status}`);
+          return r.json();
+        })
+      )
+    );
+
+    const ok = results.filter((r) => r.status === "fulfilled").map((r) => r.value);
+
+    const FD = ok.flat(Infinity);
     setFootballCardSources(FD);
     setChannel("");
-    console.log("FootballCardSources", data);
+
+    const failed = results.filter((r) => r.status === "rejected").length;
+    if (failed) console.warn(`Skipped ${failed} failed request(s).`);
   };
   return (
     <div className="MovieContainer">
@@ -768,22 +805,28 @@ const MoviesBox = () => {
       <div style={{ fontSize: "1rem" }}>Click on Channel to load match below</div>
 
       <div
+        // style={{
+        //   display: "flex",
+        //   justifyContent: "center",
+        //   alignItems: "center",
+        //   gap: "1rem",
+        //   width: "100%",
+        //   flexWrap: "wrap",
+        // }}
+        // className="HideScroll"
+        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
+        // ref={Footballref}
         ref={FootballNewref}
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "1rem",
-          width: "100%",
-          flexWrap: "wrap",
-        }}
       >
         {FootballCardSources.map((ele, i) => (
           <button
             style={{ textWrap: "nowrap", textTransform: "uppercase" }}
             key={ele.id + i}
             className="downloadButton"
-            onClick={() => setChannel(ele.embedUrl)}
+            onClick={() => {
+              setChannel(ele.embedUrl);
+              footballFrameref.current.scrollIntoView({ behavior: "smooth", block: "center" });
+            }}
           >
             {ele.language + " " + ele.source + " " + ele.streamNo}
           </button>
@@ -796,6 +839,7 @@ const MoviesBox = () => {
           src={channel}
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen ; download"
           allowFullScreen
+          ref={footballFrameref}
         />
       </div>
 
@@ -839,7 +883,7 @@ const MoviesBox = () => {
           </button>
         ))}
       </div> */}
-      <div style={{ fontSize: "1rem" }}>Today Matches</div>
+      <div style={{ fontSize: "1rem" }}>Match List</div>
       <div style={{ fontSize: "1rem" }}>
         <button className="downloadButton" onClick={() => FootballCardDataApiV2()}>
           Refresh Match List
