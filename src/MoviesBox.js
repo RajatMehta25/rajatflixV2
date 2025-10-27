@@ -536,6 +536,8 @@ const MoviesBox = () => {
   //   console.log("FootballCardSources", data);
   // };
   const fetchFootballSources = async (sources) => {
+    navigator.vibrate(200);
+
     const results = await Promise.allSettled(
       sources.map(({ source, id }) =>
         fetch(`https://streamed.pk/api/stream/${source}/${id}`).then((r) => {
