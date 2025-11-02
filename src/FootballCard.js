@@ -6,6 +6,7 @@ const FootballCard = ({ homeLogo, awayLogo, homeName, awayName, status, time, sc
     <div
       style={{
         display: "flex",
+        flex: 1,
         flexDirection: "column",
         justifyContent: "space-evenly",
         alignItems: "center",
