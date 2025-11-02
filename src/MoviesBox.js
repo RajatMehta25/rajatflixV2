@@ -250,7 +250,8 @@ const MoviesBox = () => {
       .then((data) => setFootballCardData(data));
   };
   const FootballCardDataApiV2 = () => {
-    fetch(`https://streamed.pk/api/matches/football`)
+    // fetch(`https://streamed.pk/api/matches/football`)
+    fetch(`https://streamed.pk/api/matches/all`)
       .then((res) => res.json())
       .then((data) => {
         setFootballCardData(data);
@@ -802,7 +803,7 @@ const MoviesBox = () => {
         ))}
       </div>
 
-      <div style={{ fontSize: "1.5rem" }}>Live Stream Football</div>
+      <div style={{ fontSize: "1.5rem" }}>Live Stream ALL SPORTS</div>
       {/* <div style={{ fontSize: "1rem" }}>(Use Ad Blocker)</div> */}
       <div style={{ fontSize: "1rem" }}>Click on Channel to load match below</div>
 
@@ -893,8 +894,14 @@ const MoviesBox = () => {
       </div>
 
       <div
-        className="HideScroll"
-        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
+        // className="HideScroll"
+        style={{
+          display: "flex",
+          // overflowX: "scroll",
+          flexWrap: "wrap",
+          gap: "1rem",
+          width: "100%",
+        }}
         ref={FootballCardref}
       >
         {searchChannel().map((ele, i) => (
