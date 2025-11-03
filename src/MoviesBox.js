@@ -557,6 +557,17 @@ const MoviesBox = () => {
     const failed = results.filter((r) => r.status === "rejected").length;
     if (failed) console.warn(`Skipped ${failed} failed request(s).`);
   };
+
+  // Group by category (whatever the API returns)
+  const groupByCategory = (items) =>
+    (items ?? []).reduce((acc, ele) => {
+      const cat = ele?.category || "uncategorized";
+      (acc[cat] ||= []).push(ele);
+      return acc;
+    }, {});
+
+  const grouped = groupByCategory(searchChannel());
+
   return (
     <div className="MovieContainer">
       {/* <HowToDownload /> */}
@@ -904,19 +915,47 @@ const MoviesBox = () => {
         }}
         ref={FootballCardref}
       >
-        {searchChannel().map((ele, i) => (
-          <FootballCard
-            key={ele.id}
-            homeLogo={ele?.teams?.home?.badge}
-            awayLogo={ele?.teams?.away?.badge}
-            homeName={ele?.teams?.home?.name}
-            awayName={ele?.teams?.away?.name}
-            // status={ele.status}
-            time={ele.date}
-            // score={ele.score}
-            // league={ele.league_en}
-            onClick={() => fetchFootballSources(ele.sources)}
-          />
+        {/* {searchChannel().map((ele, i) => {
+          if (ele?.category === "football") {
+            <FootballCard
+              key={ele.id}
+              homeLogo={ele?.teams?.home?.badge}
+              awayLogo={ele?.teams?.away?.badge}
+              homeName={ele?.teams?.home?.name}
+              awayName={ele?.teams?.away?.name}
+              // status={ele.status}
+              time={ele.date}
+              // score={ele.score}
+              // league={ele.league_en}
+              onClick={() => fetchFootballSources(ele.sources)}
+            />;
+          }
+        })} */}
+
+        {/*new renderer  */}
+        {Object.entries(grouped).map(([category, items]) => (
+          <section key={category} style={{ textAlign: "center" }}>
+            <h3 style={{ marginBottom: 12, textTransform: "capitalize", fontFamily: "monospace", fontSize: "1.5rem" }}>
+              {category.replaceAll("-", " ")}
+            </h3>
+
+            <div>
+              {items.map((ele) => (
+                <FootballCard
+                  key={ele.id}
+                  homeLogo={ele?.teams?.home?.badge}
+                  awayLogo={ele?.teams?.away?.badge}
+                  homeName={ele?.teams?.home?.name}
+                  awayName={ele?.teams?.away?.name}
+                  // status={ele.status}
+                  time={ele.date}
+                  // score={ele.score}
+                  // league={ele.league_en}
+                  onClick={() => fetchFootballSources(ele.sources)}
+                />
+              ))}
+            </div>
+          </section>
         ))}
       </div>
     </div>
