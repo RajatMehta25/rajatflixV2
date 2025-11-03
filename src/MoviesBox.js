@@ -54,6 +54,7 @@ const MoviesBox = () => {
   const [matchData, setMatchData] = useState({});
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [count, setCount] = useState(Math.floor(Math.random() * (10000 - 7000 + 1)) + 7000);
+  const [selectedCategory, setSelectedCategory] = useState("football");
   const handleIframeLoad = () => {
     setIframeLoaded(true);
   };
@@ -227,7 +228,7 @@ const MoviesBox = () => {
       const homeName = ele?.teams?.home?.name?.toLowerCase() || "";
       const awayName = ele?.teams?.away?.name?.toLowerCase() || "";
 
-      return homeName.includes(searchTerm) || awayName.includes(searchTerm);
+      return (homeName.includes(searchTerm) || awayName.includes(searchTerm)) && ele?.category === selectedCategory;
     });
 
     return newData ?? [];
@@ -566,7 +567,13 @@ const MoviesBox = () => {
       return acc;
     }, {});
 
-  const grouped = groupByCategory(searchChannel());
+  const grouped = groupByCategory(FootballCardData);
+  console.log("grouped", grouped);
+
+  const categories = FootballCardData.filter((item, index, self) => {
+    return index === self.findIndex((t) => t.category === item.category);
+  }).map((item) => item.category);
+  console.log("categories", categories);
 
   return (
     <div className="MovieContainer">
@@ -903,7 +910,30 @@ const MoviesBox = () => {
           Refresh Match List
         </button>
       </div>
-
+      <div
+        style={{
+          display: "flex",
+          overflowX: "scroll",
+          // flexWrap: "wrap",
+          gap: "1rem",
+          width: "100%",
+        }}
+        ref={FootballCardref}
+      >
+        {categories.map((ele) => (
+          <button key={ele} className="customButton" onClick={() => setSelectedCategory(ele)}>
+            <span
+              style={{
+                textDecoration: selectedCategory === ele ? "underline" : "none",
+                textDecorationColor: selectedCategory === ele ? "#db0000" : "",
+                textDecorationThickness: selectedCategory === ele ? "0.25rem" : "",
+              }}
+            >
+              {ele}
+            </span>
+          </button>
+        ))}
+      </div>
       <div
         // className="HideScroll"
         style={{
@@ -913,27 +943,28 @@ const MoviesBox = () => {
           gap: "1rem",
           width: "100%",
         }}
-        ref={FootballCardref}
+        // ref={FootballCardref}
       >
-        {/* {searchChannel().map((ele, i) => {
-          if (ele?.category === "football") {
-            <FootballCard
-              key={ele.id}
-              homeLogo={ele?.teams?.home?.badge}
-              awayLogo={ele?.teams?.away?.badge}
-              homeName={ele?.teams?.home?.name}
-              awayName={ele?.teams?.away?.name}
-              // status={ele.status}
-              time={ele.date}
-              // score={ele.score}
-              // league={ele.league_en}
-              onClick={() => fetchFootballSources(ele.sources)}
-            />;
-          }
-        })} */}
+        {searchChannel().map((ele, i) => {
+          if (ele?.category === selectedCategory)
+            return (
+              <FootballCard
+                key={ele.id}
+                homeLogo={ele?.teams?.home?.badge}
+                awayLogo={ele?.teams?.away?.badge}
+                homeName={ele?.teams?.home?.name}
+                awayName={ele?.teams?.away?.name}
+                // status={ele.status}
+                time={ele.date}
+                // score={ele.score}
+                // league={ele.league_en}
+                onClick={() => fetchFootballSources(ele.sources)}
+              />
+            );
+        })}
 
         {/*new renderer  */}
-        {Object.entries(grouped).map(([category, items]) => (
+        {/* {Object.entries(grouped).map(([category, items]) => (
           <section key={category} style={{ textAlign: "center" }}>
             <h3 style={{ marginBottom: 12, textTransform: "capitalize", fontFamily: "monospace", fontSize: "1.5rem" }}>
               {category.replaceAll("-", " ")}
@@ -956,7 +987,7 @@ const MoviesBox = () => {
               ))}
             </div>
           </section>
-        ))}
+        ))} */}
       </div>
     </div>
   );
