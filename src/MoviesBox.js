@@ -538,7 +538,7 @@ const MoviesBox = () => {
   //   console.log("FootballCardSources", data);
   // };
   const fetchFootballSources = async (sources) => {
-    navigator.vibrate(200);
+    // navigator.vibrate(200);
 
     const results = await Promise.allSettled(
       sources.map(({ source, id }) =>
@@ -958,7 +958,7 @@ const MoviesBox = () => {
                 time={ele.date}
                 // score={ele.score}
                 // league={ele.league_en}
-                onClick={() => fetchFootballSources(ele.sources)}
+                onClick={() => fetchFootballSources(ele?.sources)}
               />
             );
         })}
