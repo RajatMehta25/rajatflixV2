@@ -11,6 +11,7 @@ import moment from "moment";
 import { getToken, onMessage, getMessaging } from "firebase/messaging";
 import { messaging } from "./firebase";
 import { isAfter, parseISO, parse } from "date-fns";
+import Disclaimer from "./Disclaimer";
 // import { parse } from "date-fns-tz";
 
 const Message = ({ image, title, body }) => {
@@ -190,6 +191,7 @@ const Home = () => {
           )}
         </>
       )}
+      <Disclaimer />
     </div>
   );
 };
