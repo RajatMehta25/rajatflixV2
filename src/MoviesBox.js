@@ -538,6 +538,11 @@ const MoviesBox = () => {
   //   console.log("FootballCardSources", data);
   // };
   const fetchFootballSources = async (sources) => {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+    if (/android/i.test(userAgent)) {
+      navigator.vibrate(200);
+    }
     // navigator.vibrate(200);
 
     const results = await Promise.allSettled(
