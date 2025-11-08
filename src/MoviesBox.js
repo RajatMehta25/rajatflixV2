@@ -733,7 +733,7 @@ const MoviesBox = () => {
             overflowX: "auto",
             gap: "1rem",
             width: "100%",
-            padding: "1rem 0",
+            padding: "1rem 1rem",
             scrollBehavior: "smooth",
           }}
           ref={playref}
