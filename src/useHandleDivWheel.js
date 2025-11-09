@@ -9,7 +9,6 @@ const useHandleDivWheel = (event, incomingRef) => {
 
     incomingRef.current.scrollLeft += event.deltaY;
   };
-  return <div>useHandleDivWheel</div>;
 };
 
 export default useHandleDivWheel;

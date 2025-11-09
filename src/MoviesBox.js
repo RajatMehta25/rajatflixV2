@@ -12,6 +12,7 @@ import { TiChartLine } from "react-icons/ti";
 import { motion } from "motion/react";
 import MusicPlayer from "./MusicPlayer";
 import useHandleDivWheel from "./useHandleDivWheel";
+import useGithubApi from "./useGithubApi";
 
 const MoviesBox = () => {
   const Kapilref = useRef();
@@ -63,6 +64,17 @@ const MoviesBox = () => {
   useHandleDivWheel(Songref);
   useHandleDivWheel(FootballCardref);
 
+  useGithubApi(
+    "https://raw.githubusercontent.com/RajatMehta25/TV/main/Songs.json",
+    setSongData,
+    setSongPlayLink,
+    setNowPlaying
+  );
+  useGithubApi("https://raw.githubusercontent.com/RajatMehta25/TV/main/Movie.json", setData, onChangeSearch);
+  useGithubApi("https://raw.githubusercontent.com/RajatMehta25/TV/main/MovieFrame.json", setMovieFrame, onChangeSearchFrame);
+  useGithubApi("https://raw.githubusercontent.com/RajatMehta25/TV/main/Kapil.json", setKapilS02);
+  useGithubApi("https://raw.githubusercontent.com/RajatMehta25/TV/main/football_channels.json", setFootballData);
+
   const handleIframeLoad = () => {
     setIframeLoaded(true);
   };
@@ -91,23 +103,6 @@ const MoviesBox = () => {
   // }, [iframeLoaded]);
   const [FootballCardSources, setFootballCardSources] = useState([]);
 
-  useEffect(() => {
-    fetch("https://raw.githubusercontent.com/RajatMehta25/TV/main/Movie.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data.data);
-        onChangeSearch("");
-      });
-  }, []);
-  useEffect(() => {
-    fetch("https://raw.githubusercontent.com/RajatMehta25/TV/main/MovieFrame.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setMovieFrame(data.data);
-        onChangeSearchFrame("");
-      });
-  }, []);
-
   // when movieFrame loads, set initial playLink and activeIndex using the sliced frames
   useEffect(() => {
     const frames = movieFrame?.slice(1) || [];
@@ -118,39 +113,11 @@ const MoviesBox = () => {
       setProgress(100);
     }
   }, [movieFrame]);
-  useEffect(() => {
-    fetch("https://raw.githubusercontent.com/RajatMehta25/TV/main/Kapil.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setKapilS02(data.data);
-      });
-  }, []);
-  useEffect(() => {
-    fetch("https://raw.githubusercontent.com/RajatMehta25/TV/main/football_channels.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setFootballData(data.data);
-      });
-  }, []);
-  useEffect(() => {
-    fetch("https://raw.githubusercontent.com/RajatMehta25/TV/main/Songs.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setSongData(data.data);
-        setSongPlayLink(data.data[0].downloadLink);
-        setNowPlaying(data.data[0].name);
-      });
-  }, []);
+
   useEffect(() => {
     audioRef.current.play();
   }, [playingLink, audioRef.current]);
 
-  const searchMovie = () => {
-    let newData = data?.filter((ele) => ele.name.toLowerCase().includes(search.toLowerCase()));
-
-    // setFilteredData(newData ?? data);
-    return newData;
-  };
   const searchMovieFrame = () => {
     // filter by searchFrame, then skip the 0th index from the resulting array
     let newData = movieFrame?.filter((ele) => ele.name.toLowerCase().includes(searchFrame.toLowerCase()));
@@ -158,12 +125,7 @@ const MoviesBox = () => {
     // skip the first element (0th) from the array
     return newData.slice(1);
   };
-  // const searchChannel = () => {
-  //   let newData = FootballCardData?.filter((ele) => ele?.teams?.home?.name.toLowerCase().includes(channelSearch.toLowerCase()));
 
-  //   // setFilteredData(newData ?? data);
-  //   return newData;
-  // };
   const searchChannel = () => {
     if (!channelSearch?.trim()) return FootballCardData;
 
