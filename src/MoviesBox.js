@@ -11,6 +11,7 @@ import { TiChartLine } from "react-icons/ti";
 // import { CastButton, useCastSession } from "react-google-cast";
 import { motion } from "motion/react";
 import MusicPlayer from "./MusicPlayer";
+import useHandleDivWheel from "./useHandleDivWheel";
 
 const MoviesBox = () => {
   const Kapilref = useRef();
@@ -56,6 +57,12 @@ const MoviesBox = () => {
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [count, setCount] = useState(Math.floor(Math.random() * (10000 - 7000 + 1)) + 7000);
   const [selectedCategory, setSelectedCategory] = useState("football");
+
+  useHandleDivWheel(Kapilref);
+  useHandleDivWheel(FootballNewref);
+  useHandleDivWheel(Songref);
+  useHandleDivWheel(FootballCardref);
+
   const handleIframeLoad = () => {
     setIframeLoaded(true);
   };
@@ -138,69 +145,6 @@ const MoviesBox = () => {
     audioRef.current.play();
   }, [playingLink, audioRef.current]);
 
-  const handleWheelKapil = (event) => {
-    event.preventDefault();
-
-    Kapilref.current.scrollLeft += event.deltaY;
-
-    // console.log((ref.current.scrollLeft += event.deltaY));
-  };
-  const handleWheelMovie = (event) => {
-    event.preventDefault();
-
-    Movieref.current.scrollLeft += event.deltaY;
-
-    // console.log((ref.current.scrollLeft += event.deltaY));
-  };
-  const handleWheelFootball = (event) => {
-    event.preventDefault();
-
-    FootballNewref.current.scrollLeft += event.deltaY;
-
-    // console.log((ref.current.scrollLeft += event.deltaY));
-  };
-  const handleWheelFootballCard = (event) => {
-    event.preventDefault();
-
-    FootballCardref.current.scrollLeft += event.deltaY;
-
-    // console.log((ref.current.scrollLeft += event.deltaY));
-  };
-  const handleWheelSong = (event) => {
-    event.preventDefault();
-
-    Songref.current.scrollLeft += event.deltaY;
-
-    // console.log((ref.current.scrollLeft += event.deltaY));
-  };
-  const handleMovieFrame = (event) => {
-    event.preventDefault();
-
-    playref.current.scrollLeft += event.deltaY;
-
-    // console.log((ref.current.scrollLeft += event.deltaY));
-  };
-  useEffect(() => {
-    Kapilref.current.addEventListener("wheel", handleWheelKapil);
-  }, []);
-  // useEffect(() => {
-  //   Movieref.current.addEventListener("wheel", handleWheelMovie);
-  // }, []);
-  // useEffect(() => {
-  //   Footballref.current.addEventListener("wheel", handleWheelFootball);
-  // }, []);
-  useEffect(() => {
-    FootballNewref.current.addEventListener("wheel", handleWheelFootball);
-  }, []);
-  useEffect(() => {
-    FootballCardref.current.addEventListener("wheel", handleWheelFootballCard);
-  }, []);
-  useEffect(() => {
-    Songref.current.addEventListener("wheel", handleWheelSong);
-  }, []);
-  // useEffect(() => {
-  //   Songref.current.addEventListener("wheel", handleMovieFrame);
-  // }, []);
   const searchMovie = () => {
     let newData = data?.filter((ele) => ele.name.toLowerCase().includes(search.toLowerCase()));
 
@@ -694,7 +638,7 @@ const MoviesBox = () => {
       </div>
       {/* <h1>New Music Player in Progress</h1>
       <MusicPlayer songs={SongData} /> */}
-      <div style={{ fontSize: "1.5rem" }}>Live Stream Movies</div>
+      <div style={{ fontSize: "1.5rem" }}>Live Stream Movies / TV Series</div>
       <div style={{ fontSize: "1.2rem" }}>USE AD BLOCKER / CLOSE ADS TO WATCH MOVIE</div>
 
       <div style={{ width: "100%" }}>
@@ -729,7 +673,7 @@ const MoviesBox = () => {
             // }
           }}
           value={searchFrame}
-          placeholder="Search Movie"
+          placeholder="Search Movie/Tv Series"
           className="search"
         />
       </div>
