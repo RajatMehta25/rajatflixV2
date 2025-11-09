@@ -297,3 +297,347 @@
 .customButton:hover::before {
   transform: translate3d(100%, 0, 0);
 }
+
+/* =============================
+   MusicPlayer.css (create file)
+   ============================= */
+
+/* Root layout with animated gradient "liquid" background */
+.mp-root {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background: radial-gradient(1200px 1200px at 20% 10%, #1b1f2b, #0a0b10 60%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  box-sizing: border-box;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial,
+    "Apple Color Emoji", "Segoe UI Emoji";
+  overflow: hidden;
+}
+.mp-liquid-bg {
+  position: absolute;
+  inset: -20%;
+  filter: blur(40px) saturate(120%);
+  pointer-events: none;
+  z-index: 0;
+}
+.blob {
+  position: absolute;
+  width: 40vw;
+  height: 40vw;
+  max-width: 680px;
+  max-height: 680px;
+  border-radius: 50%;
+  opacity: 0.35;
+  mix-blend-mode: screen;
+  animation: drift 26s ease-in-out infinite alternate;
+}
+.blob.b1 {
+  left: 0%;
+  top: 10%;
+  background: radial-gradient(circle at 30% 30%, #5eead4, #2563eb 60%, transparent 70%);
+}
+.blob.b2 {
+  right: -10%;
+  top: -10%;
+  background: radial-gradient(circle at 70% 40%, #a78bfa, #f43f5e 60%, transparent 75%);
+  animation-duration: 30s;
+}
+.blob.b3 {
+  left: 30%;
+  bottom: -15%;
+  background: radial-gradient(circle at 50% 50%, #22d3ee, #16a34a 60%, transparent 75%);
+  animation-duration: 34s;
+}
+@keyframes drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(6%, -6%, 0) scale(1.06);
+  }
+}
+
+/* Glass card */
+.mp-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 760px;
+  padding: 22px;
+  border-radius: 22px;
+  box-sizing: border-box;
+}
+.glass {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 -1px 0 rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(18px) saturate(120%);
+  -webkit-backdrop-filter: blur(18px) saturate(120%);
+}
+
+/* Subtle inner highlight (iOS-style sheen) */
+.mp-card::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: 21px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02) 60%, rgba(255, 255, 255, 0.04));
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+/* Header */
+.mp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.mp-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mp-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  margin: 0;
+}
+.mp-count {
+  font-size: 12px;
+  color: #cbd5e1;
+}
+
+/* Hero */
+.mp-hero {
+  display: flex;
+  gap: 18px;
+}
+.mp-art-wrap {
+  position: relative;
+}
+.mp-art {
+  width: 120px;
+  height: 120px;
+  border-radius: 16px;
+  object-fit: cover;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+.mp-art-shine {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.05) 40%, rgba(0, 0, 0, 0) 60%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+.mp-hero-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.mp-track-name {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 6px 0 6px;
+  line-height: 1.25;
+}
+.mp-track-file {
+  font-size: 11px;
+  color: #cbd5e1;
+  word-break: break-all;
+  opacity: 0.85;
+}
+
+/* Time + ranges */
+.mp-timebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #d1d5db;
+  margin-bottom: 6px;
+}
+.mp-range {
+  width: 100%;
+  appearance: none;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.35), inset 0 -1px 1px rgba(255, 255, 255, 0.08);
+}
+.glass-track {
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.1));
+}
+.mp-range:hover {
+  filter: brightness(1.05);
+}
+.mp-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle at 30% 30%, #ffffff, #d1d5db);
+  border-radius: 50%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+  margin-top: -6px;
+}
+.mp-range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: #e5e7eb;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+}
+.mp-range-sm {
+  width: 160px;
+}
+
+/* Controls */
+.mp-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+}
+.mp-transport,
+.mp-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chip.mp-btn,
+.mp-btn.chip {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  padding: 8px 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+.mp-btn {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  transition: transform 0.04s ease, filter 0.2s ease;
+}
+.mp-btn:hover {
+  filter: brightness(1.06);
+}
+.mp-btn:active {
+  transform: scale(0.98);
+}
+.mp-btn.is-active {
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.pill.mp-btn-primary,
+.mp-btn-primary.pill {
+  border-radius: 999px;
+}
+.mp-btn-primary {
+  background: linear-gradient(180deg, #ffffff, #e5e7eb);
+  color: #0b0b0f;
+  border: 0;
+  padding: 12px 16px;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+.mp-btn-primary:hover {
+  filter: brightness(0.98);
+}
+.mp-btn-primary:active {
+  transform: scale(0.985);
+}
+
+.mp-icon {
+  width: 20px;
+  height: 20px;
+}
+.mp-icon-lg {
+  width: 24px;
+  height: 24px;
+}
+.is-accent {
+  color: #34d399;
+}
+.is-info {
+  color: #60a5fa;
+}
+
+/* Playlist */
+.mp-list {
+  margin-top: 18px;
+  max-height: 260px;
+  overflow: auto;
+  padding-right: 6px;
+  display: grid;
+  gap: 10px;
+}
+.mp-list::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+.mp-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+}
+.mp-list-item {
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border-radius: 14px;
+  color: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  cursor: pointer;
+  transition: filter 0.2s ease, transform 0.04s ease;
+}
+.mp-list-item:hover {
+  filter: brightness(1.06);
+}
+.mp-list-item.is-selected {
+  outline: 1.5px solid rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.06);
+}
+.mp-list-thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+.mp-list-text {
+  display: flex;
+  flex-direction: column;
+}
+.mp-list-title {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.mp-list-sub {
+  font-size: 11px;
+  color: #cbd5e1;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 520px;
+  opacity: 0.9;
+}

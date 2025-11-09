@@ -10,6 +10,7 @@ import { use } from "react";
 import { TiChartLine } from "react-icons/ti";
 // import { CastButton, useCastSession } from "react-google-cast";
 import { motion } from "motion/react";
+import MusicPlayer from "./MusicPlayer";
 
 const MoviesBox = () => {
   const Kapilref = useRef();
@@ -691,6 +692,8 @@ const MoviesBox = () => {
           </a> */}
         </div>
       </div>
+      {/* <h1>New Music Player in Progress</h1>
+      <MusicPlayer songs={SongData} /> */}
       <div style={{ fontSize: "1.5rem" }}>Live Stream Movies</div>
       <div style={{ fontSize: "1.2rem" }}>USE AD BLOCKER / CLOSE ADS TO WATCH MOVIE</div>
 
