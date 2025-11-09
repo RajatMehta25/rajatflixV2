@@ -179,16 +179,19 @@ const Home = () => {
         <>
           <Header userDetails={userDetails} handleLogout={handleLogout} />
           {/* <button onClick={() => showNoti()}>Click Me</button> */}
-          {userDetails?.paidUser && checkExpiryTime(userDetails?.expiryTime) ? (
-            <MoviesBox />
-          ) : (
-            <div style={{ textAlign: "center", padding: "1rem", fontSize: "1.5rem" }}>
-              Free Trial is Over.
-              {/* ₹60 to UPI ID : rjt25881-1@okaxis and Whatsapp the Screenshot with your EMAIL ID to
+          {
+            // userDetails?.paidUser && checkExpiryTime(userDetails?.expiryTime)
+            true ? (
+              <MoviesBox />
+            ) : (
+              <div style={{ textAlign: "center", padding: "1rem", fontSize: "1.5rem" }}>
+                Free Trial is Over.
+                {/* ₹60 to UPI ID : rjt25881-1@okaxis and Whatsapp the Screenshot with your EMAIL ID to
               :<a href="https://wa.me/916372773008">+91-6372773008</a>
               &nbsp; to activate Subscription for 1 Month. */}
-            </div>
-          )}
+              </div>
+            )
+          }
         </>
       )}
       <Disclaimer />
