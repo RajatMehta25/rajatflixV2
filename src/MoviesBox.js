@@ -13,6 +13,7 @@ import { motion } from "motion/react";
 import MusicPlayer from "./MusicPlayer";
 import useHandleDivWheel from "./useHandleDivWheel";
 import useGithubApi from "./useGithubApi";
+import KapilBox from "./KapilBox";
 
 const MoviesBox = () => {
   const Kapilref = useRef();
@@ -713,27 +714,7 @@ const MoviesBox = () => {
           ))}
         </div>
       </>
-
-      <div style={{ fontSize: "1.5rem" }}>Kapil Season 2</div>
-      <div style={{ width: "100%" }}>
-        <iframe
-          className="iframe"
-          src={episode}
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen ; download"
-          allowFullScreen
-        />
-      </div>
-      <div
-        // className="kapilButtonContainer"
-        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
-        ref={Kapilref}
-      >
-        {kapils02.map((ele, i) => (
-          <button key={ele.downloadLink + i} className="downloadButton" onClick={() => setEpisode(ele.downloadLink)}>
-            {ele.name}
-          </button>
-        ))}
-      </div>
+      {/* <KapilBox Kapilref={Kapilref} kapils02={kapils02} episode={episode} setEpisode={setEpisode} /> */}
 
       <div style={{ fontSize: "1.5rem" }}>Live Stream ALL SPORTS</div>
       {/* <div style={{ fontSize: "1rem" }}>(Use Ad Blocker)</div> */}
