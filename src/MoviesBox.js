@@ -10,6 +10,9 @@ import { use } from "react";
 import { TiChartLine } from "react-icons/ti";
 // import { CastButton, useCastSession } from "react-google-cast";
 import { motion } from "motion/react";
+import MusicPlayer from "./MusicPlayer";
+import useHandleDivWheel from "./useHandleDivWheel";
+import useGithubApi from "./useGithubApi";
 
 const MoviesBox = () => {
   const Kapilref = useRef();
@@ -55,6 +58,23 @@ const MoviesBox = () => {
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [count, setCount] = useState(Math.floor(Math.random() * (10000 - 7000 + 1)) + 7000);
   const [selectedCategory, setSelectedCategory] = useState("football");
+
+  useHandleDivWheel(Kapilref);
+  useHandleDivWheel(FootballNewref);
+  useHandleDivWheel(Songref);
+  useHandleDivWheel(FootballCardref);
+
+  useGithubApi(
+    "https://raw.githubusercontent.com/RajatMehta25/TV/main/Songs.json",
+    setSongData,
+    setSongPlayLink,
+    setNowPlaying
+  );
+  useGithubApi("https://raw.githubusercontent.com/RajatMehta25/TV/main/Movie.json", setData, onChangeSearch);
+  useGithubApi("https://raw.githubusercontent.com/RajatMehta25/TV/main/MovieFrame.json", setMovieFrame, onChangeSearchFrame);
+  useGithubApi("https://raw.githubusercontent.com/RajatMehta25/TV/main/Kapil.json", setKapilS02);
+  useGithubApi("https://raw.githubusercontent.com/RajatMehta25/TV/main/football_channels.json", setFootballData);
+
   const handleIframeLoad = () => {
     setIframeLoaded(true);
   };
@@ -83,23 +103,6 @@ const MoviesBox = () => {
   // }, [iframeLoaded]);
   const [FootballCardSources, setFootballCardSources] = useState([]);
 
-  useEffect(() => {
-    fetch("https://raw.githubusercontent.com/RajatMehta25/TV/main/Movie.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data.data);
-        onChangeSearch("");
-      });
-  }, []);
-  useEffect(() => {
-    fetch("https://raw.githubusercontent.com/RajatMehta25/TV/main/MovieFrame.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setMovieFrame(data.data);
-        onChangeSearchFrame("");
-      });
-  }, []);
-
   // when movieFrame loads, set initial playLink and activeIndex using the sliced frames
   useEffect(() => {
     const frames = movieFrame?.slice(1) || [];
@@ -110,102 +113,11 @@ const MoviesBox = () => {
       setProgress(100);
     }
   }, [movieFrame]);
-  useEffect(() => {
-    fetch("https://raw.githubusercontent.com/RajatMehta25/TV/main/Kapil.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setKapilS02(data.data);
-      });
-  }, []);
-  useEffect(() => {
-    fetch("https://raw.githubusercontent.com/RajatMehta25/TV/main/football_channels.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setFootballData(data.data);
-      });
-  }, []);
-  useEffect(() => {
-    fetch("https://raw.githubusercontent.com/RajatMehta25/TV/main/Songs.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setSongData(data.data);
-        setSongPlayLink(data.data[0].downloadLink);
-        setNowPlaying(data.data[0].name);
-      });
-  }, []);
+
   useEffect(() => {
     audioRef.current.play();
   }, [playingLink, audioRef.current]);
 
-  const handleWheelKapil = (event) => {
-    event.preventDefault();
-
-    Kapilref.current.scrollLeft += event.deltaY;
-
-    // console.log((ref.current.scrollLeft += event.deltaY));
-  };
-  const handleWheelMovie = (event) => {
-    event.preventDefault();
-
-    Movieref.current.scrollLeft += event.deltaY;
-
-    // console.log((ref.current.scrollLeft += event.deltaY));
-  };
-  const handleWheelFootball = (event) => {
-    event.preventDefault();
-
-    FootballNewref.current.scrollLeft += event.deltaY;
-
-    // console.log((ref.current.scrollLeft += event.deltaY));
-  };
-  const handleWheelFootballCard = (event) => {
-    event.preventDefault();
-
-    FootballCardref.current.scrollLeft += event.deltaY;
-
-    // console.log((ref.current.scrollLeft += event.deltaY));
-  };
-  const handleWheelSong = (event) => {
-    event.preventDefault();
-
-    Songref.current.scrollLeft += event.deltaY;
-
-    // console.log((ref.current.scrollLeft += event.deltaY));
-  };
-  const handleMovieFrame = (event) => {
-    event.preventDefault();
-
-    playref.current.scrollLeft += event.deltaY;
-
-    // console.log((ref.current.scrollLeft += event.deltaY));
-  };
-  useEffect(() => {
-    Kapilref.current.addEventListener("wheel", handleWheelKapil);
-  }, []);
-  // useEffect(() => {
-  //   Movieref.current.addEventListener("wheel", handleWheelMovie);
-  // }, []);
-  // useEffect(() => {
-  //   Footballref.current.addEventListener("wheel", handleWheelFootball);
-  // }, []);
-  useEffect(() => {
-    FootballNewref.current.addEventListener("wheel", handleWheelFootball);
-  }, []);
-  useEffect(() => {
-    FootballCardref.current.addEventListener("wheel", handleWheelFootballCard);
-  }, []);
-  useEffect(() => {
-    Songref.current.addEventListener("wheel", handleWheelSong);
-  }, []);
-  // useEffect(() => {
-  //   Songref.current.addEventListener("wheel", handleMovieFrame);
-  // }, []);
-  const searchMovie = () => {
-    let newData = data?.filter((ele) => ele.name.toLowerCase().includes(search.toLowerCase()));
-
-    // setFilteredData(newData ?? data);
-    return newData;
-  };
   const searchMovieFrame = () => {
     // filter by searchFrame, then skip the 0th index from the resulting array
     let newData = movieFrame?.filter((ele) => ele.name.toLowerCase().includes(searchFrame.toLowerCase()));
@@ -213,12 +125,7 @@ const MoviesBox = () => {
     // skip the first element (0th) from the array
     return newData.slice(1);
   };
-  // const searchChannel = () => {
-  //   let newData = FootballCardData?.filter((ele) => ele?.teams?.home?.name.toLowerCase().includes(channelSearch.toLowerCase()));
 
-  //   // setFilteredData(newData ?? data);
-  //   return newData;
-  // };
   const searchChannel = () => {
     if (!channelSearch?.trim()) return FootballCardData;
 
@@ -538,6 +445,11 @@ const MoviesBox = () => {
   //   console.log("FootballCardSources", data);
   // };
   const fetchFootballSources = async (sources) => {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+    if (/android/i.test(userAgent)) {
+      navigator.vibrate(200);
+    }
     // navigator.vibrate(200);
 
     const results = await Promise.allSettled(
@@ -686,7 +598,9 @@ const MoviesBox = () => {
           </a> */}
         </div>
       </div>
-      <div style={{ fontSize: "1.5rem" }}>Live Stream Movies</div>
+      {/* <h1>New Music Player in Progress</h1>
+      <MusicPlayer songs={SongData} /> */}
+      <div style={{ fontSize: "1.5rem" }}>Live Stream Movies / TV Series</div>
       <div style={{ fontSize: "1.2rem" }}>USE AD BLOCKER / CLOSE ADS TO WATCH MOVIE</div>
 
       <div style={{ width: "100%" }}>
@@ -721,7 +635,7 @@ const MoviesBox = () => {
             // }
           }}
           value={searchFrame}
-          placeholder="Search Movie"
+          placeholder="Search Movie/Tv Series"
           className="search"
         />
       </div>
@@ -733,7 +647,7 @@ const MoviesBox = () => {
             overflowX: "auto",
             gap: "1rem",
             width: "100%",
-            padding: "1rem 0",
+            padding: "1rem 1rem",
             scrollBehavior: "smooth",
           }}
           ref={playref}
