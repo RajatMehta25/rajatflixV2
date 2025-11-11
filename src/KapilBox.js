@@ -1,5 +1,3 @@
-import React from "react";
-
 const KapilBox = ({ Kapilref, kapils02, episode, setEpisode }) => {
   return (
     <>

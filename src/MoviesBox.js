@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import MovieCard from "./MovieCard";
 import moment from "moment";
 import FootballCard from "./FootballCard";
