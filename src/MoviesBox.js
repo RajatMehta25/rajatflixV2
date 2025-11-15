@@ -505,7 +505,7 @@ const MoviesBox = () => {
           alignItems: "center",
           gap: "0.5rem",
           flexWrap: "wrap",
-          flexDirection: "column",
+          // flexDirection: "column",
         }}
       >
         <p>Request your favorite Movies , Tv Series , Songs on</p>
