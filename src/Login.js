@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { toast, Zoom } from "react-toastify";
 import moment from "moment";
 import { format, addMonths, subDays } from "date-fns";
+import HomeWrapper from "./HomeWrapper";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -174,6 +175,7 @@ const Login = () => {
   };
 
   return (
+    // <HomeWrapper>
     <div className="LoginContainer">
       <div>
         <img src="rajatflix.png" />
@@ -183,6 +185,7 @@ const Login = () => {
         <div className="SignIn">Sign In</div>
       </div>
     </div>
+    // </HomeWrapper>
   );
 };
 
