@@ -59,7 +59,7 @@ const MoviesBox = () => {
   const [telegramData, setTelegramData] = useState([]);
   const [matchData, setMatchData] = useState({});
   const [iframeLoaded, setIframeLoaded] = useState(false);
-  const [count, setCount] = useState(Math.floor(Math.random() * (10000 - 7000 + 1)) + 7000);
+  const [count, setCount] = useState(Math.floor(Math.random() * (10000 - 7000 + 1)) + 50000);
   const [selectedCategory, setSelectedCategory] = useState("football");
   const [loadingFootballCard, setFootballCardLoading] = useState(false);
   useHandleDivWheel(Kapilref);
@@ -123,7 +123,7 @@ const MoviesBox = () => {
 
   const searchMovieFrame = () => {
     // filter by searchFrame, then skip the 0th index from the resulting array
-    let newData = movieFrame?.filter((ele) => ele.name.toLowerCase().includes(searchFrame.toLowerCase()));
+    let newData = movieFrame?.filter((ele) => ele.name.toLowerCase().includes(searchFrame.toLowerCase().trim()));
     if (!newData) return [];
     // skip the first element (0th) from the array
     return newData.slice(1);
@@ -132,7 +132,7 @@ const MoviesBox = () => {
   const searchChannel = () => {
     if (!channelSearch?.trim()) return FootballCardData;
 
-    const searchTerm = channelSearch.toLowerCase();
+    const searchTerm = channelSearch.toLowerCase().trim();
 
     const newData = FootballCardData?.filter((ele) => {
       const homeName = ele?.teams?.home?.name?.toLowerCase() || "";
@@ -144,7 +144,7 @@ const MoviesBox = () => {
     return newData ?? [];
   };
   const searchSongs = () => {
-    let newData = SongData?.filter((ele) => ele.name.toLowerCase().includes(searchSong.toLowerCase()));
+    let newData = SongData?.filter((ele) => ele.name.toLowerCase().includes(searchSong.toLowerCase().trim()));
 
     // setFilteredData(newData ?? data);
     return newData;
@@ -190,59 +190,6 @@ const MoviesBox = () => {
 
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   const recognition = new SpeechRecognition();
-
-  // const [isCasting, setIsCasting] = useState(false);
-  // const [castSession, setCastSession] = useState(null);
-  // useEffect(() => {
-  //   const initCastApi = async () => {
-  //     try {
-  //       await window["__onGCastApiAvailable"];
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-  //   };
-  //   initCastApi();
-  // }, []);
-  // const initializeCastApi = async (isAvailable) => {
-  //   if (!isAvailable) {
-  //     console.log("Cast API not available");
-  //     return;
-  //   }
-  //   const context = await window.cast.framework.CastContext.getInstance();
-  //   context.setOptions({
-  //     receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID,
-  //     autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED,
-  //   });
-  //   // context.addEventListener(cast.framework.CastContextEventType.CAST_STATE_CHANGED, (event) => {
-  //   //   console.log(event);
-  //   //   setIsCasting(event.castState !== "NO_DEVICES_AVAILABLE");
-  //   // });
-  // };
-
-  // const handleCast = async () => {
-  //   if (!isCasting) {
-  //     try {
-  //       const castSession = await window.cast.framework.CastContext.getInstance().requestSession();
-  //       setCastSession(castSession);
-  //       setIsCasting(true);
-  //       loadMedia(castSession);
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-  //   } else {
-  //     try {
-  //       await castSession.endSession();
-  //       setIsCasting(false);
-  //     } catch (error) {}
-  //   }
-  // };
-  // const loadMedia = async (castSession) => {
-  //   const mediaInfo = new window.cast.framework.MediaInfo(playLink);
-  //   const request = new window.cast.framework.LoadRequest(mediaInfo);
-  //   try {
-  //     await castSession.loadMedia(request);
-  //   } catch (error) {}
-  // };
 
   useEffect(() => {
     const initializeCast = () => {
