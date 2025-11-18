@@ -14,6 +14,8 @@ import MusicPlayer from "./MusicPlayer";
 import useHandleDivWheel from "./useHandleDivWheel";
 import useGithubApi from "./useGithubApi";
 import KapilBox from "./KapilBox";
+import LoadingCard from "./LoadingCard";
+import { set } from "date-fns";
 
 const MoviesBox = () => {
   const Kapilref = useRef();
@@ -59,7 +61,7 @@ const MoviesBox = () => {
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [count, setCount] = useState(Math.floor(Math.random() * (10000 - 7000 + 1)) + 7000);
   const [selectedCategory, setSelectedCategory] = useState("football");
-
+  const [loadingFootballCard, setFootballCardLoading] = useState(false);
   useHandleDivWheel(Kapilref);
   useHandleDivWheel(FootballNewref);
   useHandleDivWheel(Songref);
@@ -159,13 +161,20 @@ const MoviesBox = () => {
       .then((data) => setFootballCardData(data));
   };
   const FootballCardDataApiV2 = () => {
+    setFootballCardLoading(true);
     // fetch(`https://streamed.pk/api/matches/football`)
-    fetch(`https://streamed.pk/api/matches/all`)
-      .then((res) => res.json())
-      .then((data) => {
-        setFootballCardData(data);
-        onChangeChannelSearch(""); // console.log("FootballCardDataV2", data);
-      });
+    try {
+      fetch(`https://streamed.pk/api/matches/all`)
+        .then((res) => res.json())
+        .then((data) => {
+          setFootballCardData(data);
+          setFootballCardLoading(false);
+          onChangeChannelSearch(""); // console.log("FootballCardDataV2", data);
+        });
+    } catch (error) {
+      console.error("Error fetching football card data:", error);
+      setFootballCardLoading(false);
+    }
   };
 
   const MatchDetails = (id) => {
@@ -563,78 +572,18 @@ const MoviesBox = () => {
           </svg>
         </a>
       </div>
-      {/* <div style={{ fontSize: "1.5rem" }}>DOWNLOAD MOVIES</div>
-
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "1rem",
-          width: "100%",
-        }}
-      >
-        <input
-          onChange={(e) => {
-            // if (e) {
-            onChangeSearch(e.target.value);
-            // searchChannel(e);
-            // } else {
-            // onChangeSearch(e);
-            // setFilteredData(data);
-            // }
-          }}
-          value={search}
-          placeholder="Search Movie"
-          className="search"
-        />
-        <span style={{ fontSize: "2rem", cursor: "pointer" }}>
-         
-        </span>
-      </div>
-      <div
-        // className="MovieList"
-        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%", overflowY: "hidden" }}
-        ref={Movieref}
-      >
-        {searchMovie(data)?.map((ele, i) => (
-          <MovieCard key={ele + i} photo={ele.image} link={ele.downloadLink} name={ele.name} />
-        ))}
-      </div> */}
 
       <div style={{ fontSize: "1.5rem" }}>Songs</div>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}>
         <input
           onChange={(e) => {
-            // if (e) {
             onChangeSearchSong(e.target.value);
-            // searchChannel(e);
-            // } else {
-            // onChangeSearch(e);
-            // setFilteredData(data);
-            // }
           }}
           value={searchSong}
           placeholder="Search Song Name"
           className="search"
         />
-        <span style={{ fontSize: "2rem", cursor: "pointer" }}>
-          {/* <FaMicrophone
-            onClick={() => {
-              recognition.start();
-              setIsListening(true);
-              recognition.onresult = (event) => {
-                const result = event.results[0][0].transcript;
-                onChangeSearchSong(result);
-                console.log(result);
-              };
-              recognition.onspeechend = () => {
-                recognition.stop();
-                setIsListening(false);
-              };
-            }}
-          /> */}
-        </span>
+        <span style={{ fontSize: "2rem", cursor: "pointer" }}></span>
       </div>
       <div
         // className="MovieList"
@@ -693,13 +642,7 @@ const MoviesBox = () => {
       >
         <input
           onChange={(e) => {
-            // if (e) {
             onChangeSearchFrame(e.target.value);
-            // searchChannel(e);
-            // } else {
-            // onChangeSearch(e);
-            // setFilteredData(data);
-            // }
           }}
           value={searchFrame}
           placeholder="Search Movie/Tv Series"
@@ -787,15 +730,6 @@ const MoviesBox = () => {
       <div style={{ fontSize: "1rem" }}>Click on Channel to load match below</div>
 
       <div
-        // style={{
-        //   display: "flex",
-        //   justifyContent: "center",
-        //   alignItems: "center",
-        //   gap: "1rem",
-        //   width: "100%",
-        //   flexWrap: "wrap",
-        // }}
-        // className="HideScroll"
         style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
         // ref={Footballref}
         ref={FootballNewref}
@@ -835,36 +769,9 @@ const MoviesBox = () => {
           placeholder="Search Team Name"
           className="search"
         />
-        <span style={{ fontSize: "2rem", cursor: "pointer" }}>
-          {/* <FaMicrophone
-            onClick={() => {
-              recognition.start();
-              setIsListening(true);
-              recognition.onresult = (event) => {
-                const result = event.results[0][0].transcript;
-                onChangeChannelSearch(result);
-                console.log(result);
-              };
-              recognition.onspeechend = () => {
-                recognition.stop();
-                setIsListening(false);
-              };
-            }}
-          /> */}
-        </span>
+        <span style={{ fontSize: "2rem", cursor: "pointer" }}></span>
       </div>
 
-      {/* <div
-        className="HideScroll"
-        style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}
-        ref={Footballref}
-      >
-        {searchChannel().map((ele, i) => (
-          <button style={{ textWrap: "nowrap", textTransform: "uppercase" }} key={ele.link + i} className="downloadButton">
-            {ele.channel_name}
-          </button>
-        ))}
-      </div> */}
       <div style={{ fontSize: "1rem" }}>Match List</div>
       <div style={{ fontSize: "1rem" }}>
         <button className="downloadButton" onClick={() => FootballCardDataApiV2()}>
@@ -906,23 +813,27 @@ const MoviesBox = () => {
         }}
         // ref={FootballCardref}
       >
-        {searchChannel().map((ele, i) => {
-          if (ele?.category === selectedCategory)
-            return (
-              <FootballCard
-                key={ele.id}
-                homeLogo={ele?.teams?.home?.badge}
-                awayLogo={ele?.teams?.away?.badge}
-                homeName={ele?.teams?.home?.name}
-                awayName={ele?.teams?.away?.name}
-                // status={ele.status}
-                time={ele.date}
-                // score={ele.score}
-                // league={ele.league_en}
-                onClick={() => fetchFootballSources(ele?.sources)}
-              />
-            );
-        })}
+        {loadingFootballCard ? (
+          <LoadingCard />
+        ) : (
+          searchChannel().map((ele, i) => {
+            if (ele?.category === selectedCategory)
+              return (
+                <FootballCard
+                  key={ele.id}
+                  homeLogo={ele?.teams?.home?.badge}
+                  awayLogo={ele?.teams?.away?.badge}
+                  homeName={ele?.teams?.home?.name}
+                  awayName={ele?.teams?.away?.name}
+                  // status={ele.status}
+                  time={ele.date}
+                  // score={ele.score}
+                  // league={ele.league_en}
+                  onClick={() => fetchFootballSources(ele?.sources)}
+                />
+              );
+          })
+        )}
 
         {/*new renderer  */}
         {/* {Object.entries(grouped).map(([category, items]) => (
