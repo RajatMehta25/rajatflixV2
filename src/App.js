@@ -1,31 +1,33 @@
-import { BrowserRouter, Navigate, Outlet, Route, Routes, useNavigate } from "react-router-dom";
+// App.jsx
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Header from "./Header";
 import Login from "./Login";
 import Home from "./Home";
+import Movies from "./Movies";
 import ProtectedRoute from "./ProtectedRoute";
-import MoviesBox from "./MoviesBox";
 import ContextProvider from "./contextProvider";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "./context";
-import { auth } from "./firebase";
+
 function App() {
   return (
     <div className="App">
-      <ContextProvider>
-        <BrowserRouter>
+      <BrowserRouter>
+        <ContextProvider>
           <Routes>
             <Route path="/" element={<Login />} />
-            <Route path="*" element={<Login />} />
-
-            <Route element={<ProtectedRoute />}>
-              <Route path="/Home" element={<Home />} />
+            {/* protected routes */}
+            <Route element={<ProtectedRoute fallbackPath="/login" />}>
+              <Route path="/home" element={<Home />} />
+              <Route path="/movies" element={<Movies />} />
             </Route>
+
+            {/* catch-all: redirect to home if authenticated, otherwise to login */}
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
-        </BrowserRouter>
-      </ContextProvider>
+        </ContextProvider>
+      </BrowserRouter>
+
       <ToastContainer />
     </div>
   );

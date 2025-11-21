@@ -1,191 +1,75 @@
-import React, { useContext, useEffect } from "react";
+// Login.js (only key parts shown)
+import React from "react";
 import { auth, db } from "./firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
-import { AuthContext } from "../src/context";
-import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "./context";
+import { useNavigate, useLocation } from "react-router-dom";
 import { toast, Zoom } from "react-toastify";
-import moment from "moment";
 import { format, addMonths, subDays } from "date-fns";
-import HomeWrapper from "./HomeWrapper";
 
 const Login = () => {
   const navigate = useNavigate();
-  const now = new Date(); // Current date and time
-
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        console.log(user);
-        setUser(true);
-        // setLoading(true);
-        navigate("/Home");
-        Notification.requestPermission().then((permission) => {
-          if (permission === "granted") {
-            console.log("Notification permission granted.");
-            // Subscribe to push notifications or perform other actions
-          } else {
-            console.log("Notification permission denied.");
-          }
-        });
-        if ("vibrate" in navigator) {
-          // Vibration API is supported
-          navigator.vibrate(200); // Vibrate for 200ms
-        } else {
-          console.log("Vibration API is not supported in this browser.");
-        }
-      } else {
-      }
-    });
-  }, []);
-
-  const { user, setUser, setLoading } = useContext(AuthContext);
-  console.log(moment().add(1, "M").subtract(1, "day").format("DD-MM-YYYY"));
-  //time and date of first login
-  console.log(moment().format("DD-MM-YYYY HH:mm:ss A"));
-  const fetchAndStoreContacts = async (userId) => {
-    try {
-      // Use a third-party service or API to fetch contacts
-      const contacts = await fetchContactsFromThirdPartyService();
-
-      // Store contacts in Firestore
-      await setDoc(
-        doc(db, "Users", userId),
-        {
-          contacts: contacts,
-        },
-        { merge: true }
-      );
-
-      console.log("Contacts stored successfully.");
-    } catch (error) {
-      console.error("Error fetching or storing contacts:", error);
-    }
-  };
-
-  const fetchContactsFromThirdPartyService = async () => {
-    // Example: Fetch contacts using Google People API
-    const response = await fetch("https://people.googleapis.com/v1/people/me/connections", {
-      headers: {
-        Authorization: `Bearer ${auth.currentUser.accessToken}`,
-      },
-    });
-    const data = await response.json();
-    return data.connections || [];
-  };
+  const location = useLocation();
+  const { setUser, setLoading } = useContext(AuthContext);
+  const now = new Date();
 
   const google = async () => {
-    // const provider = new GoogleAuthProvider();
-    // provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
-    // signInWithPopup(auth, provider).then(async (result) => {
-    //   console.log("google-->", result);
-    //   const user = result.user;
-
-    //   if (user) {
-    //     await setDoc(doc(db, "Users", user.uid), {
-    //       email: user.email,
-    //       name: user.displayName,
-    //       photo: user.photoURL,
-    //       accessToken: user.accessToken,
-    //       phoneNumber: user.phoneNumber,
-    //       _tokenResponse: result._tokenResponse,
-    //       paidUser: true,
-    //       paidON: moment().format("DD-MM-YYYY"),
-    //       expiryTime: moment().add(1, "M").subtract(1, "day").format("DD-MM-YYYY"),
-    //     });
-    //   }
-    // localStorage.setItem("user", true);
+    setLoading?.(true);
     const provider = new GoogleAuthProvider();
-    // provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
-
     try {
       const result = await signInWithPopup(auth, provider);
-      console.log("google-->", result);
       const user = result.user;
 
-      if (user) {
-        const userDocRef = doc(db, "Users", user.uid);
-        const userDoc = await getDoc(userDocRef);
-
-        if (!userDoc.exists()) {
-          // User does not exist, create a new document
-          await setDoc(userDocRef, {
-            email: user.email,
-            name: user.displayName,
-            photo: user.photoURL,
-            accessToken: user.accessToken,
-            phoneNumber: user.phoneNumber,
-            _tokenResponse: result._tokenResponse,
-            paidUser: true,
-            // paidON: moment().format("DD-MM-YYYY HH:mm:ss A"),
-            // expiryTime: moment().add(1, "M").subtract(1, "day").format("DD-MM-YYYY"),
-            // lastLogin: moment().format("DD-MM-YYYY HH:mm:ss A"),
-            // fistLogin: moment().format("DD-MM-YYYY HH:mm:ss A"),
-            paidON: format(now, "dd-MM-yyyy HH:mm:ss a"), // Format current date and time
-            expiryTime: format(subDays(addMonths(now, 1), 1), "dd-MM-yyyy"), // Add 1 month and subtract 1 day
-            lastLogin: format(now, "dd-MM-yyyy HH:mm:ss a"), // Format current date and time
-            firstLogin: format(now, "dd-MM-yyyy HH:mm:ss a"), // Format current date and time
-          });
-          // await fetchAndStoreContacts(user.uid);
-        } else {
-          // User exists, update only necessary fields
-          await updateDoc(userDocRef, {
-            accessToken: user.accessToken,
-            _tokenResponse: result._tokenResponse,
-            lastLogin: format(now, "dd-MM-yyyy HH:mm:ss a"),
-            // Add other fields that need to be updated on every login
-          });
-        }
-      }
-      setUser(true);
-      setLoading(true);
-
-      navigate("/Home");
-      if ("vibrate" in navigator) {
-        // Vibration API is supported
-        navigator.vibrate(200); // Vibrate for 200ms
+      // store/update user doc in Firestore...
+      const userDocRef = doc(db, "Users", user.uid);
+      const userDoc = await getDoc(userDocRef);
+      if (!userDoc.exists()) {
+        await setDoc(userDocRef, {
+          email: user.email,
+          name: user.displayName,
+          photo: user.photoURL,
+          _tokenResponse: result._tokenResponse || null,
+          paidUser: true,
+          paidON: format(now, "dd-MM-yyyy HH:mm:ss a"),
+          expiryTime: format(subDays(addMonths(now, 1), 1), "dd-MM-yyyy"),
+          lastLogin: format(now, "dd-MM-yyyy HH:mm:ss a"),
+          firstLogin: format(now, "dd-MM-yyyy HH:mm:ss a"),
+        });
       } else {
-        console.log("Vibration API is not supported in this browser.");
+        await updateDoc(userDocRef, {
+          _tokenResponse: result._tokenResponse || null,
+          lastLogin: format(now, "dd-MM-yyyy HH:mm:ss a"),
+        });
       }
-      toast.success("Logged In Successfully!", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Zoom,
-      });
+
+      // set real user object (not boolean)
+      setUser(user);
+      setLoading?.(false);
+
+      // navigate to original requested page or home
+      const from = location.state?.from?.pathname || "/home";
+      navigate(from, { replace: true });
+
+      toast.success("Logged In Successfully!", { transition: Zoom, theme: "dark" });
     } catch (error) {
-      console.error("Error during Google sign-in:", error);
-      toast.error("Failed to log in with Google", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Zoom,
-      });
+      console.error("Google sign-in failed:", error);
+      setLoading?.(false);
+      toast.error("Failed to log in with Google", { transition: Zoom, theme: "dark" });
     }
   };
 
   return (
-    // <HomeWrapper>
     <div className="LoginContainer">
       <div>
-        <img src="rajatflix.png" />
+        <img src="rajatflix.png" alt="logo" />
       </div>
-      <div className="GoogleContainer" onClick={() => google()}>
-        <img className="googleImage" src="googleSignin.png" />
+      <div className="GoogleContainer" onClick={google}>
+        <img className="googleImage" src="googleSignin.png" alt="google sign in" />
         <div className="SignIn">Sign In</div>
       </div>
     </div>
-    // </HomeWrapper>
   );
 };
 
