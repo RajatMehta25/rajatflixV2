@@ -16,6 +16,7 @@ import useGithubApi from "./useGithubApi";
 import KapilBox from "./KapilBox";
 import LoadingCard from "./LoadingCard";
 import { set } from "date-fns";
+import { Link } from "react-router-dom";
 
 const MoviesBox = () => {
   const Kapilref = useRef();
@@ -356,6 +357,8 @@ const MoviesBox = () => {
 
     const current = frames[activeIndex % frames.length];
     if (current && current.playLink) setplayLink(current.playLink);
+    toggleFullscreen();
+    //create anchor tag with iframe to new page having src as playLink
 
     // reset and animate progress bar
     setProgress(0);
@@ -444,6 +447,31 @@ const MoviesBox = () => {
   }).map((item) => item.category);
   console.log("categories", categories);
 
+  function toggleFullscreen() {
+    const iframe = document.getElementById("myIframe");
+
+    if (document.fullscreenElement) {
+      // If already in fullscreen, exit fullscreen
+      document.exitFullscreen();
+      iframe.classList.remove("fullscreen-iframe"); // Remove fullscreen styling
+    } else {
+      // If not in fullscreen, request fullscreen for the iframe
+      if (iframe.requestFullscreen) {
+        iframe.requestFullscreen();
+      } else if (iframe.mozRequestFullScreen) {
+        /* Firefox */
+        iframe.mozRequestFullScreen();
+      } else if (iframe.webkitRequestFullscreen) {
+        /* Chrome, Safari & Opera */
+        iframe.webkitRequestFullscreen();
+      } else if (iframe.msRequestFullscreen) {
+        /* IE/Edge */
+        iframe.msRequestFullscreen();
+      }
+      // iframe.classList.add("fullscreen-iframe"); // Apply fullscreen styling
+    }
+  }
+
   return (
     <div className="MovieContainer">
       {/* <HowToDownload /> */}
@@ -519,6 +547,9 @@ const MoviesBox = () => {
           </svg>
         </a>
       </div>
+      <div>
+        <p>{/* <Link to="/Movies">New Movies Section in Progress</Link> */}</p>
+      </div>
 
       <div style={{ fontSize: "1.5rem" }}>Songs</div>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}>
@@ -574,8 +605,8 @@ const MoviesBox = () => {
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen ; download"
           allowFullScreen
           allowfullscreen="true"
-          // onLoad={handleIframeLoad}
           id="myIframe"
+          target="_blank"
         />
       </div>
       <div

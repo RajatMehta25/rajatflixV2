@@ -1,15 +1,15 @@
-import { useContext, useEffect } from "react";
-import { Navigate, Outlet } from "react-router-dom";
+// ProtectedRoute.js
+import React, { useContext } from "react";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { AuthContext } from "./context";
 
-const ProtectedRoute = () => {
-  const { user, setUser } = useContext(AuthContext);
-  // useEffect(() => {
-  //   setUser(JSON.parse(localStorage.getItem("user")));
-  // }, [user]);
+const ProtectedRoute = ({ fallbackPath = "/login" }) => {
+  const { user, authResolved } = useContext(AuthContext);
+  const location = useLocation();
 
-  console.log(user);
-  return <div>{user ? <Outlet /> : <Navigate to="/" />}</div>;
+  if (!authResolved) return <div>Loading...</div>;
+
+  return user ? <Outlet /> : <Navigate to={fallbackPath} replace state={{ from: location }} />;
 };
 
 export default ProtectedRoute;
