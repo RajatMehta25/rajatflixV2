@@ -2,6 +2,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { AuthContext } from "./context"; // your existing context object
 import { auth } from "./firebase"; // firebase auth instance
+import LoadingCard from "./LoadingCard";
 
 const ContextProvider = ({ children }) => {
   const [user, setUser] = useState(null); // store user object or null
@@ -18,7 +19,7 @@ const ContextProvider = ({ children }) => {
   }, []);
 
   const value = useMemo(() => ({ user, setUser, authResolved, loading, setLoading }), [user, authResolved, loading]);
-
+  if (!authResolved) return <LoadingCard />;
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
