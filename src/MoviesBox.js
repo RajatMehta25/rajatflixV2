@@ -357,7 +357,7 @@ const MoviesBox = () => {
 
     const current = frames[activeIndex % frames.length];
     if (current && current.playLink) setplayLink(current.playLink);
-    toggleFullscreen();
+    // toggleFullscreen();
     //create anchor tag with iframe to new page having src as playLink
 
     // reset and animate progress bar
@@ -606,7 +606,7 @@ const MoviesBox = () => {
           allowFullScreen
           allowfullscreen="true"
           id="myIframe"
-          target="_blank"
+          // target="_blank"
         />
       </div>
       <div
