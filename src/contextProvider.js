@@ -12,6 +12,7 @@ const ContextProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
       // avoid unnecessary re-sets if same user
+
       setUser((prev) => (prev?.uid === firebaseUser?.uid ? prev : firebaseUser || null));
       setAuthResolved(true);
     });

@@ -79,32 +79,27 @@ const MoviesBox = () => {
   useGithubApi("https://raw.githubusercontent.com/RajatMehta25/TV/main/Kapil.json", setKapilS02);
   useGithubApi("https://raw.githubusercontent.com/RajatMehta25/TV/main/football_channels.json", setFootballData);
 
-  const handleIframeLoad = () => {
-    setIframeLoaded(true);
-  };
-
-  // useEffect(() => {
-  //   console.log("iframeLoaded", iframeLoaded);
-  //   if (iframeLoaded) {
-  //     const iframe = document?.getElementById("myIframe");
-  //     const iframeDocument = iframe?.contentDocument || iframe?.contentWindow?.document;
-  //     const adElements = iframeDocument?.querySelectorAll("iframe,img,a,script");
-  //     adElements.forEach((ele) => {
-  //       if (
-  //         ele?.src?.includes("ads") ||
-  //         ele?.src?.includes("ad") ||
-  //         ele?.src?.includes("xads") ||
-  //         ele?.src?.includes("xadsmart") ||
-  //         ele?.src?.includes("/xads.js") ||
-  //         ele?.src?.includes("https://c.adsco.re/") ||
-  //         ele?.src?.includes("soliads") ||
-  //         ele?.href?.includes("ad")
-  //       ) {
-  //         ele.remove();
-  //       }
-  //     });
-  //   }
-  // }, [iframeLoaded]);
+  useEffect(() => {
+    if (iframeLoaded) {
+      const iframe = document?.getElementById("myIframe");
+      const iframeDocument = iframe?.contentDocument || iframe?.contentWindow?.document;
+      const adElements = iframeDocument?.querySelectorAll("iframe,img,a,script");
+      adElements.forEach((ele) => {
+        if (
+          ele?.src?.includes("ads") ||
+          ele?.src?.includes("ad") ||
+          ele?.src?.includes("xads") ||
+          ele?.src?.includes("xadsmart") ||
+          ele?.src?.includes("/xads.js") ||
+          ele?.src?.includes("https://c.adsco.re/") ||
+          ele?.src?.includes("soliads") ||
+          ele?.href?.includes("ad")
+        ) {
+          ele.remove();
+        }
+      });
+    }
+  }, [playLink]);
   const [FootballCardSources, setFootballCardSources] = useState([]);
 
   // when movieFrame loads, set initial playLink and activeIndex using the sliced frames
@@ -119,15 +114,18 @@ const MoviesBox = () => {
   }, [movieFrame]);
 
   useEffect(() => {
+    // const isPlaying = !audioRef.paused && audioRef.currentTime > 0 && !audioRef.ended;
     audioRef.current.play();
   }, [playingLink, audioRef.current]);
 
   const searchMovieFrame = () => {
+    if (!searchFrame?.trim()) return movieFrame?.slice(1) || [];
+
+    const searchMovie = searchFrame.toLowerCase().trim();
     // filter by searchFrame, then skip the 0th index from the resulting array
-    let newData = movieFrame?.filter((ele) => ele.name.toLowerCase().includes(searchFrame.toLowerCase().trim()));
+    let newData = movieFrame?.filter((ele) => ele.name.toLowerCase().includes(searchMovie));
     if (!newData) return [];
-    // skip the first element (0th) from the array
-    return newData.slice(1);
+    return newData;
   };
 
   const searchChannel = () => {
@@ -339,6 +337,7 @@ const MoviesBox = () => {
   }, [playLink]);
   useEffect(() => {
     if (FootballCardSources && FootballNewref.current) {
+      setChannel(FootballCardSources[0]?.embedUrl);
       FootballNewref.current.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   }, [FootballCardSources]);
@@ -425,7 +424,7 @@ const MoviesBox = () => {
 
     const FD = ok.flat(Infinity);
     setFootballCardSources(FD);
-    setChannel("");
+    // setChannel(FD[0]?.embedUrl);
 
     const failed = results.filter((r) => r.status === "rejected").length;
     if (failed) console.warn(`Skipped ${failed} failed request(s).`);
