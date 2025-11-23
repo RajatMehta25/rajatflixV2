@@ -116,6 +116,78 @@ const MoviesBox = () => {
   useEffect(() => {
     // const isPlaying = !audioRef.paused && audioRef.currentTime > 0 && !audioRef.ended;
     audioRef.current.play();
+    const audio = audioRef.current;
+    if (!audio || !("mediaSession" in navigator)) return;
+
+    const ms = navigator.mediaSession;
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: nowPlaying,
+      artist: "Rajat Mehta",
+      // album: "Coding Beats",
+      artwork: [
+        {
+          src: SongData?.filter((ele) => ele.downloadLink === playingLink)[0]?.image,
+          sizes: "96x96",
+          type: "image/*",
+        },
+        {
+          src: SongData?.filter((ele) => ele.downloadLink === playingLink)[0]?.image,
+          sizes: "512x512",
+          type: "image/*",
+        },
+      ],
+    });
+    ms.setActionHandler("play", async () => {
+      await audio.play();
+      ms.playbackState = "playing";
+    });
+
+    ms.setActionHandler("pause", () => {
+      audio.pause();
+      ms.playbackState = "paused";
+    });
+
+    ms.setActionHandler("previoustrack", () => {
+      // your logic: go to previous track in playlist
+      if (SongData[0].downloadLink === playingLink) {
+        setSongPlayLink(SongData[0].downloadLink);
+        setNowPlaying(SongData[0].name);
+      } else {
+        const currentIndex = SongData.findIndex((ele) => ele.downloadLink === playingLink);
+        setSongPlayLink(SongData[currentIndex - 1].downloadLink);
+        setNowPlaying(SongData[currentIndex - 1].name);
+      }
+    });
+
+    ms.setActionHandler("nexttrack", () => {
+      // your logic: go to next track in playlist
+      if (SongData[SongData.length - 1].downloadLink === playingLink) {
+        setSongPlayLink(SongData[SongData.length - 1].downloadLink);
+        setNowPlaying(SongData[SongData.length - 1].name);
+      } else {
+        const currentIndex = SongData.findIndex((ele) => ele.downloadLink === playingLink);
+        setSongPlayLink(SongData[currentIndex + 1].downloadLink);
+        setNowPlaying(SongData[currentIndex + 1].name);
+      }
+    });
+
+    ms.setActionHandler("seekto", (details) => {
+      if (details.fastSeek && "fastSeek" in audio) {
+        // @ts-ignore
+        audio.fastSeek(details.seekTime);
+        return;
+      }
+      audio.currentTime = details.seekTime;
+    });
+
+    return () => {
+      // Cleanup handlers when component unmounts
+      ms.setActionHandler("play", null);
+      ms.setActionHandler("pause", null);
+      ms.setActionHandler("previoustrack", null);
+      ms.setActionHandler("nexttrack", null);
+      ms.setActionHandler("seekto", null);
+    };
   }, [playingLink, audioRef.current]);
 
   const searchMovieFrame = () => {
@@ -470,6 +542,8 @@ const MoviesBox = () => {
       // iframe.classList.add("fullscreen-iframe"); // Apply fullscreen styling
     }
   }
+
+  useEffect(() => {}, []);
 
   return (
     <div className="MovieContainer">
