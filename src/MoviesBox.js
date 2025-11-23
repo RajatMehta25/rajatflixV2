@@ -124,18 +124,18 @@ const MoviesBox = () => {
       title: nowPlaying,
       artist: "Rajat Mehta",
       // album: "Coding Beats",
-      artwork: [
-        {
-          src: SongData?.filter((ele) => ele.downloadLink === playingLink)[0]?.image,
-          sizes: "96x96",
-          type: "image/*",
-        },
-        {
-          src: SongData?.filter((ele) => ele.downloadLink === playingLink)[0]?.image,
-          sizes: "512x512",
-          type: "image/*",
-        },
-      ],
+      // artwork: [
+      //   {
+      //     src: SongData?.filter((ele) => ele.downloadLink === playingLink)[0]?.image,
+      //     sizes: "96x96",
+      //     type: "image/*",
+      //   },
+      //   {
+      //     src: SongData?.filter((ele) => ele.downloadLink === playingLink)[0]?.image,
+      //     sizes: "512x512",
+      //     type: "image/*",
+      //   },
+      // ],
     });
     ms.setActionHandler("play", async () => {
       await audio.play();
