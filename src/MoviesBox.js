@@ -136,6 +136,13 @@ const MoviesBox = () => {
       //     type: "image/*",
       //   },
       // ],
+      artwork: [
+        {
+          src:
+            SongData?.filter((ele) => ele.downloadLink === playingLink)[0]?.image ||
+            "https://github.com/RajatMehta25/rajatflixV2/blob/main/public/rajatflix.png?raw=true",
+        },
+      ],
     });
     ms.setActionHandler("play", async () => {
       await audio.play();
@@ -624,7 +631,12 @@ const MoviesBox = () => {
         <p>{/* <Link to="/Movies">New Movies Section in Progress</Link> */}</p>
       </div>
 
-      <div style={{ fontSize: "1.5rem" }}>Songs</div>
+      <div
+        // style={{ fontSize: "1.5rem" }}
+        className="netflix-heading"
+      >
+        Songs
+      </div>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}>
         <input
           onChange={(e) => {
@@ -667,7 +679,12 @@ const MoviesBox = () => {
       </div>
       {/* <h1>New Music Player in Progress</h1>
       <MusicPlayer songs={SongData} /> */}
-      <div style={{ fontSize: "1.5rem" }}>Live Stream Movies / TV Series</div>
+      <div
+        // style={{ fontSize: "1.5rem" }}
+        className="netflix-heading"
+      >
+        Live Stream Movies / TV Series
+      </div>
       <div style={{ fontSize: "1.2rem" }}>USE AD BLOCKER / CLOSE ADS TO WATCH MOVIE</div>
 
       <div style={{ width: "100%" }}>
@@ -776,7 +793,12 @@ const MoviesBox = () => {
       </>
       {/* <KapilBox Kapilref={Kapilref} kapils02={kapils02} episode={episode} setEpisode={setEpisode} /> */}
 
-      <div style={{ fontSize: "1.5rem" }}>Live Stream ALL SPORTS</div>
+      <div
+        // style={{ fontSize: "1.5rem" }}
+        className="netflix-heading"
+      >
+        Live Stream ALL SPORTS
+      </div>
       {/* <div style={{ fontSize: "1rem" }}>(Use Ad Blocker)</div> */}
       <div style={{ fontSize: "1rem" }}>Click on Channel to load match below</div>
 
