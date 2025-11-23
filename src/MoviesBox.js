@@ -637,6 +637,7 @@ const MoviesBox = () => {
       >
         Songs
       </div>
+          <div style={{fontsize:"1.5rem"}}>Control music from Lockscreen </div>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}>
         <input
           onChange={(e) => {
