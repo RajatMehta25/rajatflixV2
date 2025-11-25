@@ -19,7 +19,7 @@ const Login = () => {
     const provider = new GoogleAuthProvider();
     try {
       // 1. Set the persistence
-      await setPersistence(auth, browserLocalPersistence);
+      // await setPersistence(auth, browserLocalPersistence);
       // 2. Then, sign in
       const result = await signInWithPopup(auth, provider); // This will now use the persistence you just set
       const user = result.user;

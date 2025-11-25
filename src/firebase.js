@@ -5,6 +5,7 @@ import {
   initializeAuth,
   indexedDBLocalPersistence,
   browserLocalPersistence,
+  browserPopupRedirectResolver,
   browserSessionPersistence,
   connectAuthEmulator,
   getAuth,
@@ -30,13 +31,17 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-export const auth = getAuth(app);
-
+const auth = initializeAuth(app, {
+  persistence: [indexedDBLocalPersistence, browserLocalPersistence, browserSessionPersistence],
+  popupRedirectResolver: browserPopupRedirectResolver,
+});
+const messaging = getMessaging(app);
+const db = getFirestore(app);
 const analytics = getAnalytics(app);
-export const db = getFirestore(app);
-// Messaging service
-export const messaging = getMessaging(app);
-// export const requestForToken = async () => {
+
+export { app as default, auth, db, messaging, analytics };
+
+// The commented out code below can be moved to a separate file to keep this one clean.
 //   return getToken(messaging, { vapidKey: process.env.REACT_APP_VAPID_KEY })
 //     .then((currentToken) => {
 //       if (currentToken) {
@@ -58,5 +63,3 @@ export const messaging = getMessaging(app);
 //       resolve(payload);
 //     });
 //   });
-
-export default app;
