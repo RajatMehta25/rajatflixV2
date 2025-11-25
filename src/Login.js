@@ -1,9 +1,8 @@
 // Login.js (only key parts shown)
-import React from "react";
+import React, { useContext } from "react";
 import { auth, db } from "./firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
-import { useContext } from "react";
 import { AuthContext } from "./context";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast, Zoom } from "react-toastify"; // Ensure this import is here
@@ -12,7 +11,7 @@ import { format, addMonths, subDays } from "date-fns";
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { setUser, setLoading } = useContext(AuthContext);
+  const { setUser, setLoading } = useContext(AuthContext) || {};
   const now = new Date();
 
   const google = async () => {
