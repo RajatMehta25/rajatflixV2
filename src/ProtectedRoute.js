@@ -4,7 +4,7 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { AuthContext } from "./context";
 import LoadingCard from "./LoadingCard";
 
-const ProtectedRoute = ({ fallbackPath = "/login" }) => {
+const ProtectedRoute = ({ fallbackPath = "/" }) => {
   const { user, authResolved } = useContext(AuthContext);
   const location = useLocation();
 

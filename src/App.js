@@ -1,8 +1,8 @@
 // App.jsx
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Login from "./Login";
 import Home from "./Home";
+import Root from "./Root";
 import Movies from "./Movies";
 import ProtectedRoute from "./ProtectedRoute";
 import ContextProvider from "./contextProvider";
@@ -15,7 +15,7 @@ function App() {
       <BrowserRouter>
         <ContextProvider>
           <Routes>
-            <Route path="/" element={<Login />} />
+            <Route path="/" element={<Root />} />
             {/* protected routes */}
             <Route element={<ProtectedRoute fallbackPath="/login" />}>
               <Route path="/home" element={<Home />} />
