@@ -30,10 +30,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Initialize Auth with a robust persistence hierarchy
-export const auth = initializeAuth(app, {
-  persistence: [indexedDBLocalPersistence, browserLocalPersistence, browserSessionPersistence],
-});
+export const auth = getAuth(app);
 
 const analytics = getAnalytics(app);
 export const db = getFirestore(app);
