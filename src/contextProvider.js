@@ -1,6 +1,6 @@
 // contextProvider.js
 import React, { useEffect, useMemo, useState } from "react";
-import { AuthContext } from "./context"; // your existing context object
+import { AuthContext } from "./context";
 import { auth } from "./firebase"; // firebase auth instance
 import LoadingCard from "./LoadingCard";
 
@@ -11,8 +11,6 @@ const ContextProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
-      // avoid unnecessary re-sets if same user
-
       setUser((prev) => (prev?.uid === firebaseUser?.uid ? prev : firebaseUser || null));
       setAuthResolved(true);
     });

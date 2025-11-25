@@ -1,10 +1,16 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { browserLocalPersistence, getAuth, setPersistence } from "firebase/auth";
+import {
+  initializeAuth,
+  indexedDBLocalPersistence,
+  browserLocalPersistence,
+  browserSessionPersistence,
+  connectAuthEmulator,
+  getAuth,
+} from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getMessaging } from "firebase/messaging";
-import { toast, Zoom } from "react-toastify";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -23,8 +29,13 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
+// Initialize Auth with a robust persistence hierarchy
+export const auth = initializeAuth(app, {
+  persistence: [indexedDBLocalPersistence, browserLocalPersistence, browserSessionPersistence],
+});
+
 const analytics = getAnalytics(app);
-export const auth = getAuth();
 export const db = getFirestore(app);
 // Messaging service
 export const messaging = getMessaging(app);
@@ -50,8 +61,5 @@ export const messaging = getMessaging(app);
 //       resolve(payload);
 //     });
 //   });
-// enforce local persistence on app startup
-setPersistence(auth, browserLocalPersistence).catch((err) => {
-  console.error("Failed to set persistence:", err);
-});
+
 export default app;

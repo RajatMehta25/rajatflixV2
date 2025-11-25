@@ -6,7 +6,7 @@ import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { useContext } from "react";
 import { AuthContext } from "./context";
 import { useNavigate, useLocation } from "react-router-dom";
-import { toast, Zoom } from "react-toastify";
+import { toast, Zoom } from "react-toastify"; // Ensure this import is here
 import { format, addMonths, subDays } from "date-fns";
 
 const Login = () => {
