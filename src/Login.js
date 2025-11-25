@@ -1,7 +1,7 @@
 // Login.js (only key parts shown)
 import React, { useContext } from "react";
-import { auth, db } from "./firebase";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth, db } from "./firebase"; // browserLocalPersistence is one of the options
+import { GoogleAuthProvider, signInWithPopup, setPersistence, browserLocalPersistence } from "firebase/auth";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { AuthContext } from "./context";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -18,7 +18,10 @@ const Login = () => {
     setLoading?.(true);
     const provider = new GoogleAuthProvider();
     try {
-      const result = await signInWithPopup(auth, provider);
+      // 1. Set the persistence
+      await setPersistence(auth, browserLocalPersistence);
+      // 2. Then, sign in
+      const result = await signInWithPopup(auth, provider); // This will now use the persistence you just set
       const user = result.user;
 
       // store/update user doc in Firestore...
