@@ -1,5 +1,7 @@
 import moment from "moment";
+
 import React, { memo } from "react";
+
 import "./FootballCard.css";
 
 const FootballCard = ({ homeLogo, awayLogo, homeName, awayName, status, time, score, league, onClick }) => {
