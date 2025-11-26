@@ -1,13 +1,14 @@
 // App.jsx
+import React from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Home from "./Home";
 import Root from "./Root";
-import Movies from "./Movies";
 import ProtectedRoute from "./ProtectedRoute";
 import ContextProvider from "./contextProvider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+const Movies = React.lazy(() => import("./Movies"));
 
 function App() {
   return (
