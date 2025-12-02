@@ -17,7 +17,7 @@ import KapilBox from "./KapilBox";
 import LoadingCard from "./LoadingCard";
 import { set } from "date-fns";
 import { Link } from "react-router-dom";
-
+import "./FootballCard.css";
 const MoviesBox = () => {
   const Kapilref = useRef();
   const Movieref = useRef();
@@ -63,6 +63,7 @@ const MoviesBox = () => {
   const [count, setCount] = useState(Math.floor(Math.random() * (10000 - 7000 + 1)) + 50000);
   const [selectedCategory, setSelectedCategory] = useState("football");
   const [loadingFootballCard, setFootballCardLoading] = useState(false);
+  const [slowFootballSources, setSlowFootballSources] = useState([]);
   useHandleDivWheel(Kapilref);
   useHandleDivWheel(FootballNewref);
   useHandleDivWheel(Songref);
@@ -549,8 +550,16 @@ const MoviesBox = () => {
       // iframe.classList.add("fullscreen-iframe"); // Apply fullscreen styling
     }
   }
-
-  useEffect(() => {}, []);
+  const fetchSlowFootballSources = async () => {
+    const response = await fetch("https://ppv.to/api/streams");
+    const data = await response.json();
+    const FilteredFootballData = data.streams.filter((ele) => ele.category === "Football");
+    console.log("FilteredFootballData", FilteredFootballData);
+    setSlowFootballSources(FilteredFootballData);
+  };
+  useEffect(() => {
+    fetchSlowFootballSources();
+  }, []);
 
   return (
     <div className="MovieContainer">
@@ -934,6 +943,30 @@ const MoviesBox = () => {
             </div>
           </section>
         ))} */}
+      </div>
+      <h1></h1>
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", justifyContent: "center", alignItems: "center" }}>
+        {slowFootballSources[0]?.streams?.map((ele, i) => (
+          <div
+            key={ele.name + i}
+            className="football-card"
+            style={{
+              backgroundImage: `url(${ele.poster})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+            onClick={() => {
+              setChannel(ele.iframe);
+              footballFrameref.current.scrollIntoView({ behavior: "smooth", block: "center" });
+            }}
+          >
+            <div style={{ backdropFilter: "blur(10px)", background: "transparent" }}>{ele.name}</div>
+            <div style={{ backdropFilter: "blur(10px)", background: "transparent" }}>{ele.tag}</div>
+            <div style={{ backdropFilter: "blur(10px)", background: "transparent" }}>
+              {moment(ele.starts_at * 1000).format("DD MMM YYYY, h:mm A")}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import ContextProvider from "./contextProvider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import NewMovieComp from "./NewMovieComp";
 const Movies = React.lazy(() => import("./Movies"));
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
             <Route element={<ProtectedRoute fallbackPath="/login" />}>
               <Route path="/home" element={<Home />} />
               <Route path="/movies" element={<Movies />} />
+              <Route path="/movies1" element={<NewMovieComp />} />
             </Route>
 
             {/* catch-all: redirect to home if authenticated, otherwise to login */}
