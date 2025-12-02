@@ -22,18 +22,21 @@ const Movies = () => {
     // document.title = "Movies Page";
     fetchMovies();
   }, []);
-  const fetchImages = (movieId) => {
-    let url = fetch(`https://api.imdbapi.dev/titles/${movieId}/images`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Fetched images data:", data);
-        return data.images[0]?.url || null;
-      })
-      .catch((error) => {
-        console.error("Error fetching images data:", error);
-        return null;
-      });
-    return url;
+  const fetchImages = async (movieId) => {
+    // let url = fetch(`https://api.imdbapi.dev/titles/${movieId}/images`)
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     console.log("Fetched images data:", data);
+    //     return data.images[0]?.url || null;
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error fetching images data:", error);
+    //     return null;
+    //   });
+    // return url;
+    const response = await fetch(`https://api.imdbapi.dev/titles/${movieId}/images`);
+    const data = await response.json();
+    return data.images[0]?.url || null;
   };
   return (
     <div>
