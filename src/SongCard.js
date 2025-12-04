@@ -1,6 +1,9 @@
+import { logEvent } from "firebase/analytics";
 import React from "react";
+import { analytics } from "./firebase";
+import moment from "moment";
 
-const SongCard = ({ photo, name, link, setSongPlayLink, setNowPlaying, currentAudio }) => {
+const SongCard = ({ photo, name, link, setSongPlayLink, setNowPlaying, currentAudio, user }) => {
   return (
     <div
       className="MovieCardContainer"
@@ -15,6 +18,11 @@ const SongCard = ({ photo, name, link, setSongPlayLink, setNowPlaying, currentAu
           onClick={() => {
             setSongPlayLink(link);
             setNowPlaying(name);
+            logEvent(analytics, `${user?.displayName}-${name}`, {
+              user: user?.displayName || "guest",
+              timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
+              category: "song",
+            });
           }}
         />
 
