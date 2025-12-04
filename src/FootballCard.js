@@ -4,9 +4,17 @@ import React, { memo } from "react";
 
 import "./FootballCard.css";
 
-const FootballCard = ({ homeLogo, awayLogo, homeName, awayName, status, time, score, league, onClick }) => {
+const FootballCard = ({ homeLogo, awayLogo, homeName, awayName, status, time, score, league, onClick, poster }) => {
   return (
-    <div className="football-card" onClick={onClick}>
+    <div
+      className="football-card"
+      // style={{
+      //   backgroundImage: `url(https://streamed.pk${poster})`,
+      //   backgroundSize: "cover",
+      //   backgroundPosition: "center",
+      // }}
+      onClick={onClick}
+    >
       <div className="league">{league}</div>
       <div className="teams">
         <div className="team">
@@ -14,7 +22,7 @@ const FootballCard = ({ homeLogo, awayLogo, homeName, awayName, status, time, sc
           <img
             className="team-logo"
             src={
-              `https://streamed.pk/api/images/proxy/${homeLogo}.webp` ||
+              `https://streamed.pk/api/images/proxy/${homeLogo}.webp` ??
               "https://github.com/RajatMehta25/rajatflixV2/blob/main/public/rajatflix.png?raw=true"
             }
             alt={`${homeName} logo`}

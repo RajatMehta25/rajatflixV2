@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useContext } from "react";
 import MovieCard from "./MovieCard";
 import moment from "moment";
 import FootballCard from "./FootballCard";
@@ -18,6 +18,10 @@ import LoadingCard from "./LoadingCard";
 import { set } from "date-fns";
 import { Link } from "react-router-dom";
 import "./FootballCard.css";
+import { logEvent } from "firebase/analytics";
+import { analytics } from "./firebase";
+import { AuthContext } from "./context";
+
 const MoviesBox = () => {
   const Kapilref = useRef();
   const Movieref = useRef();
@@ -64,6 +68,8 @@ const MoviesBox = () => {
   const [selectedCategory, setSelectedCategory] = useState("football");
   const [loadingFootballCard, setFootballCardLoading] = useState(false);
   const [slowFootballSources, setSlowFootballSources] = useState([]);
+  const { user } = useContext(AuthContext) || {};
+
   useHandleDivWheel(Kapilref);
   useHandleDivWheel(FootballNewref);
   useHandleDivWheel(Songref);
@@ -489,6 +495,11 @@ const MoviesBox = () => {
     if (/android/i.test(userAgent)) {
       navigator.vibrate(200);
     }
+    logEvent(analytics, `${user.displayName}-${sources.id}`, {
+      user: user?.displayName || "guest",
+      timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
+      category: "football",
+    });
     // navigator.vibrate(200);
 
     const results = await Promise.allSettled(
@@ -672,6 +683,7 @@ const MoviesBox = () => {
             setSongPlayLink={setSongPlayLink}
             setNowPlaying={setNowPlaying}
             currentAudio={audioRef.current.src}
+            user={user}
           />
         ))}
       </div>
@@ -766,7 +778,14 @@ const MoviesBox = () => {
                 transition: "all 0.3s ease", // Smooth animation
                 transform: playLink === ele.playLink ? "scale(1.03)" : "scale(1)",
               }}
-              onClick={() => setActiveIndex(i)}
+              onClick={() => {
+                setActiveIndex(i);
+                logEvent(analytics, `${user.displayName}-${ele.name}`, {
+                  user: user?.displayName || "guest",
+                  timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
+                  category: "movie/tv",
+                });
+              }}
             >
               <img
                 src={ele.image}
@@ -860,6 +879,7 @@ const MoviesBox = () => {
         <button className="downloadButton" onClick={() => FootballCardDataApiV2()}>
           Refresh Match List
         </button>
+        <h1>For Fast Internet/Wifi</h1>
       </div>
       <div
         style={{
@@ -903,6 +923,7 @@ const MoviesBox = () => {
             if (ele?.category === selectedCategory)
               return (
                 <FootballCard
+                  poster={ele.poster}
                   key={ele.id}
                   homeLogo={ele?.teams?.home?.badge}
                   awayLogo={ele?.teams?.away?.badge}
@@ -944,7 +965,7 @@ const MoviesBox = () => {
           </section>
         ))} */}
       </div>
-      <h1></h1>
+      <h1>For Slow Internet</h1>
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", justifyContent: "center", alignItems: "center" }}>
         {slowFootballSources[0]?.streams?.map((ele, i) => (
           <div
@@ -958,6 +979,11 @@ const MoviesBox = () => {
             onClick={() => {
               setChannel(ele.iframe);
               footballFrameref.current.scrollIntoView({ behavior: "smooth", block: "center" });
+              logEvent(analytics, `${user.displayName}-${ele.name}`, {
+                user: user?.displayName || "guest",
+                timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
+                category: "slow-football",
+              });
             }}
           >
             <div style={{ backdropFilter: "blur(10px)", background: "transparent" }}>{ele.name}</div>
