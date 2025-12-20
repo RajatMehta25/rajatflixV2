@@ -43,7 +43,7 @@ const Movies = () => {
       <h1>Movies Page</h1>
       <iframe
         src={`https://moviesapi.club/movie/${selectedMovieId}`}
-        style={{ width: "100%", minHeight: "300px", position: "fixed", zIndex: 1 }}
+        style={{ width: "100%", minHeight: "300px", zIndex: 1 }}
       />
       <div>
         {movies.map((movie) => (
