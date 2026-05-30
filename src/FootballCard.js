@@ -8,11 +8,11 @@ const FootballCard = ({ homeLogo, awayLogo, homeName, awayName, status, time, sc
   return (
     <div
       className="football-card"
-      // style={{
-      //   backgroundImage: `url(https://streamed.pk${poster})`,
-      //   backgroundSize: "cover",
-      //   backgroundPosition: "center",
-      // }}
+      style={{
+        backgroundImage: `url(	https://dami-tv.pro${poster})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
       onClick={onClick}
     >
       <div className="league">{league}</div>
@@ -21,17 +21,14 @@ const FootballCard = ({ homeLogo, awayLogo, homeName, awayName, status, time, sc
           <span className="team-name">{homeName}</span>
           <img
             className="team-logo"
-            src={
-              `https://streamed.pk/api/images/proxy/${homeLogo}.webp` ??
-              "https://github.com/RajatMehta25/rajatflixV2/blob/main/public/rajatflix.png?raw=true"
-            }
+            src={homeLogo ?? "https://github.com/RajatMehta25/rajatflixV2/blob/main/public/rajatflix.png?raw=true"}
             alt={`${homeName} logo`}
           />
         </div>
         <span>VS</span>
         <div className="team">
           <span className="team-name">{awayName}</span>
-          <img className="team-logo" src={`https://streamed.pk/api/images/proxy/${awayLogo}.webp`} alt={`${awayName} logo`} />
+          <img className="team-logo" src={awayLogo} alt={`${awayName} logo`} />
         </div>
       </div>
 
