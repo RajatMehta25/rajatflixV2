@@ -21,6 +21,7 @@ import "./FootballCard.css";
 import { logEvent } from "firebase/analytics";
 import { analytics } from "./firebase";
 import { AuthContext } from "./context";
+import UserCount from "./UserCount";
 
 const MoviesBox = () => {
   const Kapilref = useRef();
@@ -64,7 +65,6 @@ const MoviesBox = () => {
   const [telegramData, setTelegramData] = useState([]);
   const [matchData, setMatchData] = useState({});
   const [iframeLoaded, setIframeLoaded] = useState(false);
-  const [count, setCount] = useState(Math.floor(Math.random() * (10000 - 7000 + 1)) + 50000);
   const [selectedCategory, setSelectedCategory] = useState("football");
   const [loadingFootballCard, setFootballCardLoading] = useState(false);
   const [slowFootballSources, setSlowFootballSources] = useState([]);
@@ -411,13 +411,6 @@ const MoviesBox = () => {
   // };
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCount(Math.floor(Math.random() * (1000000 - 7000 + 1)) + 7000);
-    }, 2000);
-    return () => clearInterval(timer);
-  }, []);
-
-  useEffect(() => {
     if (playLink && iframeRef.current) {
       iframeRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
     }
@@ -562,16 +555,18 @@ const MoviesBox = () => {
       // iframe.classList.add("fullscreen-iframe"); // Apply fullscreen styling
     }
   }
+  const channelNumberArray = [885, 886, 887];
+  const liveTVChannel = async (channelNumber) => {
+    const response = await fetch(`https://dami-tv.pro/papi/tv/resolve/${channelNumber}`);
+    const data = await response.json();
+    const streamingLink = `https://dami-tv.pro${data.stream}`;
+    return streamingLink;
+  };
 
   return (
     <div className="MovieContainer">
       {/* <HowToDownload /> */}
-      <div style={{ fontSize: "1.5rem", fontFamily: "monospace", textAlign: "center" }}>
-        WorldWide Active User Count :{" "}
-        <span style={{ color: "#db0000" }} className="blinking-text">
-          {count}
-        </span>
-      </div>
+      <UserCount />
       <div
         style={{
           fontSize: "1.5rem",
@@ -853,6 +848,23 @@ const MoviesBox = () => {
       </div>
 
       <div style={{ fontSize: "1rem" }}>Click To Watch Live (close ads)</div>
+      <div style={{ fontSize: "1rem" }}>Live Sony TV</div>
+      <div>
+        {channelNumberArray.map((ele, i) => (
+          <button
+            key={ele}
+            className="downloadButton"
+            onClick={() => {
+              liveTVChannel(ele).then((link) => {
+                setChannel(link);
+                footballFrameref.current.scrollIntoView({ behavior: "smooth", block: "center" });
+              });
+            }}
+          >
+            {`Sony Ten ${i + 1}`}
+          </button>
+        ))}
+      </div>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}>
         <input
           onChange={(e) => {
@@ -923,8 +935,9 @@ const MoviesBox = () => {
                   status={ele?.status}
                   time={ele.date}
                   // score={ele.score}
-                  // league={ele.league_en}
+                  league={ele.league}
                   onClick={() => fetchFootballSources(ele?.sources)}
+                  index={i + 1}
                 />
               );
           })

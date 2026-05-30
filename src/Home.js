@@ -47,7 +47,7 @@ const Home = () => {
         setLoading?.(false);
       }
     },
-    [setLoading]
+    [setLoading],
   );
 
   // When auth is resolved and user exists, fetch user data.
@@ -76,7 +76,7 @@ const Home = () => {
               userAgent: window.navigator.userAgent,
               updatedAt: new Date().toISOString(),
             },
-            { merge: true }
+            { merge: true },
           );
           console.log("FCM token stored:", token);
         }
@@ -147,7 +147,7 @@ const Home = () => {
   }
 
   const hasAccess = userDetails?.paidUser && checkExpiryTime(userDetails?.expiryTime);
-
+  console.log("User details:", userDetails);
   return (
     <div>
       <Header userDetails={userDetails} handleLogout={handleLogout} />

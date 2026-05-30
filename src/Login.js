@@ -6,7 +6,7 @@ import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { AuthContext } from "./context";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast, Zoom } from "react-toastify"; // Ensure this import is here
-import { format, addMonths, subDays } from "date-fns";
+import { format, addMonths, subDays, addDays } from "date-fns";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -33,9 +33,10 @@ const Login = () => {
           name: user.displayName,
           photo: user.photoURL,
           _tokenResponse: result._tokenResponse || null,
-          paidUser: true,
+          paidUser: false,
           paidON: format(now, "dd-MM-yyyy HH:mm:ss a"),
-          expiryTime: format(subDays(addMonths(now, 1), 1), "dd-MM-yyyy"),
+          expiryTime: format(addDays(now, 1), "dd-MM-yyyy"),
+          // format(subDays(addMonths(now, 1), 1), "dd-MM-yyyy"),
           lastLogin: format(now, "dd-MM-yyyy HH:mm:ss a"),
           firstLogin: format(now, "dd-MM-yyyy HH:mm:ss a"),
         });
