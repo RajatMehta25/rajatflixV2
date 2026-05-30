@@ -79,7 +79,7 @@ const MoviesBox = () => {
     "https://raw.githubusercontent.com/RajatMehta25/TV/main/Songs.json",
     setSongData,
     setSongPlayLink,
-    setNowPlaying
+    setNowPlaying,
   );
   useGithubApi("https://raw.githubusercontent.com/RajatMehta25/TV/main/Movie.json", setData, onChangeSearch);
   useGithubApi("https://raw.githubusercontent.com/RajatMehta25/TV/main/MovieFrame.json", setMovieFrame, onChangeSearchFrame);
@@ -249,7 +249,8 @@ const MoviesBox = () => {
     setFootballCardLoading(true);
     // fetch(`https://streamed.pk/api/matches/football`)
     try {
-      fetch(`https://streamed.pk/api/matches/all`)
+      // fetch(`https://streamed.pk/api/matches/all`)
+      fetch(`https://dami-tv.pro/papi/matches/all`)
         .then((res) => res.json())
         .then((data) => {
           setFootballCardData(data);
@@ -353,7 +354,7 @@ const MoviesBox = () => {
       },
       (error) => {
         console.error("Error starting Cast session:", error);
-      }
+      },
     );
   };
   const castMedia = useCallback(() => {
@@ -385,7 +386,7 @@ const MoviesBox = () => {
         },
         (error) => {
           console.error("Error loading media:", error);
-        }
+        },
       );
     } else {
       console.log("No session");
@@ -411,7 +412,7 @@ const MoviesBox = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCount(Math.floor(Math.random() * (10000 - 7000 + 1)) + 7000);
+      setCount(Math.floor(Math.random() * (1000000 - 7000 + 1)) + 7000);
     }, 2000);
     return () => clearInterval(timer);
   }, []);
@@ -504,11 +505,11 @@ const MoviesBox = () => {
 
     const results = await Promise.allSettled(
       sources.map(({ source, id }) =>
-        fetch(`https://streamed.pk/api/stream/${source}/${id}`).then((r) => {
+        fetch(`https://pooembed.eu/embed/${source}/${id}`).then((r) => {
           if (!r.ok) throw new Error(`HTTP ${r.status}`);
           return r.json();
-        })
-      )
+        }),
+      ),
     );
 
     const ok = results.filter((r) => r.status === "fulfilled").map((r) => r.value);
@@ -561,16 +562,6 @@ const MoviesBox = () => {
       // iframe.classList.add("fullscreen-iframe"); // Apply fullscreen styling
     }
   }
-  const fetchSlowFootballSources = async () => {
-    const response = await fetch("https://ppv.to/api/streams");
-    const data = await response.json();
-    const FilteredFootballData = data.streams.filter((ele) => ele.category === "Football");
-    console.log("FilteredFootballData", FilteredFootballData);
-    setSlowFootballSources(FilteredFootballData);
-  };
-  useEffect(() => {
-    fetchSlowFootballSources();
-  }, []);
 
   return (
     <div className="MovieContainer">
@@ -929,7 +920,7 @@ const MoviesBox = () => {
                   awayLogo={ele?.teams?.away?.badge}
                   homeName={ele?.teams?.home?.name}
                   awayName={ele?.teams?.away?.name}
-                  // status={ele.status}
+                  status={ele?.status}
                   time={ele.date}
                   // score={ele.score}
                   // league={ele.league_en}
@@ -938,61 +929,6 @@ const MoviesBox = () => {
               );
           })
         )}
-
-        {/*new renderer  */}
-        {/* {Object.entries(grouped).map(([category, items]) => (
-          <section key={category} style={{ textAlign: "center" }}>
-            <h3 style={{ marginBottom: 12, textTransform: "capitalize", fontFamily: "monospace", fontSize: "1.5rem" }}>
-              {category.replaceAll("-", " ")}
-            </h3>
-
-            <div>
-              {items.map((ele) => (
-                <FootballCard
-                  key={ele.id}
-                  homeLogo={ele?.teams?.home?.badge}
-                  awayLogo={ele?.teams?.away?.badge}
-                  homeName={ele?.teams?.home?.name}
-                  awayName={ele?.teams?.away?.name}
-                  // status={ele.status}
-                  time={ele.date}
-                  // score={ele.score}
-                  // league={ele.league_en}
-                  onClick={() => fetchFootballSources(ele.sources)}
-                />
-              ))}
-            </div>
-          </section>
-        ))} */}
-      </div>
-      <h1>For Slow Internet</h1>
-      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", justifyContent: "center", alignItems: "center" }}>
-        {slowFootballSources[0]?.streams?.map((ele, i) => (
-          <div
-            key={ele.name + i}
-            className="football-card"
-            style={{
-              backgroundImage: `url(${ele.poster})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-            onClick={() => {
-              setChannel(ele.iframe);
-              footballFrameref.current.scrollIntoView({ behavior: "smooth", block: "center" });
-              logEvent(analytics, `${user.displayName}-${ele.name}`, {
-                user: user?.displayName || "guest",
-                timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
-                category: "slow-football",
-              });
-            }}
-          >
-            <div style={{ backdropFilter: "blur(10px)", background: "transparent" }}>{ele.name}</div>
-            <div style={{ backdropFilter: "blur(10px)", background: "transparent" }}>{ele.tag}</div>
-            <div style={{ backdropFilter: "blur(10px)", background: "transparent" }}>
-              {moment(ele.starts_at * 1000).format("DD MMM YYYY, h:mm A")}
-            </div>
-          </div>
-        ))}
       </div>
     </div>
   );
