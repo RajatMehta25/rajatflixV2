@@ -584,6 +584,13 @@ const MoviesBox = () => {
     const streamingLink = `https://dami-tv.pro${data.stream}`;
     return streamingLink;
   };
+  const channelNumberArrayWWE = [{ channelNumber: 376, name: "WWE" }];
+  const liveTVChannelWWE = async (channelNumber) => {
+    const response = await fetch(`https://dami-tv.pro/papi/tv/resolve/${channelNumber}`);
+    const data = await response.json();
+    const streamingLink = `https://dami-tv.pro${data.stream}`;
+    return streamingLink;
+  };
   return (
     <div className="MovieContainer">
       {/* <HowToDownload /> */}
@@ -911,6 +918,23 @@ const MoviesBox = () => {
             className="downloadButton"
             onClick={() => {
               liveTVChannelHBO(ele.channelNumber).then((link) => {
+                setChannel(link);
+                footballFrameref.current.scrollIntoView({ behavior: "smooth", block: "center" });
+              });
+            }}
+          >
+            {`${ele.name}`}
+          </button>
+        ))}
+      </div>
+      <div style={{ fontSize: "1rem" }}>Live WWE TV</div>
+      <div>
+        {channelNumberArrayWWE.map((ele, i) => (
+          <button
+            key={ele.name}
+            className="downloadButton"
+            onClick={() => {
+              liveTVChannelWWE(ele.channelNumber).then((link) => {
                 setChannel(link);
                 footballFrameref.current.scrollIntoView({ behavior: "smooth", block: "center" });
               });
