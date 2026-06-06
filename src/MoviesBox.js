@@ -22,6 +22,7 @@ import { logEvent } from "firebase/analytics";
 import { analytics } from "./firebase";
 import { AuthContext } from "./context";
 import UserCount from "./UserCount";
+import Overlay from "./Overlay";
 
 const MoviesBox = () => {
   const Kapilref = useRef();
@@ -874,7 +875,8 @@ const MoviesBox = () => {
           </button>
         ))}
       </div>
-      <div style={{ width: "100%" }}>
+      <div style={{ width: "100%", position: "relative" }}>
+        <Overlay channel={channel} />
         {/* <video style={{ minHeight: 200 }} src={channel}></video> */}
         <iframe
           className="iframe"
