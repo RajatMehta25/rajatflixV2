@@ -562,7 +562,28 @@ const MoviesBox = () => {
     const streamingLink = `https://dami-tv.pro${data.stream}`;
     return streamingLink;
   };
-
+  const channelNumberArrayESPN = [44, 45];
+  const liveTVChannelESPN = async (channelNumber) => {
+    const response = await fetch(`https://dami-tv.pro/papi/tv/resolve/${channelNumber}`);
+    const data = await response.json();
+    const streamingLink = `https://dami-tv.pro${data.stream}`;
+    return streamingLink;
+  };
+  const channelNumberArrayHBO = [
+    { channelNumber: 690, name: "HBO Comedy" },
+    { channelNumber: 691, name: "HBO Family" },
+    { channelNumber: 692, name: "HBO Latino" },
+    { channelNumber: 693, name: "HBO Signature" },
+    { channelNumber: 321, name: "HBO 1" },
+    { channelNumber: 694, name: "HBO Zone" },
+    { channelNumber: 689, name: "HBO 2" },
+  ];
+  const liveTVChannelHBO = async (channelNumber) => {
+    const response = await fetch(`https://dami-tv.pro/papi/tv/resolve/${channelNumber}`);
+    const data = await response.json();
+    const streamingLink = `https://dami-tv.pro${data.stream}`;
+    return streamingLink;
+  };
   return (
     <div className="MovieContainer">
       {/* <HowToDownload /> */}
@@ -862,6 +883,40 @@ const MoviesBox = () => {
             }}
           >
             {`Sony Ten ${i + 1}`}
+          </button>
+        ))}
+      </div>
+      <div style={{ fontSize: "1rem" }}>Live ESPN TV</div>
+      <div>
+        {channelNumberArrayESPN.map((ele, i) => (
+          <button
+            key={ele}
+            className="downloadButton"
+            onClick={() => {
+              liveTVChannelESPN(ele).then((link) => {
+                setChannel(link);
+                footballFrameref.current.scrollIntoView({ behavior: "smooth", block: "center" });
+              });
+            }}
+          >
+            {`ESPN ${i + 1}`}
+          </button>
+        ))}
+      </div>
+      <div style={{ fontSize: "1rem" }}>Live HBO TV</div>
+      <div>
+        {channelNumberArrayHBO.map((ele, i) => (
+          <button
+            key={ele.name}
+            className="downloadButton"
+            onClick={() => {
+              liveTVChannelHBO(ele.channelNumber).then((link) => {
+                setChannel(link);
+                footballFrameref.current.scrollIntoView({ behavior: "smooth", block: "center" });
+              });
+            }}
+          >
+            {`${ele.name}`}
           </button>
         ))}
       </div>
