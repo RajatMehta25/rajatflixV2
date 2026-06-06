@@ -483,7 +483,7 @@ const MoviesBox = () => {
   //   setChannel("");
   //   console.log("FootballCardSources", data);
   // };
-  const fetchFootballSources = async (sources) => {
+  const fetchFootballSources = async (sources, channels) => {
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
     if (/android/i.test(userAgent)) {
@@ -496,23 +496,26 @@ const MoviesBox = () => {
     });
     // navigator.vibrate(200);
 
-    const results = await Promise.allSettled(
-      sources.map(({ source, id }) =>
-        fetch(`https://pooembed.eu/embed/${source}/${id}`).then((r) => {
-          if (!r.ok) throw new Error(`HTTP ${r.status}`);
-          return r.json();
-        }),
-      ),
-    );
+    // const results = await Promise.allSettled(
+    //   sources.map(({ source, id }) =>
+    //     // fetch(`https://pooembed.eu/embed/${source}/${id}`)
+    //     fetch(`https://dami-tv.pro/embed/?id=${id}`).then((r) => {
+    //       if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    //       return r.json();
+    //     }),
+    //   ),
+    // );
 
-    const ok = results.filter((r) => r.status === "fulfilled").map((r) => r.value);
+    // const ok = results.filter((r) => r.status === "fulfilled").map((r) => r.value);
 
-    const FD = ok.flat(Infinity);
-    setFootballCardSources(FD);
-    // setChannel(FD[0]?.embedUrl);
+    // const FD = ok.flat(Infinity);
+    setFootballCardSources(channels);
+    // console.log("Selected sources for fetching:", sources);
+    footballFrameref.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    setChannel(`https://dami-tv.pro/embed/?id=${sources[0].id}`);
 
-    const failed = results.filter((r) => r.status === "rejected").length;
-    if (failed) console.warn(`Skipped ${failed} failed request(s).`);
+    // const failed = results.filter((r) => r.status === "rejected").length;
+    // if (failed) console.warn(`Skipped ${failed} failed request(s).`);
   };
 
   // Group by category (whatever the API returns)
@@ -557,17 +560,19 @@ const MoviesBox = () => {
   }
   const channelNumberArray = [885, 886, 887];
   const liveTVChannel = async (channelNumber) => {
-    const response = await fetch(`https://dami-tv.pro/papi/tv/resolve/${channelNumber}`);
-    const data = await response.json();
-    const streamingLink = `https://dami-tv.pro${data.stream}`;
-    return streamingLink;
+    // const response = await fetch(`https://dami-tv.pro/papi/tv/resolve/${channelNumber}`);
+    // const data = await response.json();
+    // const streamingLink = `https://dami-tv.pro${data.stream}`;
+    // return streamingLink;
+    return `https://dami-tv.pro/embed/channel/?id=${channelNumber}`;
   };
   const channelNumberArrayESPN = [44, 45];
   const liveTVChannelESPN = async (channelNumber) => {
-    const response = await fetch(`https://dami-tv.pro/papi/tv/resolve/${channelNumber}`);
-    const data = await response.json();
-    const streamingLink = `https://dami-tv.pro${data.stream}`;
-    return streamingLink;
+    // const response = await fetch(`https://dami-tv.pro/papi/tv/resolve/${channelNumber}`);
+    // const data = await response.json();
+    // const streamingLink = `https://dami-tv.pro${data.stream}`;
+    // return streamingLink;
+    return `https://dami-tv.pro/embed/channel/?id=${channelNumber}`;
   };
   const channelNumberArrayHBO = [
     { channelNumber: 690, name: "HBO Comedy" },
@@ -579,19 +584,24 @@ const MoviesBox = () => {
     { channelNumber: 689, name: "HBO 2" },
   ];
   const liveTVChannelHBO = async (channelNumber) => {
-    const response = await fetch(`https://dami-tv.pro/papi/tv/resolve/${channelNumber}`);
-    const data = await response.json();
-    const streamingLink = `https://dami-tv.pro${data.stream}`;
-    return streamingLink;
+    // const response = await fetch(`https://dami-tv.pro/papi/tv/resolve/${channelNumber}`);
+    // const data = await response.json();
+    // const streamingLink = `https://dami-tv.pro${data.stream}`;
+    return `https://dami-tv.pro/embed/channel/?id=${channelNumber}`;
   };
   const channelNumberArrayWWE = [{ channelNumber: 376, name: "WWE" }];
   const liveTVChannelWWE = async (channelNumber) => {
-    const response = await fetch(`https://dami-tv.pro/papi/tv/resolve/${channelNumber}`);
-    const data = await response.json();
-    const streamingLink = `https://dami-tv.pro${data.stream}`;
-    return streamingLink;
+    // const response = await fetch(`https://dami-tv.pro/papi/tv/resolve/${channelNumber}`);
+    // console.log("WWE Channel Response:", response);
+    // const data = await response.json();
+    // console.log("WWE Channel Data:", data);
+    // const streamingLink = `https://dami-tv.pro${data.stream}`;
+    return `https://dami-tv.pro/embed/channel/?id=${channelNumber}`;
+    // return `https://dami-tv.pro/embed/channel/?id=${channelNumber}`;
+    // return `https://dami-tv.pro/player/hls/?v=300&resolve=${channelNumber}&name=${encodeURIComponent("MTV USA")}`;
   };
-  return (
+  //dami-tv.pro/player/hls/?v=300&resolve=
+  https: return (
     <div className="MovieContainer">
       {/* <HowToDownload /> */}
       <UserCount />
@@ -850,17 +860,17 @@ const MoviesBox = () => {
         // ref={Footballref}
         ref={FootballNewref}
       >
-        {FootballCardSources.map((ele, i) => (
+        {FootballCardSources?.map((ele, i) => (
           <button
             style={{ textWrap: "nowrap", textTransform: "uppercase" }}
             key={ele.id + i}
             className="downloadButton"
             onClick={() => {
-              setChannel(ele.embedUrl);
+              setChannel(`https://dami-tv.pro/embed/channel/?id=${ele.id}`);
               footballFrameref.current.scrollIntoView({ behavior: "smooth", block: "center" });
             }}
           >
-            {ele.language + " " + ele.source + " " + ele.streamNo}
+            {ele.name}
           </button>
         ))}
       </div>
@@ -919,6 +929,7 @@ const MoviesBox = () => {
             onClick={() => {
               liveTVChannelHBO(ele.channelNumber).then((link) => {
                 setChannel(link);
+                console.log("HBO Channel Link:", link);
                 footballFrameref.current.scrollIntoView({ behavior: "smooth", block: "center" });
               });
             }}
@@ -935,6 +946,7 @@ const MoviesBox = () => {
             className="downloadButton"
             onClick={() => {
               liveTVChannelWWE(ele.channelNumber).then((link) => {
+                console.log("WWE Channel Link:", link);
                 setChannel(link);
                 footballFrameref.current.scrollIntoView({ behavior: "smooth", block: "center" });
               });
@@ -1015,7 +1027,7 @@ const MoviesBox = () => {
                   time={ele.date}
                   // score={ele.score}
                   league={ele.league}
-                  onClick={() => fetchFootballSources(ele?.sources)}
+                  onClick={() => fetchFootballSources(ele.sources, ele?.channels)}
                   index={i + 1}
                 />
               );
