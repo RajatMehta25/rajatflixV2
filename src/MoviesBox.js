@@ -602,7 +602,29 @@ const MoviesBox = () => {
     // return `https://dami-tv.pro/player/hls/?v=300&resolve=${channelNumber}&name=${encodeURIComponent("MTV USA")}`;
   };
   //dami-tv.pro/player/hls/?v=300&resolve=
-  https: return (
+  const TVSeriesData = [
+    {
+      id: 247769,
+      name: "Kapil Sharma",
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMl3eP7UPS03MX_lRpn0XqWIVR0hizM1nEFg&s",
+    },
+    {
+      id: 220102,
+      name: "Spider Noir",
+      img: "https://m.media-amazon.com/images/S/pv-target-images/68a476ef999551fb0e7053dcf4e8da0dd4d528557a2ef6b8b1dfc955eb258bd3.png",
+    },
+    {
+      id: 273240,
+      name: "Off Campus",
+      img: "https://m.media-amazon.com/images/S/pv-target-images/f19c7e550a4c984dd0fed38014bc6baefc59c09e4c342b6d390851a4ea70da85.png",
+    },
+    {
+      id: 60574,
+      name: "The Peaky Blinders",
+      img: "https://m.media-amazon.com/images/S/pv-target-images/f7ffc4ffa21f3ae373bacf9502771bf724f2503b177e415d8aacc56d6ca05970.jpg",
+    },
+  ];
+  return (
     <div className="MovieContainer">
       {/* <HowToDownload /> */}
       <UserCount />
@@ -846,7 +868,27 @@ const MoviesBox = () => {
         </div>
       </>
       {/* <KapilBox Kapilref={Kapilref} kapils02={kapils02} episode={episode} setEpisode={setEpisode} /> */}
-
+      <div>
+        <h1>NEW Content</h1>
+        {TVSeriesData.map((ele, i) => (
+          <button
+            key={ele.id + i}
+            className="downloadButton"
+            onClick={() => {
+              setChannel(`https://vidcore.net/tv/${ele.id}/1/1`);
+              footballFrameref.current.scrollIntoView({ behavior: "smooth", block: "center" });
+              logEvent(analytics, `${user.displayName}-${ele.name}`, {
+                user: user?.displayName || "guest",
+                timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
+                category: "movie/tv",
+              });
+            }}
+          >
+            <img src={ele.img} alt={ele.name} style={{ width: "100px", height: "100px", objectFit: "cover" }} />
+            <div>{ele.name}</div>
+          </button>
+        ))}
+      </div>
       <div
         // style={{ fontSize: "1.5rem" }}
         className="netflix-heading"
