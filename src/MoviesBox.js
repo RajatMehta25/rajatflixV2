@@ -605,23 +605,97 @@ const MoviesBox = () => {
   const TVSeriesData = [
     {
       id: 247769,
-      name: "Kapil Sharma",
+      name: "Kapil Sharma S1",
+      season: 1,
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMl3eP7UPS03MX_lRpn0XqWIVR0hizM1nEFg&s",
+    },
+    {
+      id: 247769,
+      name: "Kapil Sharma S2",
+      season: 2,
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMl3eP7UPS03MX_lRpn0XqWIVR0hizM1nEFg&s",
+    },
+    {
+      id: 247769,
+      name: "Kapil Sharma S3",
+      season: 3,
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMl3eP7UPS03MX_lRpn0XqWIVR0hizM1nEFg&s",
+    },
+    {
+      id: 247769,
+      name: "Kapil Sharma S4",
+      season: 4,
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMl3eP7UPS03MX_lRpn0XqWIVR0hizM1nEFg&s",
     },
     {
       id: 220102,
       name: "Spider Noir",
+      season: 1,
       img: "https://m.media-amazon.com/images/S/pv-target-images/68a476ef999551fb0e7053dcf4e8da0dd4d528557a2ef6b8b1dfc955eb258bd3.png",
     },
     {
       id: 273240,
       name: "Off Campus",
+      season: 1,
       img: "https://m.media-amazon.com/images/S/pv-target-images/f19c7e550a4c984dd0fed38014bc6baefc59c09e4c342b6d390851a4ea70da85.png",
     },
     {
       id: 60574,
-      name: "The Peaky Blinders",
+      name: "The Peaky Blinders S1",
+      season: 1,
       img: "https://m.media-amazon.com/images/S/pv-target-images/f7ffc4ffa21f3ae373bacf9502771bf724f2503b177e415d8aacc56d6ca05970.jpg",
+    },
+    {
+      id: 60574,
+      name: "The Peaky Blinders S2",
+      season: 2,
+      img: "https://m.media-amazon.com/images/S/pv-target-images/f7ffc4ffa21f3ae373bacf9502771bf724f2503b177e415d8aacc56d6ca05970.jpg",
+    },
+    {
+      id: 60574,
+      name: "The Peaky Blinders S3",
+      season: 3,
+      img: "https://m.media-amazon.com/images/S/pv-target-images/f7ffc4ffa21f3ae373bacf9502771bf724f2503b177e415d8aacc56d6ca05970.jpg",
+    },
+    {
+      id: 60574,
+      name: "The Peaky Blinders S4",
+      season: 4,
+      img: "https://m.media-amazon.com/images/S/pv-target-images/f7ffc4ffa21f3ae373bacf9502771bf724f2503b177e415d8aacc56d6ca05970.jpg",
+    },
+    {
+      id: 60574,
+      name: "The Peaky Blinders S5",
+      season: 5,
+      img: "https://m.media-amazon.com/images/S/pv-target-images/f7ffc4ffa21f3ae373bacf9502771bf724f2503b177e415d8aacc56d6ca05970.jpg",
+    },
+    {
+      id: 60574,
+      name: "The Peaky Blinders S6",
+      season: 6,
+      img: "https://m.media-amazon.com/images/S/pv-target-images/f7ffc4ffa21f3ae373bacf9502771bf724f2503b177e415d8aacc56d6ca05970.jpg",
+    },
+  ];
+  const MoviesData = [
+    {
+      id: 1308553,
+      name: "Hai Jawani Toh IShq hona h",
+      img: "https://media.themoviedb.org/t/p/w600_and_h900_face/vmlJvz6qVzYgei2V74GvnmcuQfW.jpg",
+    },
+    {
+      id: 931285,
+      name: "Mortal Kombat",
+      img: "https://media.themoviedb.org/t/p/w600_and_h900_face/6Wdl9N6dL0Hi0T1qJLWSz6gMLg.jpg",
+    },
+    {
+      id: 936075,
+      name: "Michael",
+      img: "https://media.themoviedb.org/t/p/w600_and_h900_face/8YFL5QQVPy3AgrEQgL9iW6pQ9S.jpg",
+    },
+    {
+      id: 687163,
+      name: "Project Hail Mary",
+      img: "https://media.themoviedb.org/t/p/w600_and_h900_face/3D2aGqM1JYlG8t5iFhLh0sYy0.jpg",
     },
   ];
   return (
@@ -870,12 +944,32 @@ const MoviesBox = () => {
       {/* <KapilBox Kapilref={Kapilref} kapils02={kapils02} episode={episode} setEpisode={setEpisode} /> */}
       <div>
         <h1>NEW Content</h1>
+        <div>Series</div>
         {TVSeriesData.map((ele, i) => (
           <button
             key={ele.id + i}
             className="downloadButton"
             onClick={() => {
-              setChannel(`https://vidcore.net/tv/${ele.id}/1/1`);
+              setChannel(`https://vidcore.net/tv/${ele.id}/${ele.season}/1?hideServer=true`);
+              footballFrameref.current.scrollIntoView({ behavior: "smooth", block: "center" });
+              logEvent(analytics, `${user.displayName}-${ele.name}`, {
+                user: user?.displayName || "guest",
+                timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
+                category: "movie/tv",
+              });
+            }}
+          >
+            <img src={ele.img} alt={ele.name} style={{ width: "100px", height: "100px", objectFit: "cover" }} />
+            <div>{ele.name}</div>
+          </button>
+        ))}
+        <div>Movies</div>
+        {MoviesData.map((ele, i) => (
+          <button
+            key={ele.id + i}
+            className="downloadButton"
+            onClick={() => {
+              setChannel(`https://vidcore.net/movie/${ele.id}?hideServer=true`);
               footballFrameref.current.scrollIntoView({ behavior: "smooth", block: "center" });
               logEvent(analytics, `${user.displayName}-${ele.name}`, {
                 user: user?.displayName || "guest",
