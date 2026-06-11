@@ -675,6 +675,12 @@ const MoviesBox = () => {
       season: 6,
       img: "https://m.media-amazon.com/images/S/pv-target-images/f7ffc4ffa21f3ae373bacf9502771bf724f2503b177e415d8aacc56d6ca05970.jpg",
     },
+    {id:90966,
+      name: "Gullak S5",
+      season:5,
+      img:"https://image.tmdb.org/t/p/original/47fUYgqURqbp0aT65CJdmOKHyJj.jpg",
+      
+    },
   ];
   const MoviesData = [
     {
@@ -685,17 +691,17 @@ const MoviesBox = () => {
     {
       id: 931285,
       name: "Mortal Kombat",
-      img: "https://media.themoviedb.org/t/p/w600_and_h900_face/6Wdl9N6dL0Hi0T1qJLWSz6gMLg.jpg",
+      img: "https://image.tmdb.org/t/p/original/mUExj4VneG3S0Ysufxnj9JPZEHQ.jpg",
     },
     {
       id: 936075,
       name: "Michael",
-      img: "https://media.themoviedb.org/t/p/w600_and_h900_face/8YFL5QQVPy3AgrEQgL9iW6pQ9S.jpg",
+      img: "https://image.tmdb.org/t/p/original/5HgVwIzug5iCoprtj4ZSvcHjjI1.jpg",
     },
     {
       id: 687163,
       name: "Project Hail Mary",
-      img: "https://media.themoviedb.org/t/p/w600_and_h900_face/3D2aGqM1JYlG8t5iFhLh0sYy0.jpg",
+      img: "https://image.tmdb.org/t/p/original/kutdTXxqWJ7KYmnll8nSrtWWsCR.jpg",
     },
   ];
   return (
