@@ -486,9 +486,14 @@ const MoviesBox = () => {
   //   setChannel("");
   //   console.log("FootballCardSources", data);
   // };
-  const fetchFootballSources = async (sources, channels) => {
+  const fetchFootballSources = async (sources, channels, streamedSources) => {
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
+    const streamedSourcesArray = streamedSources.map((source) => ({
+      id: source.id,
+      name: source.source,
+      embedUrl: `https://embed.st/embed/${source.source}/${source.id}/1`,
+    }));
+    const newChannels = [...channels, ...streamedSourcesArray];
     if (/android/i.test(userAgent)) {
       navigator.vibrate(200);
     }
@@ -512,7 +517,7 @@ const MoviesBox = () => {
     // const ok = results.filter((r) => r.status === "fulfilled").map((r) => r.value);
 
     // const FD = ok.flat(Infinity);
-    setFootballCardSources(channels);
+    setFootballCardSources(newChannels);
     // console.log("Selected sources for fetching:", sources);
     footballFrameref.current.scrollIntoView({ behavior: "smooth", block: "center" });
     setChannel(`https://dami-tv.pro/embed/?id=${sources[0].id}`);
@@ -1097,19 +1102,24 @@ const MoviesBox = () => {
         // ref={Footballref}
         ref={FootballNewref}
       >
-        {FootballCardSources?.map((ele, i) => (
-          <button
-            style={{ textWrap: "nowrap", textTransform: "uppercase" }}
-            key={ele.id + i}
-            className="downloadButton"
-            onClick={() => {
-              setChannel(`https://dami-tv.pro/embed/channel/?id=${ele.id}`);
-              footballFrameref.current.scrollIntoView({ behavior: "smooth", block: "center" });
-            }}
-          >
-            {ele.name}
-          </button>
-        ))}
+        {FootballCardSources.length > 0 &&
+          FootballCardSources?.map((ele, i) => (
+            <button
+              style={{ textWrap: "nowrap", textTransform: "uppercase" }}
+              key={ele.id + i}
+              className="downloadButton"
+              onClick={() => {
+                if (!ele.embedUrl) {
+                  setChannel(`https://dami-tv.pro/embed/channel/?id=${ele.id}`);
+                } else {
+                  setChannel(ele.embedUrl);
+                }
+                footballFrameref.current.scrollIntoView({ behavior: "smooth", block: "center" });
+              }}
+            >
+              {ele.name}
+            </button>
+          ))}
       </div>
       <div style={{ width: "100%", position: "relative" }}>
         <Overlay channel={channel} />
@@ -1265,7 +1275,7 @@ const MoviesBox = () => {
                   time={ele.date}
                   // score={ele.score}
                   league={ele.league}
-                  onClick={() => fetchFootballSources(ele.sources, ele?.tvChannels)}
+                  onClick={() => fetchFootballSources(ele.sources, ele?.tvChannels, ele?._streamedSources)}
                   index={i + 1}
                 />
               );
