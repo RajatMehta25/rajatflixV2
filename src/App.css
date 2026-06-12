@@ -160,7 +160,10 @@
   --_p: var(--s);
   background: conic-gradient(from 90deg at var(--b) var(--b), #0000 90deg, var(--color) 0) var(--_p) var(--_p) /
     calc(100% - var(--b) - 2 * var(--_p)) calc(100% - var(--b) - 2 * var(--_p));
-  transition: 0.3s linear, color 0s, background-color 0s;
+  transition:
+    0.3s linear,
+    color 0s,
+    background-color 0s;
   outline: var(--b) solid #0000;
   outline-offset: 0.6em;
   font-size: 16px;
@@ -314,8 +317,19 @@
   justify-content: center;
   padding: 18px;
   box-sizing: border-box;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial,
-    "Apple Color Emoji", "Segoe UI Emoji";
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Ubuntu,
+    Cantarell,
+    Noto Sans,
+    "Helvetica Neue",
+    Arial,
+    "Apple Color Emoji",
+    "Segoe UI Emoji";
   overflow: hidden;
 }
 .mp-liquid-bg {
@@ -375,7 +389,10 @@
 .glass {
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 -1px 0 rgba(0, 0, 0, 0.35);
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.35);
   backdrop-filter: blur(18px) saturate(120%);
   -webkit-backdrop-filter: blur(18px) saturate(120%);
 }
@@ -475,7 +492,9 @@
   outline: none;
   cursor: pointer;
   position: relative;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.35), inset 0 -1px 1px rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.35),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.08);
 }
 .glass-track {
   background: linear-gradient(to right, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.1));
@@ -489,7 +508,9 @@
   height: 18px;
   background: radial-gradient(circle at 30% 30%, #ffffff, #d1d5db);
   border-radius: 50%;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.9);
   margin-top: -6px;
 }
 .mp-range::-moz-range-thumb {
@@ -498,7 +519,9 @@
   background: #e5e7eb;
   border: none;
   border-radius: 50%;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.9);
 }
 .mp-range-sm {
   width: 160px;
@@ -525,14 +548,18 @@
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 14px;
   padding: 8px 10px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 .mp-btn {
   background: transparent;
   border: none;
   color: #ffffff;
   cursor: pointer;
-  transition: transform 0.04s ease, filter 0.2s ease;
+  transition:
+    transform 0.04s ease,
+    filter 0.2s ease;
 }
 .mp-btn:hover {
   filter: brightness(1.06);
@@ -541,7 +568,9 @@
   transform: scale(0.98);
 }
 .mp-btn.is-active {
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  box-shadow:
+    0 8px 22px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
 }
 
 .pill.mp-btn-primary,
@@ -554,7 +583,9 @@
   border: 0;
   padding: 12px 16px;
   border-radius: 16px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 .mp-btn-primary:hover {
   filter: brightness(0.98);
@@ -605,7 +636,9 @@
   color: inherit;
   border: 1px solid rgba(255, 255, 255, 0.14);
   cursor: pointer;
-  transition: filter 0.2s ease, transform 0.04s ease;
+  transition:
+    filter 0.2s ease,
+    transform 0.04s ease;
 }
 .mp-list-item:hover {
   filter: brightness(1.06);
@@ -670,4 +703,64 @@
   line-height: 1.8rem;
   display: flex;
   gap: 0.5rem;
+}
+
+/* Container for the row */
+.netflixRow {
+  padding: 20px;
+  width: 100%;
+}
+
+/* The horizontal scrolling track */
+.rowPoster {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 15px; /* Spacing between posters */
+  padding: 10px 0;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling for touch devices */
+  width: 100%;
+}
+
+/* Hide the scrollbar for a cleaner Netflix aesthetic */
+.rowPoster::-webkit-scrollbar {
+  display: none;
+}
+
+/* Individual button styled like a Netflix card */
+.downloadButtonSeries {
+  flex: 0 0 auto; /* Prevents button from squishing */
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Netflix hover effect: scales the card up smoothly */
+.downloadButtonSeries:hover {
+  transform: scale(1.08);
+}
+
+/* The images inside the buttons */
+.downloadButtonSeries img {
+  width: 150px; /* Adjust as needed */
+  height: 225px; /* Gives the classic poster aspect ratio */
+  object-fit: cover;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Title that appears under the poster */
+.posterTitle {
+  margin-top: 8px;
+  color: #e5e5e5;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  max-width: 150px;
+  white-space: normal;
 }

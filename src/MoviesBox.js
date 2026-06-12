@@ -69,6 +69,8 @@ const MoviesBox = () => {
   const [selectedCategory, setSelectedCategory] = useState("football");
   const [loadingFootballCard, setFootballCardLoading] = useState(false);
   const [slowFootballSources, setSlowFootballSources] = useState([]);
+  const [NewContentSrc, setNewContentSrc] = useState("");
+  const NewContentRef = useRef();
   const { user } = useContext(AuthContext) || {};
 
   useHandleDivWheel(Kapilref);
@@ -675,11 +677,12 @@ const MoviesBox = () => {
       season: 6,
       img: "https://m.media-amazon.com/images/S/pv-target-images/f7ffc4ffa21f3ae373bacf9502771bf724f2503b177e415d8aacc56d6ca05970.jpg",
     },
-    {id:90966,
-      name: "Gullak S5",
-      season:5,
-      img:"https://image.tmdb.org/t/p/original/47fUYgqURqbp0aT65CJdmOKHyJj.jpg",
-      
+    { id: 90966, name: "Gullak S5", season: 5, img: "https://image.tmdb.org/t/p/original/47fUYgqURqbp0aT65CJdmOKHyJj.jpg" },
+    {
+      id: 96421,
+      name: "Hostel Daze S1",
+      season: 1,
+      img: "https://media.themoviedb.org/t/p/w600_and_h900_face/5GZQ9BWhCifOe82PngY1xgqVEuG.jpg",
     },
   ];
   const MoviesData = [
@@ -702,6 +705,31 @@ const MoviesBox = () => {
       id: 687163,
       name: "Project Hail Mary",
       img: "https://image.tmdb.org/t/p/original/kutdTXxqWJ7KYmnll8nSrtWWsCR.jpg",
+    },
+    {
+      id: 1439930,
+      name: "The Punisher",
+      img: "https://media.themoviedb.org/t/p/w600_and_h900_face/qQclTgLMDvGBuUBFGHRipxkEwWR.jpg",
+    },
+    {
+      id: 1628448,
+      name: "Maa Behen",
+      img: "https://media.themoviedb.org/t/p/w116_and_h174_face/dpQIeEunpgj0C4rngb6OFb4zSd1.jpg",
+    },
+    {
+      id: 1239134,
+      name: "Bhoot Bangla",
+      img: "https://media.themoviedb.org/t/p/w600_and_h900_face/79RBp8afL4u4z3nVGR78z6eIvBB.jpg",
+    },
+    {
+      id: 1320660,
+      name: "Pati Patni Aur Woh Do",
+      img: "https://media.themoviedb.org/t/p/w600_and_h900_face/x0RUPvba4JlCCkyyEZGlQFIFVuF.jpg",
+    },
+    {
+      id: 1628367,
+      name: "Kartavya",
+      img: "https://media.themoviedb.org/t/p/w600_and_h900_face/2I689w0K02r5oXawo08W8yNYIzx.jpg",
     },
   ];
   return (
@@ -948,47 +976,113 @@ const MoviesBox = () => {
         </div>
       </>
       {/* <KapilBox Kapilref={Kapilref} kapils02={kapils02} episode={episode} setEpisode={setEpisode} /> */}
-      <div>
-        <h1>NEW Content</h1>
-        <div>Series</div>
-        {TVSeriesData.map((ele, i) => (
-          <button
-            key={ele.id + i}
-            className="downloadButton"
-            onClick={() => {
-              setChannel(`https://vidcore.net/tv/${ele.id}/${ele.season}/1?hideServer=true`);
-              footballFrameref.current.scrollIntoView({ behavior: "smooth", block: "center" });
-              logEvent(analytics, `${user.displayName}-${ele.name}`, {
-                user: user?.displayName || "guest",
-                timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
-                category: "movie/tv",
-              });
-            }}
-          >
-            <img src={ele.img} alt={ele.name} style={{ width: "100px", height: "100px", objectFit: "cover" }} />
-            <div>{ele.name}</div>
-          </button>
-        ))}
-        <div>Movies</div>
-        {MoviesData.map((ele, i) => (
-          <button
-            key={ele.id + i}
-            className="downloadButton"
-            onClick={() => {
-              setChannel(`https://vidcore.net/movie/${ele.id}?hideServer=true`);
-              footballFrameref.current.scrollIntoView({ behavior: "smooth", block: "center" });
-              logEvent(analytics, `${user.displayName}-${ele.name}`, {
-                user: user?.displayName || "guest",
-                timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
-                category: "movie/tv",
-              });
-            }}
-          >
-            <img src={ele.img} alt={ele.name} style={{ width: "100px", height: "100px", objectFit: "cover" }} />
-            <div>{ele.name}</div>
-          </button>
-        ))}
+      <div style={{ width: "100%", position: "relative" }}>
+        <Overlay channel={channel} />
+        {/* <video style={{ minHeight: 200 }} src={channel}></video> */}
+        <iframe
+          className="iframe"
+          src={NewContentSrc}
+          // allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen ; download"
+          allowFullScreen
+          ref={NewContentRef}
+        />
       </div>
+      <h1>NEW CONTENT</h1>
+      <h2>Series</h2>
+      <div className="netflixRow">
+        <div className="rowPoster">
+          {TVSeriesData.map((ele, i) => (
+            <button
+              key={ele.id + i}
+              className="downloadButtonSeries"
+              onClick={() => {
+                setNewContentSrc(`https://vidcore.net/tv/${ele.id}/${ele.season}/1?hideServer=true`);
+                NewContentRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+                logEvent(analytics, `${user.displayName}-${ele.name}`, {
+                  user: user?.displayName || "guest",
+                  timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
+                  category: "movie/tv",
+                });
+              }}
+            >
+              <img src={ele.img} alt={ele.name} />
+              <div className="posterTitle">{ele.name}</div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <h2>Movies</h2>
+      <div className="netflixRow">
+        <div className="rowPoster">
+          {MoviesData.map((ele, i) => (
+            <button
+              key={ele.id + i}
+              className="downloadButtonSeries"
+              onClick={() => {
+                setNewContentSrc(`https://vidcore.net/movie/${ele.id}?hideServer=true`);
+                NewContentRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+                logEvent(analytics, `${user.displayName}-${ele.name}`, {
+                  user: user?.displayName || "guest",
+                  timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
+                  category: "movie/tv",
+                });
+              }}
+            >
+              <img src={ele.img} alt={ele.name} />
+              <div className="posterTitle">{ele.name}</div>
+            </button>
+          ))}
+        </div>
+      </div>
+      <h1>New Content 2</h1>
+      <h2>TV Series</h2>
+      <div className="netflixRow">
+        <div className="rowPoster">
+          {TVSeriesData.map((ele, i) => (
+            <button
+              key={ele.id + i}
+              className="downloadButtonSeries"
+              onClick={() => {
+                setNewContentSrc(`https://web.nxsha.app/embed/tv/${ele.id}/${ele.season}/1`);
+                NewContentRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+                logEvent(analytics, `${user.displayName}-${ele.name}`, {
+                  user: user?.displayName || "guest",
+                  timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
+                  category: "movie/tv",
+                });
+              }}
+            >
+              <img src={ele.img} alt={ele.name} />
+              <div className="posterTitle">{ele.name}</div>
+            </button>
+          ))}
+        </div>
+      </div>
+      <h2>Movies</h2>
+      <div className="netflixRow">
+        <div className="rowPoster">
+          {MoviesData.map((ele, i) => (
+            <button
+              key={ele.id + i}
+              className="downloadButtonSeries"
+              onClick={() => {
+                setNewContentSrc(`https://web.nxsha.app/embed/movie/${ele.id}`);
+                NewContentRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+                logEvent(analytics, `${user.displayName}-${ele.name}`, {
+                  user: user?.displayName || "guest",
+                  timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
+                  category: "movie/tv",
+                });
+              }}
+            >
+              <img src={ele.img} alt={ele.name} />
+              <div className="posterTitle">{ele.name}</div>
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div
         // style={{ fontSize: "1.5rem" }}
         className="netflix-heading"
