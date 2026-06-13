@@ -692,6 +692,11 @@ const MoviesBox = () => {
   ];
   const MoviesData = [
     {
+      id: 1475803,
+      name: "Governor",
+      img: "https://media.themoviedb.org/t/p/w600_and_h900_face/cdWfUYREo8RXkPxnZLvuG08QJrP.jpg",
+    },
+    {
       id: 1308553,
       name: "Hai Jawani Toh IShq hona h",
       img: "https://media.themoviedb.org/t/p/w600_and_h900_face/vmlJvz6qVzYgei2V74GvnmcuQfW.jpg",
