@@ -697,6 +697,11 @@ const MoviesBox = () => {
       img: "https://media.themoviedb.org/t/p/w600_and_h900_face/cdWfUYREo8RXkPxnZLvuG08QJrP.jpg",
     },
     {
+      id: 1351908,
+      name: "BAharat Bahgya Vidhata",
+      img: "https://media.themoviedb.org/t/p/w600_and_h900_face/tf5lLrrikOswHKHpzW0UiHycJEx.jpg",
+    },
+    {
       id: 1308553,
       name: "Hai Jawani Toh IShq hona h",
       img: "https://media.themoviedb.org/t/p/w600_and_h900_face/vmlJvz6qVzYgei2V74GvnmcuQfW.jpg",
