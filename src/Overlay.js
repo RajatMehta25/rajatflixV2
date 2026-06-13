@@ -10,7 +10,7 @@ const Overlay = ({ channel }) => {
     // 2. Set a timer to close it after 2 seconds
     const timer = setTimeout(() => {
       setShowOverlay(false);
-    }, 2000);
+    }, 5000);
 
     // 3. Clean up the timer if the prop changes again quickly
     return () => clearTimeout(timer);
@@ -35,7 +35,9 @@ const Overlay = ({ channel }) => {
             zIndex: 1,
           }}
         >
-          <h1 style={{ color: "white", fontSize: "2rem" }}>Welcome to Rajatflix | Loading...</h1>
+          <h1 style={{ color: "white", fontSize: "2rem" }} className="animated-text">
+            Welcome to Rajatflix | Loading...
+          </h1>
         </div>
       )}
     </div>
