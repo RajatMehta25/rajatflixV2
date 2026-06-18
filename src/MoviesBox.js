@@ -490,9 +490,9 @@ const MoviesBox = () => {
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
     const streamedSourcesArray = streamedSources.map((source) => ({
       id: source.id,
-      name: source.source,
+      name: source.name,
       // embedUrl: `https://embed.st/embed/${source.source}/${source.id}/1`,
-      embedUrl: `https://embedindia.st/embed/${source.source}/${source.id}`,
+      embedUrl: `https://embedindia.st/embed/${source.id}`,
     }));
     const newChannels = [...channels, ...streamedSourcesArray];
     if (/android/i.test(userAgent)) {
