@@ -1286,7 +1286,7 @@ const MoviesBox = () => {
                   time={ele.date}
                   // score={ele.score}
                   league={ele.league}
-                  onClick={() => fetchFootballSources(ele.sources, ele?.tvChannels, ele?._streamedSources)}
+                  onClick={() => fetchFootballSources(ele.sources, ele?.tvChannels, ele?.substreams)}
                   index={i + 1}
                 />
               );
