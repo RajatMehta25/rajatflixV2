@@ -1145,7 +1145,7 @@ const MoviesBox = () => {
       </div>
 
       <div style={{ fontSize: "1rem" }}>Click To Watch Live (close ads)</div>
-      <div style={{ fontSize: "1rem" }}>Live Sony TV</div>
+      {/* <div style={{ fontSize: "1rem" }}>Live Sony TV</div>
       <div>
         {channelNumberArray.map((ele, i) => (
           <button
@@ -1214,7 +1214,7 @@ const MoviesBox = () => {
             {`${ele.name}`}
           </button>
         ))}
-      </div>
+      </div> */}
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}>
         <input
           onChange={(e) => {
