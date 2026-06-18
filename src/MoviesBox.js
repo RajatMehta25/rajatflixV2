@@ -491,7 +491,8 @@ const MoviesBox = () => {
     const streamedSourcesArray = streamedSources.map((source) => ({
       id: source.id,
       name: source.source,
-      embedUrl: `https://embed.st/embed/${source.source}/${source.id}/1`,
+      // embedUrl: `https://embed.st/embed/${source.source}/${source.id}/1`,
+      embedUrl: `https://embedindia.st/embed/${source.source}/${source.id}`,
     }));
     const newChannels = [...channels, ...streamedSourcesArray];
     if (/android/i.test(userAgent)) {
