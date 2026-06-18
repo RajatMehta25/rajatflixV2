@@ -573,7 +573,7 @@ const MoviesBox = () => {
     // const data = await response.json();
     // const streamingLink = `https://dami-tv.pro${data.stream}`;
     // return streamingLink;
-    return `https://dami-tv.pro/embed/channel/?id=${channelNumber}`;
+    return `https://dami-tv.pro/embed/?id=${channelNumber}`;
   };
   const channelNumberArrayESPN = [44, 45];
   const liveTVChannelESPN = async (channelNumber) => {
@@ -581,7 +581,7 @@ const MoviesBox = () => {
     // const data = await response.json();
     // const streamingLink = `https://dami-tv.pro${data.stream}`;
     // return streamingLink;
-    return `https://dami-tv.pro/embed/channel/?id=${channelNumber}`;
+    return `https://dami-tv.pro/embed/?id=${channelNumber}`;
   };
   const channelNumberArrayHBO = [
     { channelNumber: 690, name: "HBO Comedy" },
@@ -596,7 +596,8 @@ const MoviesBox = () => {
     // const response = await fetch(`https://dami-tv.pro/papi/tv/resolve/${channelNumber}`);
     // const data = await response.json();
     // const streamingLink = `https://dami-tv.pro${data.stream}`;
-    return `https://dami-tv.pro/embed/channel/?id=${channelNumber}`;
+    // return `https://dami-tv.pro/embed/channel/?id=${channelNumber}`;
+    return `https://dami-tv.pro/embed/?id=${channelNumber}`;
   };
   const channelNumberArrayWWE = [{ channelNumber: 376, name: "WWE" }];
   const liveTVChannelWWE = async (channelNumber) => {
@@ -605,7 +606,7 @@ const MoviesBox = () => {
     // const data = await response.json();
     // console.log("WWE Channel Data:", data);
     // const streamingLink = `https://dami-tv.pro${data.stream}`;
-    return `https://dami-tv.pro/embed/channel/?id=${channelNumber}`;
+    return `https://dami-tv.pro/embed/?id=${channelNumber}`;
     // return `https://dami-tv.pro/embed/channel/?id=${channelNumber}`;
     // return `https://dami-tv.pro/player/hls/?v=300&resolve=${channelNumber}&name=${encodeURIComponent("MTV USA")}`;
   };
