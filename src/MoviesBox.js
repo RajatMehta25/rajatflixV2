@@ -243,11 +243,11 @@ const MoviesBox = () => {
     FootballCardDataApiV2();
   }, []);
 
-  const FootballCardDataApi = () => {
-    fetch(`https://ws.kora-api.top/api/matches/${moment().format("YYYY-MM-DD")}?t=59`)
-      .then((res) => res.json())
-      .then((data) => setFootballCardData(data));
-  };
+  // const FootballCardDataApi = () => {
+  //   fetch(`https://ws.kora-api.top/api/matches/${moment().format("YYYY-MM-DD")}?t=59`)
+  //     .then((res) => res.json())
+  //     .then((data) => setFootballCardData(data));
+  // };
   const FootballCardDataApiV2 = () => {
     setFootballCardLoading(true);
     // fetch(`https://streamed.pk/api/matches/football`)
@@ -266,12 +266,12 @@ const MoviesBox = () => {
     }
   };
 
-  const MatchDetails = (id) => {
-    // fetch(`https://ws.kora-api.top/api/matche/${ID}/en?t=0716`);
-    fetch(`https://ws.kora-api.top/api/matche/${id}/en?t=${moment.format("YYYY-MM-DD h:i")}`)
-      .then((res) => res.json())
-      .then((data) => setMatchData(data));
-  };
+  // const MatchDetails = (id) => {
+  //   // fetch(`https://ws.kora-api.top/api/matche/${ID}/en?t=0716`);
+  //   fetch(`https://ws.kora-api.top/api/matche/${id}/en?t=${moment.format("YYYY-MM-DD h:i")}`)
+  //     .then((res) => res.json())
+  //     .then((data) => setMatchData(data));
+  // };
   //telegram bot
   // useEffect(() => {
   //   fetch(`http://localhost:5000/getUpdates`).then((res) => res.json().then((json) => setTelegramData(json.result)));
@@ -1146,7 +1146,7 @@ const MoviesBox = () => {
       </div>
 
       <div style={{ fontSize: "1rem" }}>Click To Watch Live (close ads)</div>
-      <div style={{ fontSize: "1rem" }}>Live Sony TV</div>
+      {/* <div style={{ fontSize: "1rem" }}>Live Sony TV</div>
       <div>
         {channelNumberArray.map((ele, i) => (
           <button
@@ -1215,7 +1215,7 @@ const MoviesBox = () => {
             {`${ele.name}`}
           </button>
         ))}
-      </div>
+      </div> */}
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}>
         <input
           onChange={(e) => {
