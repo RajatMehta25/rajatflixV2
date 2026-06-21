@@ -631,24 +631,15 @@ const MoviesBox = () => {
         { season: 4, episodes: 13 },
       ],
     },
-    // {
-    //   id: 247769,
-    //   name: "Kapil Sharma S2",
-    //   season: 2,
-    //   img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMl3eP7UPS03MX_lRpn0XqWIVR0hizM1nEFg&s",
-    // },
-    // {
-    //   id: 247769,
-    //   name: "Kapil Sharma S3",
-    //   season: 3,
-    //   img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMl3eP7UPS03MX_lRpn0XqWIVR0hizM1nEFg&s",
-    // },
-    // {
-    //   id: 247769,
-    //   name: "Kapil Sharma S4",
-    //   season: 4,
-    //   img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMl3eP7UPS03MX_lRpn0XqWIVR0hizM1nEFg&s",
-    // },
+    {
+      id: 94997,
+      name: "House of the Dragon",
+      img: "https://media.themoviedb.org/t/p/w600_and_h900_face/7V0Ebks0GgpKvQ7QbLAIdX5dos4.jpg",
+      seriesData: [
+        { season: 1, episodes: 10 },
+        { season: 2, episodes: 8 },
+      ],
+    },
     {
       id: 220102,
       name: "Spider Noir",
@@ -709,7 +700,7 @@ const MoviesBox = () => {
     // },
     {
       id: 90966,
-      name: "Gullak S5",
+      name: "Gullak",
       season: 5,
       img: "https://image.tmdb.org/t/p/original/47fUYgqURqbp0aT65CJdmOKHyJj.jpg",
       seriesData: [
@@ -1212,10 +1203,10 @@ const MoviesBox = () => {
       </>
       {/* <KapilBox Kapilref={Kapilref} kapils02={kapils02} episode={episode} setEpisode={setEpisode} /> */}
       <div style={{ width: "100%", position: "relative" }}>
-        <Overlay channel={channel} />
+        <Overlay channel={NewContentSrc} />
         {/* <video style={{ minHeight: 200 }} src={channel}></video> */}
         {Object.keys(seriesObject).length > 0 && (
-          <div>
+          <div style={{ display: "flex", overflowX: "scroll", gap: "1rem", width: "100%" }}>
             {seriesObject.seriesData.map((seasonData, index) => (
               <div key={index}>
                 <h3>Season {seasonData.season}</h3>
@@ -1246,6 +1237,7 @@ const MoviesBox = () => {
             ))}
           </div>
         )}
+
         <iframe
           className="iframe"
           src={NewContentSrc}
@@ -1254,7 +1246,7 @@ const MoviesBox = () => {
           ref={NewContentRef}
         />
       </div>
-      <div></div>
+
       <Tabs
         defaultActiveKey={key}
         style={{ width: "100%" }}
