@@ -151,11 +151,11 @@ const Home = () => {
   return (
     <div>
       <Header userDetails={userDetails} handleLogout={handleLogout} />
-      {hasAccess ? (
-        <MoviesBox />
-      ) : (
+      {/* {hasAccess ? ( */}
+      <MoviesBox />
+      {/* ) : (
         <div style={{ textAlign: "center", padding: "1rem", fontSize: "1.25rem" }}>Free Trial is Over.</div>
-      )}
+      )} */}
       <Disclaimer />
     </div>
   );
