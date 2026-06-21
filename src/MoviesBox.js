@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback, useContext } from "react";
+import { useState, useEffect, useRef, useCallback, useContext, Suspense, lazy } from "react";
 import MovieCard from "./MovieCard";
 import moment from "moment";
 import FootballCard from "./FootballCard";
@@ -24,7 +24,8 @@ import { AuthContext } from "./context";
 import UserCount from "./UserCount";
 import Overlay from "./Overlay";
 import { Input, Radio, Tabs } from "antd";
-import { FootballSection } from "./FootballSection";
+// import { FootballSection } from "./FootballSection";
+const FootballSection = lazy(() => import("./FootballSection"));
 
 const MoviesBox = () => {
   const Kapilref = useRef();
@@ -247,32 +248,6 @@ const MoviesBox = () => {
   };
 
   //Football
-  useEffect(() => {
-    FootballCardDataApiV2();
-  }, []);
-
-  // const FootballCardDataApi = () => {
-  //   fetch(`https://ws.kora-api.top/api/matches/${moment().format("YYYY-MM-DD")}?t=59`)
-  //     .then((res) => res.json())
-  //     .then((data) => setFootballCardData(data));
-  // };
-  const FootballCardDataApiV2 = () => {
-    setFootballCardLoading(true);
-    // fetch(`https://streamed.pk/api/matches/football`)
-    try {
-      // fetch(`https://streamed.pk/api/matches/all`)
-      fetch(`https://dami-tv.pro/papi/matches/all`)
-        .then((res) => res.json())
-        .then((data) => {
-          setFootballCardData(data);
-          setFootballCardLoading(false);
-          onChangeChannelSearch(""); // console.log("FootballCardDataV2", data);
-        });
-    } catch (error) {
-      console.error("Error fetching football card data:", error);
-      setFootballCardLoading(false);
-    }
-  };
 
   // const MatchDetails = (id) => {
   //   // fetch(`https://ws.kora-api.top/api/matche/${ID}/en?t=0716`);
@@ -494,46 +469,6 @@ const MoviesBox = () => {
   //   setChannel("");
   //   console.log("FootballCardSources", data);
   // };
-  const fetchFootballSources = async (sources, channels, streamedSources) => {
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    const streamedSourcesArray = streamedSources.map((source) => ({
-      id: source.id,
-      name: source.name,
-      // embedUrl: `https://embed.st/embed/${source.source}/${source.id}/1`,
-      embedUrl: `https://embedindia.st/embed/${source.id}`,
-    }));
-    const newChannels = [...channels, ...streamedSourcesArray];
-    if (/android/i.test(userAgent)) {
-      navigator.vibrate(200);
-    }
-    logEvent(analytics, `${user.displayName}-${sources.id}`, {
-      user: user?.displayName || "guest",
-      timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
-      category: "football",
-    });
-    // navigator.vibrate(200);
-
-    // const results = await Promise.allSettled(
-    //   sources.map(({ source, id }) =>
-    //     // fetch(`https://pooembed.eu/embed/${source}/${id}`)
-    //     fetch(`https://dami-tv.pro/embed/?id=${id}`).then((r) => {
-    //       if (!r.ok) throw new Error(`HTTP ${r.status}`);
-    //       return r.json();
-    //     }),
-    //   ),
-    // );
-
-    // const ok = results.filter((r) => r.status === "fulfilled").map((r) => r.value);
-
-    // const FD = ok.flat(Infinity);
-    setFootballCardSources(newChannels);
-    // console.log("Selected sources for fetching:", sources);
-    footballFrameref.current.scrollIntoView({ behavior: "smooth", block: "center" });
-    setChannel(`https://dami-tv.pro/embed/?id=${sources[0].id}`);
-
-    // const failed = results.filter((r) => r.status === "rejected").length;
-    // if (failed) console.warn(`Skipped ${failed} failed request(s).`);
-  };
 
   // Group by category (whatever the API returns)
   const groupByCategory = (items) =>
@@ -1383,9 +1318,9 @@ const MoviesBox = () => {
       </div>
       <div style={{ fontSize: "1rem" }}>Match List</div>
       <div style={{ fontSize: "1rem" }}>
-        <button className="downloadButton" onClick={() => FootballCardDataApiV2()}>
+        {/* <button className="downloadButton" onClick={() => FootballCardDataApiV2()}>
           Refresh Match List
-        </button>
+        </button> */}
         <h1>For Fast Internet/Wifi</h1>
       </div>
       <div
@@ -1433,12 +1368,22 @@ const MoviesBox = () => {
           onChange={handleModeChange}
         />
       </div> */}
-      <FootballSection
-        loadingFootballCard={loadingFootballCard}
-        searchChannel={searchChannel}
-        fetchFootballSources={fetchFootballSources}
-        selectedCategory={selectedCategory}
-      />
+      <Suspense fallback={<div>Loading Football Section...</div>}>
+        <FootballSection
+          loadingFootballCard={loadingFootballCard}
+          searchChannel={searchChannel}
+          // fetchFootballSources={fetchFootballSources}
+          selectedCategory={selectedCategory}
+          FootballCardData={FootballCardData}
+          setFootballCardData={setFootballCardData}
+          setFootballCardLoading={setFootballCardLoading}
+          onChangeChannelSearch={onChangeChannelSearch}
+          user={user}
+          setFootballCardSources={setFootballCardSources}
+          footballFrameref={footballFrameref}
+          setChannel={setChannel}
+        />
+      </Suspense>
     </div>
   );
 };
