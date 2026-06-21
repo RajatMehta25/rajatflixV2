@@ -555,6 +555,15 @@ const MoviesBox = () => {
   //dami-tv.pro/player/hls/?v=300&resolve=
   const TVSeriesData = [
     {
+      id: 240983,
+      name: "Sapne vs Everyone",
+      img: "https://media.themoviedb.org/t/p/w600_and_h900_face/ajBMZ9JNpfrecj4xpZz49tCONBm.jpg",
+      seriesData: [
+        { season: 1, episodes: 5 },
+        { season: 2, episodes: 5 },
+      ],
+    },
+    {
       id: 247769,
       name: "Kapil Sharma",
       // season: 1,
