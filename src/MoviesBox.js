@@ -515,7 +515,8 @@ const MoviesBox = () => {
     // const data = await response.json();
     // const streamingLink = `https://dami-tv.pro${data.stream}`;
     // return streamingLink;
-    return `https://dami-tv.pro/embed/?id=${channelNumber}`;
+    // return `https://dami-tv.pro/embed/?id=${channelNumber}`;
+    return `https://dami-tv.pro/embed/channel/?id=${channelNumber}`;
   };
   const channelNumberArrayESPN = [44, 45];
   const liveTVChannelESPN = async (channelNumber) => {
@@ -523,7 +524,8 @@ const MoviesBox = () => {
     // const data = await response.json();
     // const streamingLink = `https://dami-tv.pro${data.stream}`;
     // return streamingLink;
-    return `https://dami-tv.pro/embed/?id=${channelNumber}`;
+    // return `https://dami-tv.pro/embed/?id=${channelNumber}`;
+    return `https://dami-tv.pro/embed/channel/?id=${channelNumber}`;
   };
   const channelNumberArrayHBO = [
     { channelNumber: 690, name: "HBO Comedy" },
@@ -538,8 +540,8 @@ const MoviesBox = () => {
     // const response = await fetch(`https://dami-tv.pro/papi/tv/resolve/${channelNumber}`);
     // const data = await response.json();
     // const streamingLink = `https://dami-tv.pro${data.stream}`;
-    // return `https://dami-tv.pro/embed/channel/?id=${channelNumber}`;
-    return `https://dami-tv.pro/embed/?id=${channelNumber}`;
+    return `https://dami-tv.pro/embed/channel/?id=${channelNumber}`;
+    // return `https://dami-tv.pro/embed/?id=${channelNumber}`;
   };
   const channelNumberArrayWWE = [{ channelNumber: 376, name: "WWE" }];
   const liveTVChannelWWE = async (channelNumber) => {
@@ -548,8 +550,8 @@ const MoviesBox = () => {
     // const data = await response.json();
     // console.log("WWE Channel Data:", data);
     // const streamingLink = `https://dami-tv.pro${data.stream}`;
-    return `https://dami-tv.pro/embed/?id=${channelNumber}`;
-    // return `https://dami-tv.pro/embed/channel/?id=${channelNumber}`;
+    // return `https://dami-tv.pro/embed/?id=${channelNumber}`;
+    return `https://dami-tv.pro/embed/channel/?id=${channelNumber}`;
     // return `https://dami-tv.pro/player/hls/?v=300&resolve=${channelNumber}&name=${encodeURIComponent("MTV USA")}`;
   };
   //dami-tv.pro/player/hls/?v=300&resolve=
@@ -566,7 +568,7 @@ const MoviesBox = () => {
     {
       id: 247769,
       name: "Kapil Sharma",
-      // season: 1,
+
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMl3eP7UPS03MX_lRpn0XqWIVR0hizM1nEFg&s",
       seriesData: [
         { season: 1, episodes: 13 },
@@ -582,26 +584,27 @@ const MoviesBox = () => {
       seriesData: [
         { season: 1, episodes: 10 },
         { season: 2, episodes: 8 },
+        { season: 3, episode: 1 },
       ],
     },
     {
       id: 220102,
       name: "Spider Noir",
-      // season: 1,
+
       img: "https://m.media-amazon.com/images/S/pv-target-images/68a476ef999551fb0e7053dcf4e8da0dd4d528557a2ef6b8b1dfc955eb258bd3.png",
       seriesData: [{ season: 1, episodes: 8 }],
     },
     {
       id: 273240,
       name: "Off Campus",
-      // season: 1,
+
       img: "https://m.media-amazon.com/images/S/pv-target-images/f19c7e550a4c984dd0fed38014bc6baefc59c09e4c342b6d390851a4ea70da85.png",
       seriesData: [{ season: 1, episodes: 8 }],
     },
     {
       id: 60574,
       name: "The Peaky Blinders",
-      // season: 1,
+
       img: "https://m.media-amazon.com/images/S/pv-target-images/f7ffc4ffa21f3ae373bacf9502771bf724f2503b177e415d8aacc56d6ca05970.jpg",
       seriesData: [
         { season: 1, episodes: 6 },
@@ -612,40 +615,11 @@ const MoviesBox = () => {
         { season: 6, episodes: 6 },
       ],
     },
-    // {
-    //   id: 60574,
-    //   name: "The Peaky Blinders S2",
-    //   season: 2,
-    //   img: "https://m.media-amazon.com/images/S/pv-target-images/f7ffc4ffa21f3ae373bacf9502771bf724f2503b177e415d8aacc56d6ca05970.jpg",
-    // },
-    // {
-    //   id: 60574,
-    //   name: "The Peaky Blinders S3",
-    //   season: 3,
-    //   img: "https://m.media-amazon.com/images/S/pv-target-images/f7ffc4ffa21f3ae373bacf9502771bf724f2503b177e415d8aacc56d6ca05970.jpg",
-    // },
-    // {
-    //   id: 60574,
-    //   name: "The Peaky Blinders S4",
-    //   season: 4,
-    //   img: "https://m.media-amazon.com/images/S/pv-target-images/f7ffc4ffa21f3ae373bacf9502771bf724f2503b177e415d8aacc56d6ca05970.jpg",
-    // },
-    // {
-    //   id: 60574,
-    //   name: "The Peaky Blinders S5",
-    //   season: 5,
-    //   img: "https://m.media-amazon.com/images/S/pv-target-images/f7ffc4ffa21f3ae373bacf9502771bf724f2503b177e415d8aacc56d6ca05970.jpg",
-    // },
-    // {
-    //   id: 60574,
-    //   name: "The Peaky Blinders S6",
-    //   season: 6,
-    //   img: "https://m.media-amazon.com/images/S/pv-target-images/f7ffc4ffa21f3ae373bacf9502771bf724f2503b177e415d8aacc56d6ca05970.jpg",
-    // },
+
     {
       id: 90966,
       name: "Gullak",
-      season: 5,
+
       img: "https://image.tmdb.org/t/p/original/47fUYgqURqbp0aT65CJdmOKHyJj.jpg",
       seriesData: [
         { season: 1, episodes: 5 },
@@ -658,7 +632,7 @@ const MoviesBox = () => {
     {
       id: 96421,
       name: "Hostel Daze ",
-      season: 1,
+
       img: "https://media.themoviedb.org/t/p/w600_and_h900_face/5GZQ9BWhCifOe82PngY1xgqVEuG.jpg",
       seriesData: [
         { season: 1, episodes: 5 },
@@ -883,6 +857,231 @@ const MoviesBox = () => {
                   className="downloadButtonSeries"
                   onClick={() => {
                     setNewContentSrc(`https://web.nxsha.app/embed/movie/${ele.id}`);
+                    NewContentRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+                    logEvent(analytics, `${user.displayName}-${ele.name}`, {
+                      user: user?.displayName || "guest",
+                      timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
+                      category: "movie/tv",
+                    });
+                  }}
+                >
+                  <img src={ele.img} alt={ele.name} />
+                  <div className="posterTitle">{ele.name}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </>
+      ),
+    },
+
+    {
+      key: "Source_3",
+      label: "Source 3",
+      children: (
+        <>
+          <h2>Series</h2>
+
+          <input
+            onChange={(e) => {
+              onSearchTVSeriesSourceChange(e.target.value);
+            }}
+            value={searchTVSeriesSource}
+            placeholder="Search TV Series"
+            className="search"
+          />
+          <div className="netflixRow">
+            <div className="rowPoster">
+              {TVSeriesDataFiltered().map((ele, i) => (
+                <button
+                  key={ele.id + i}
+                  className="downloadButtonSeries"
+                  onClick={() => {
+                    setNewContentSrc(`https://www.vidking.net/embed/tv/${ele.id}/${ele.seriesData[0].season}/1`);
+                    setSeriesObject(ele);
+                    NewContentRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+                    logEvent(analytics, `${user.displayName}-${ele.name}`, {
+                      user: user?.displayName || "guest",
+                      timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
+                      category: "movie/tv",
+                    });
+                  }}
+                >
+                  <img src={ele.img} alt={ele.name} />
+                  <div className="posterTitle">{ele.name}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+          <h2>Movies</h2>
+
+          <input
+            onChange={(e) => {
+              onSearchMovieSourceChange(e.target.value);
+            }}
+            value={searchMovieSource}
+            placeholder="Search Movie"
+            className="search"
+          />
+          <div className="netflixRow">
+            <div className="rowPoster">
+              {MoviesDataFiltered().map((ele, i) => (
+                <button
+                  key={ele.id + i}
+                  className="downloadButtonSeries"
+                  onClick={() => {
+                    setNewContentSrc(`https://www.vidking.net/embed/movie/${ele.id}`);
+                    setSeriesObject({});
+                    NewContentRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+                    logEvent(analytics, `${user.displayName}-${ele.name}`, {
+                      user: user?.displayName || "guest",
+                      timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
+                      category: "movie/tv",
+                    });
+                  }}
+                >
+                  <img src={ele.img} alt={ele.name} />
+                  <div className="posterTitle">{ele.name}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </>
+      ),
+    },
+    {
+      key: "Source_4",
+      label: "Source 4",
+      children: (
+        <>
+          <h2>Series</h2>
+
+          <input
+            onChange={(e) => {
+              onSearchTVSeriesSourceChange(e.target.value);
+            }}
+            value={searchTVSeriesSource}
+            placeholder="Search TV Series"
+            className="search"
+          />
+          <div className="netflixRow">
+            <div className="rowPoster">
+              {TVSeriesDataFiltered().map((ele, i) => (
+                <button
+                  key={ele.id + i}
+                  className="downloadButtonSeries"
+                  onClick={() => {
+                    setNewContentSrc(`https://player.vidplus.to/embed/tv/${ele.id}/${ele.seriesData[0].season}/1`);
+                    setSeriesObject(ele);
+                    NewContentRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+                    logEvent(analytics, `${user.displayName}-${ele.name}`, {
+                      user: user?.displayName || "guest",
+                      timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
+                      category: "movie/tv",
+                    });
+                  }}
+                >
+                  <img src={ele.img} alt={ele.name} />
+                  <div className="posterTitle">{ele.name}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+          <h2>Movies</h2>
+
+          <input
+            onChange={(e) => {
+              onSearchMovieSourceChange(e.target.value);
+            }}
+            value={searchMovieSource}
+            placeholder="Search Movie"
+            className="search"
+          />
+          <div className="netflixRow">
+            <div className="rowPoster">
+              {MoviesDataFiltered().map((ele, i) => (
+                <button
+                  key={ele.id + i}
+                  className="downloadButtonSeries"
+                  onClick={() => {
+                    setNewContentSrc(`https://player.vidplus.to/embed/movie/${ele.id}`);
+                    setSeriesObject({});
+                    NewContentRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+                    logEvent(analytics, `${user.displayName}-${ele.name}`, {
+                      user: user?.displayName || "guest",
+                      timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
+                      category: "movie/tv",
+                    });
+                  }}
+                >
+                  <img src={ele.img} alt={ele.name} />
+                  <div className="posterTitle">{ele.name}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </>
+      ),
+    },
+    {
+      key: "Source_5",
+      label: "Source 5",
+      children: (
+        <>
+          <h2>Series</h2>
+
+          <input
+            onChange={(e) => {
+              onSearchTVSeriesSourceChange(e.target.value);
+            }}
+            value={searchTVSeriesSource}
+            placeholder="Search TV Series"
+            className="search"
+          />
+          <div className="netflixRow">
+            <div className="rowPoster">
+              {TVSeriesDataFiltered().map((ele, i) => (
+                <button
+                  key={ele.id + i}
+                  className="downloadButtonSeries"
+                  onClick={() => {
+                    setNewContentSrc(
+                      `https://streambox-scrapper.vercel.app/stream/series/${ele.id}/${ele.seriesData[0].season}/1`,
+                    );
+                    setSeriesObject(ele);
+                    NewContentRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+                    logEvent(analytics, `${user.displayName}-${ele.name}`, {
+                      user: user?.displayName || "guest",
+                      timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
+                      category: "movie/tv",
+                    });
+                  }}
+                >
+                  <img src={ele.img} alt={ele.name} />
+                  <div className="posterTitle">{ele.name}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+          <h2>Movies</h2>
+
+          <input
+            onChange={(e) => {
+              onSearchMovieSourceChange(e.target.value);
+            }}
+            value={searchMovieSource}
+            placeholder="Search Movie"
+            className="search"
+          />
+          <div className="netflixRow">
+            <div className="rowPoster">
+              {MoviesDataFiltered().map((ele, i) => (
+                <button
+                  key={ele.id + i}
+                  className="downloadButtonSeries"
+                  onClick={() => {
+                    setNewContentSrc(`https://streambox-scrapper.vercel.app/stream/movie/${ele.id}`);
+                    setSeriesObject({});
                     NewContentRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
                     logEvent(analytics, `${user.displayName}-${ele.name}`, {
                       user: user?.displayName || "guest",
@@ -1169,6 +1368,20 @@ const MoviesBox = () => {
                       } else if (key === "Source_2") {
                         setNewContentSrc(`https://web.nxsha.app/embed/tv/${seriesObject.id}/${seasonData.season}/${index}`);
                         NewContentRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+                      } else if ((key = "Source_3")) {
+                        setNewContentSrc(`https://www.vidking.net/embed/tv/${seriesObject.id}/${seasonData.season}/${index}`);
+                        NewContentRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+                      } else if ((key = "Source_4")) {
+                        setNewContentSrc(`https://player.vidplus.to/embed/tv/${seriesObject.id}/${seasonData.season}/${index}`);
+                        NewContentRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+                      } else if ((key = "Source_4")) {
+                        setNewContentSrc(`https://player.vidplus.to/embed/tv/${seriesObject.id}/${seasonData.season}/${index}`);
+                        NewContentRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+                      } else if ((key = "Source_5")) {
+                        setNewContentSrc(
+                          `https://streambox-scrapper.vercel.app/stream/series/${seriesObject.id}/${seasonData.season}/${index}`,
+                        );
+                        NewContentRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
                       }
 
                       // footballFrameref.current.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -1244,7 +1457,7 @@ const MoviesBox = () => {
         />
       </div>
       <div style={{ fontSize: "1rem" }}>Click To Watch Live (close ads)</div>
-      {/* <div style={{ fontSize: "1rem" }}>Live Sony TV</div>
+      <div style={{ fontSize: "1rem" }}>Live Sony TV</div>
       <div>
         {channelNumberArray.map((ele, i) => (
           <button
@@ -1313,7 +1526,7 @@ const MoviesBox = () => {
             {`${ele.name}`}
           </button>
         ))}
-      </div> */}
+      </div>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}>
         <input
           onChange={(e) => {
