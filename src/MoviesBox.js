@@ -733,7 +733,7 @@ const MoviesBox = () => {
       label: "Source 1",
       children: (
         <>
-          <h2>Series</h2>
+          <h2>Series Source 1 </h2>
 
           <input
             onChange={(e) => {
@@ -766,7 +766,7 @@ const MoviesBox = () => {
               ))}
             </div>
           </div>
-          <h2>Movies</h2>
+          <h2>Movies Source 1</h2>
 
           <input
             onChange={(e) => {
@@ -807,7 +807,7 @@ const MoviesBox = () => {
       label: "Source 2",
       children: (
         <>
-          <h2>TV Series</h2>
+          <h2>Series Source 2</h2>
           <input
             onChange={(e) => {
               onSearchTVSeriesSourceChange(e.target.value);
@@ -839,7 +839,7 @@ const MoviesBox = () => {
               ))}
             </div>
           </div>
-          <h2>Movies</h2>
+          <h2>Movies Source 2</h2>
           <input
             onChange={(e) => {
               onSearchMovieSourceChange(e.target.value);
@@ -880,7 +880,7 @@ const MoviesBox = () => {
       label: "Source 3",
       children: (
         <>
-          <h2>Series</h2>
+          <h2>Series Source 3</h2>
 
           <input
             onChange={(e) => {
@@ -913,7 +913,7 @@ const MoviesBox = () => {
               ))}
             </div>
           </div>
-          <h2>Movies</h2>
+          <h2>Movies Source 3</h2>
 
           <input
             onChange={(e) => {
@@ -954,7 +954,7 @@ const MoviesBox = () => {
       label: "Source 4",
       children: (
         <>
-          <h2>Series</h2>
+          <h2>Series Source 4</h2>
 
           <input
             onChange={(e) => {
@@ -987,7 +987,7 @@ const MoviesBox = () => {
               ))}
             </div>
           </div>
-          <h2>Movies</h2>
+          <h2>Movies Source 4</h2>
 
           <input
             onChange={(e) => {
@@ -1028,7 +1028,7 @@ const MoviesBox = () => {
       label: "Source 5",
       children: (
         <>
-          <h2>Series</h2>
+          <h2>Series Source 5</h2>
 
           <input
             onChange={(e) => {
@@ -1063,7 +1063,7 @@ const MoviesBox = () => {
               ))}
             </div>
           </div>
-          <h2>Movies</h2>
+          <h2>Movies Source 5</h2>
 
           <input
             onChange={(e) => {
@@ -1103,6 +1103,12 @@ const MoviesBox = () => {
   const onSourceChange = (key) => {
     setKey(key);
   };
+  useEffect(() => {
+    if (key) {
+      setNewContentSrc((prev) => prev);
+      setSeriesObject((prev) => ({ ...prev }));
+    }
+  }, [key]);
   return (
     <div className="MovieContainer">
       {/* <HowToDownload /> */}
