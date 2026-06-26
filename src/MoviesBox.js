@@ -15,7 +15,7 @@ import useHandleDivWheel from "./useHandleDivWheel";
 import useGithubApi from "./useGithubApi";
 import KapilBox from "./KapilBox";
 import LoadingCard from "./LoadingCard";
-import { set } from "date-fns";
+import { constructNow, set } from "date-fns";
 import { Link } from "react-router-dom";
 import "./FootballCard.css";
 import { logEvent } from "firebase/analytics";
@@ -23,7 +23,7 @@ import { analytics } from "./firebase";
 import { AuthContext } from "./context";
 import UserCount from "./UserCount";
 import Overlay from "./Overlay";
-import { Input, Radio, Tabs } from "antd";
+import { Button, Input, Radio, Tabs } from "antd";
 // import { FootballSection } from "./FootballSection";
 const FootballSection = lazy(() => import("./FootballSection"));
 
@@ -1109,6 +1109,9 @@ const MoviesBox = () => {
       setSeriesObject((prev) => ({ ...prev }));
     }
   }, [key]);
+
+  const [footballSource2, setFootballSource2] = useState("");
+  const [liveTvSource1, setliveTVSource1] = useState("");
   return (
     <div className="MovieContainer">
       {/* <HowToDownload /> */}
@@ -1612,6 +1615,54 @@ const MoviesBox = () => {
           setChannel={setChannel}
         />
       </Suspense>
+      <div>
+        <h2>Football Source 1</h2>
+        <iframe
+          className="iframe"
+          src={`https://hd.muesra.sbs/albaplayer/oooe/`}
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen ; download ; translator"
+          allowFullScreen
+          ref={footballFrameref}
+        />
+        <h2>Football Source 2</h2>
+        <div>
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((ele, i) => (
+            <button
+              className="downloadButton"
+              onClick={() => setFootballSource2(`https://s28.yalla-sport.top/ch/ch${i}.php`)}
+            >{`Link ${i + 1}`}</button>
+          ))}
+        </div>
+        <div style={{ width: "100%", position: "relative" }}>
+          <Overlay channel={footballSource2} />
+          <iframe
+            className="iframe"
+            src={footballSource2}
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen ; download ; translator"
+            allowFullScreen
+          />
+        </div>
+        <h2>Live TV Source 1</h2>
+        <div>
+          {["AAJTAK", "STARGOLDHD", "TRAVELXP4K", "B4UMUSIC", "BALLEBALLE", "INDIATODAY"].map((ele, i) => (
+            <button
+              className="downloadButton"
+              onClick={() => setliveTVSource1(`https://techy-kuldeep-zee5-fhuc55.vercel.app/${ele}.html`)}
+            >
+              {ele}
+            </button>
+          ))}
+        </div>
+        <div style={{ width: "100%", position: "relative" }}>
+          <Overlay channel={liveTvSource1} />
+          <iframe
+            className="iframe"
+            src={liveTvSource1}
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen ; download ; translator"
+            allowFullScreen
+          />
+        </div>
+      </div>
     </div>
   );
 };
