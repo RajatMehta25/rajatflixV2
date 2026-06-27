@@ -11,7 +11,7 @@ import { getToken, onMessage } from "firebase/messaging";
 import { parse, isAfter } from "date-fns";
 import Disclaimer from "./Disclaimer";
 import { useNavigate } from "react-router-dom";
-
+import DisableDevTool from "disable-devtool";
 const Message = ({ image, title, body }) => (
   <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
     {image ? <img src={image} style={{ width: 100, height: 100, borderRadius: 16 }} alt="" /> : null}
@@ -26,7 +26,7 @@ const Home = () => {
   const { user, setUser, loading, setLoading, authResolved } = useContext(AuthContext);
   const [userDetails, setUserDetails] = useState({});
   const navigate = useNavigate();
-
+  DisableDevTool();
   // Fetch user details once we have an authenticated user
   const fetchUserData = useCallback(
     async (uid) => {

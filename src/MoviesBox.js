@@ -24,6 +24,8 @@ import { AuthContext } from "./context";
 import UserCount from "./UserCount";
 import Overlay from "./Overlay";
 import { Button, Input, Radio, Tabs } from "antd";
+import { toast } from "react-toastify";
+import { jsonData } from "./LiveTvChannels";
 // import { FootballSection } from "./FootballSection";
 const FootballSection = lazy(() => import("./FootballSection"));
 
@@ -555,6 +557,24 @@ const MoviesBox = () => {
     // return `https://dami-tv.pro/player/hls/?v=300&resolve=${channelNumber}&name=${encodeURIComponent("MTV USA")}`;
   };
   //dami-tv.pro/player/hls/?v=300&resolve=
+  const channelNumberArrayBBC = [
+    { channelNumber: 305, name: "BBC AMerica" },
+    { channelNumber: 306, name: "BBC" },
+    { channelNumber: 307, name: "BBC Sport" },
+    { channelNumber: 308, name: "BBC News" },
+    { channelNumber: 309, name: "BBC World" },
+    { channelNumber: 310, name: "BBC One" },
+  ];
+  const liveTVChannelBBC = async (channelNumber) => {
+    // const response = await fetch(`https://dami-tv.pro/papi/tv/resolve/${channelNumber}`);
+    // console.log("WWE Channel Response:", response);
+    // const data = await response.json();
+    // console.log("WWE Channel Data:", data);
+    // const streamingLink = `https://dami-tv.pro${data.stream}`;
+    // return `https://dami-tv.pro/embed/?id=${channelNumber}`;
+    return `https://dami-tv.pro/embed/channel/?id=${channelNumber}`;
+    // return `https://dami-tv.pro/player/hls/?v=300&resolve=${channelNumber}&name=${encodeURIComponent("MTV USA")}`;
+  };
   const TVSeriesData = [
     {
       id: 240983,
@@ -1112,6 +1132,27 @@ const MoviesBox = () => {
 
   const [footballSource2, setFootballSource2] = useState("");
   const [liveTvSource1, setliveTVSource1] = useState("");
+  const [liveTvSource2, setliveTVSource2] = useState("");
+  const fetchLiveTvSource2 = async (ele) => {
+    try {
+      const res = await fetch(`https://in4.vlive.in/drm.php?id=${ele}`);
+      const data = await res.json();
+      if (data && data.url && data.clearkey) {
+        const url = data.url; // Use 'url' from the response
+        const Clearkey = data.clearkey; // Use 'clearkey' from the response
+
+        // Update the iframe source
+        // const randomId = Math.random(); // This line is not needed
+        // Use 'url' (which you defined above) as the 'manifest' value
+        const iframeSrc = `https://vlive.pages.dev/pl.html?manifest=${encodeURIComponent(url)}&keyid=${Clearkey.split(":")[0]}&key=${Clearkey.split(":")[1]}`;
+        console.log("iframeSRC", iframeSrc);
+        window.open(iframeSrc, "_blank");
+        // setliveTVSource2(iframeSrc);
+      }
+    } catch (err) {
+      toast.error("Not Available For Now");
+    }
+  };
   return (
     <div className="MovieContainer">
       {/* <HowToDownload /> */}
@@ -1536,6 +1577,23 @@ const MoviesBox = () => {
           </button>
         ))}
       </div>
+      <div style={{ fontSize: "1rem" }}>Live BBC TV</div>
+      <div>
+        {channelNumberArrayBBC.map((ele, i) => (
+          <button
+            key={ele}
+            className="downloadButton"
+            onClick={() => {
+              liveTVChannelBBC(ele.channelNumber).then((link) => {
+                setChannel(link);
+                footballFrameref.current.scrollIntoView({ behavior: "smooth", block: "center" });
+              });
+            }}
+          >
+            {`BBC ${i + 1}`}
+          </button>
+        ))}
+      </div>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", width: "100%" }}>
         <input
           onChange={(e) => {
@@ -1622,14 +1680,13 @@ const MoviesBox = () => {
           src={`https://hd.muesra.sbs/albaplayer/oooe/`}
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen ; download ; translator"
           allowFullScreen
-          ref={footballFrameref}
         />
         <h2>Football Source 2</h2>
         <div>
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((ele, i) => (
             <button
               className="downloadButton"
-              onClick={() => setFootballSource2(`https://s28.yalla-sport.top/ch/ch${i}.php`)}
+              onClick={() => setFootballSource2(`https://s29.yalla-sport.top/ch/ch${i}.php`)}
             >{`Link ${i + 1}`}</button>
           ))}
         </div>
@@ -1644,7 +1701,24 @@ const MoviesBox = () => {
         </div>
         <h2>Live TV Source 1</h2>
         <div>
-          {["AAJTAK", "STARGOLDHD", "TRAVELXP4K", "B4UMUSIC", "BALLEBALLE", "INDIATODAY"].map((ele, i) => (
+          {[
+            "AAJTAK",
+            "STARGOLDHD",
+            "TRAVELXP4K",
+            "B4UMUSIC",
+            "BALLEBALLE",
+            "INDIATODAY",
+            "MUSICINDIA",
+            "ZEENEWS",
+            "INDIATODAY",
+            "GOODNEWSTODAY",
+            "WION",
+            "7XMUSIC",
+            "HARYANABEATS",
+            "SAGAMUSICHD",
+            "ZOOM",
+            "DESITASHAN",
+          ].map((ele, i) => (
             <button
               className="downloadButton"
               onClick={() => setliveTVSource1(`https://techy-kuldeep-zee5-fhuc55.vercel.app/${ele}.html`)}
@@ -1661,6 +1735,28 @@ const MoviesBox = () => {
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen ; download ; translator"
             allowFullScreen
           />
+        </div>
+      </div>
+      <h2>Live TV Source 2</h2>
+      <div className="netflixRow">
+        <div className="rowPoster">
+          {Object.entries(jsonData)
+            .map(([key, value]) => ({
+              id: key,
+              ...value,
+            }))
+            .map((ele, i) => (
+              <button
+                key={ele.id + i}
+                className="downloadButtonSeries"
+                onClick={() => {
+                  fetchLiveTvSource2(ele.id);
+                }}
+              >
+                <img src={ele.logo} alt={ele.logo} />
+                <div className="posterTitle">{ele.name}</div>
+              </button>
+            ))}
         </div>
       </div>
     </div>
