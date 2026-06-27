@@ -23,20 +23,26 @@ const FootballSection = ({
   //     .then((res) => res.json())
   //     .then((data) => setFootballCardData(data));
   // };
+  let retry = 0;
   const FootballCardDataApiV2 = () => {
     setFootballCardLoading(true);
     // fetch(`https://streamed.pk/api/matches/football`)
     try {
       // fetch(`https://streamed.pk/api/matches/all`)
       fetch(`https://dami-tv.pro/papi/matches/all`)
+        // fetch(`https://dami-tv.pro/papi/api/streams`)
         .then((res) => res.json())
         .then((data) => {
           setFootballCardData(data);
           setFootballCardLoading(false);
-          onChangeChannelSearch(""); // console.log("FootballCardDataV2", data);
+          onChangeChannelSearch("");
+          console.log("FootballCardDataV2", data);
         });
+      retry++;
     } catch (error) {
       console.error("Error fetching football card data:", error);
+      if (retry < 5) FootballCardDataApiV2();
+
       setFootballCardLoading(false);
     }
   };
