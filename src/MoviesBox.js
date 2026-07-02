@@ -577,6 +577,22 @@ const MoviesBox = () => {
   };
   const TVSeriesData = [
     {
+      id: 158282,
+      name: "Lock UPP",
+      img: "https://media.themoviedb.org/t/p/w600_and_h900_face/hRMpjPcg3P4wsdCl61KNXum1Itf.jpg",
+      seriesData: [
+        { season: 1, episodes: 71 },
+        { season: 2, episodes: 10 },
+      ],
+    },
+    {
+      id: 326367,
+      name: "Alliance",
+      img: "https://media.themoviedb.org/t/p/w600_and_h900_face/t9Og3WjlXcptadBFhLFJL3cSMDy.jpg",
+      seriesData: [{ season: 1, episodes: 8 }],
+    },
+
+    {
       id: 240983,
       name: "Sapne vs Everyone",
       img: "https://media.themoviedb.org/t/p/w600_and_h900_face/ajBMZ9JNpfrecj4xpZz49tCONBm.jpg",
@@ -1123,12 +1139,12 @@ const MoviesBox = () => {
   const onSourceChange = (key) => {
     setKey(key);
   };
-  useEffect(() => {
-    if (key) {
-      setNewContentSrc((prev) => prev);
-      setSeriesObject((prev) => ({ ...prev }));
-    }
-  }, [key]);
+  // useEffect(() => {
+  //   if (key) {
+  //     setNewContentSrc((prev) => prev);
+  //     setSeriesObject((prev) => ({ ...prev }));
+  //   }
+  // }, [key]);
 
   const [footballSource2, setFootballSource2] = useState("");
   const [liveTvSource1, setliveTVSource1] = useState("");
