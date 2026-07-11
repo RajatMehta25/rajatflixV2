@@ -99,17 +99,17 @@ const Login = () => {
 
     try {
       // Check screen size or touch capability
-      const isMobile = window.innerWidth < 768 || /Mobi|Android|iPhone/i.test(navigator.userAgent);
+      // const isMobile = window.innerWidth < 768 || /Mobi|Android|iPhone/i.test(navigator.userAgent);
 
-      if (isMobile) {
-        // Mobile flow
-        await signInWithRedirect(auth, provider);
-      } else {
-        // Desktop flow
-        const result = await signInWithPopup(auth, provider);
-        const success = await handleUserSession(result);
-        if (!success) setLoading?.(false);
-      }
+      // if (isMobile) {
+      //   // Mobile flow
+      //   await signInWithRedirect(auth, provider);
+      // } else {
+      // Desktop flow
+      const result = await signInWithPopup(auth, provider);
+      const success = await handleUserSession(result);
+      if (!success) setLoading?.(false);
+      // }
     } catch (error) {
       console.error("Google sign-in failed:", error);
       setLoading?.(false);
