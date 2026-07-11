@@ -680,21 +680,6 @@ const MoviesBox = () => {
   ];
   const MoviesData = [
     {
-      id: 1122030,
-      name: "Alpha",
-      img: "https://media.themoviedb.org/t/p/w600_and_h900_face/bPtRt3ajQ0EkyeQ1O6iJwAIi9Py.jpg",
-    },
-    {
-      id: 1522333,
-      name: "Carry on jatta 4",
-      img: "https://media.themoviedb.org/t/p/w600_and_h900_face/bKa9qAg71Kkjz0tOT1gxSAX9Nfv.jpg",
-    },
-    {
-      id: 1081003,
-      name: "Super Girl",
-      img: "https://media.themoviedb.org/t/p/w600_and_h900_face/niSvU02l2BONH9ivubV6K1a5QiK.jpg",
-    },
-    {
       id: 1475803,
       name: "Governor",
       img: "https://media.themoviedb.org/t/p/w600_and_h900_face/cdWfUYREo8RXkPxnZLvuG08QJrP.jpg",
@@ -1150,155 +1135,6 @@ const MoviesBox = () => {
         </>
       ),
     },
-
-    {
-      key: "Source_6",
-      label: "Source 6",
-      children: (
-        <>
-          <h2>Series Source 6</h2>
-
-          <input
-            onChange={(e) => {
-              onSearchTVSeriesSourceChange(e.target.value);
-            }}
-            value={searchTVSeriesSource}
-            placeholder="Search TV Series"
-            className="search"
-          />
-          <div className="netflixRow">
-            <div className="rowPoster">
-              {TVSeriesDataFiltered().map((ele, i) => (
-                <button
-                  key={ele.id + i}
-                  className="downloadButtonSeries"
-                  onClick={() => {
-                    setNewContentSrc(`https://video.moviepire.co/embed/tv/${ele.id}/${ele.seriesData[0].season}/1`);
-                    setSeriesObject(ele);
-                    NewContentRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
-                    logEvent(analytics, `${user.displayName}-${ele.name}`, {
-                      user: user?.displayName || "guest",
-                      timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
-                      category: "movie/tv",
-                    });
-                  }}
-                >
-                  <img src={ele.img} alt={ele.name} />
-                  <div className="posterTitle">{ele.name}</div>
-                </button>
-              ))}
-            </div>
-          </div>
-          <h2>Movies Source 6</h2>
-
-          <input
-            onChange={(e) => {
-              onSearchMovieSourceChange(e.target.value);
-            }}
-            value={searchMovieSource}
-            placeholder="Search Movie"
-            className="search"
-          />
-          <div className="netflixRow">
-            <div className="rowPoster">
-              {MoviesDataFiltered().map((ele, i) => (
-                <button
-                  key={ele.id + i}
-                  className="downloadButtonSeries"
-                  onClick={() => {
-                    setNewContentSrc(`https://video.moviepire.co/embed/movie/${ele.id}`);
-                    setSeriesObject({});
-                    NewContentRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
-                    logEvent(analytics, `${user.displayName}-${ele.name}`, {
-                      user: user?.displayName || "guest",
-                      timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
-                      category: "movie/tv",
-                    });
-                  }}
-                >
-                  <img src={ele.img} alt={ele.name} />
-                  <div className="posterTitle">{ele.name}</div>
-                </button>
-              ))}
-            </div>
-          </div>
-        </>
-      ),
-    },
-    {
-      key: "Source_7",
-      label: "Source 7",
-      children: (
-        <>
-          <h2>Series Source 7</h2>
-
-          <input
-            onChange={(e) => {
-              onSearchTVSeriesSourceChange(e.target.value);
-            }}
-            value={searchTVSeriesSource}
-            placeholder="Search TV Series"
-            className="search"
-          />
-          <div className="netflixRow">
-            <div className="rowPoster">
-              {TVSeriesDataFiltered().map((ele, i) => (
-                <button
-                  key={ele.id + i}
-                  className="downloadButtonSeries"
-                  onClick={() => {
-                    setNewContentSrc(`https://vixsrc.to/tv/${ele.id}/${ele.seriesData[0].season}/1`);
-                    setSeriesObject(ele);
-                    NewContentRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
-                    logEvent(analytics, `${user.displayName}-${ele.name}`, {
-                      user: user?.displayName || "guest",
-                      timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
-                      category: "movie/tv",
-                    });
-                  }}
-                >
-                  <img src={ele.img} alt={ele.name} />
-                  <div className="posterTitle">{ele.name}</div>
-                </button>
-              ))}
-            </div>
-          </div>
-          <h2>Movies Source 7</h2>
-
-          <input
-            onChange={(e) => {
-              onSearchMovieSourceChange(e.target.value);
-            }}
-            value={searchMovieSource}
-            placeholder="Search Movie"
-            className="search"
-          />
-          <div className="netflixRow">
-            <div className="rowPoster">
-              {MoviesDataFiltered().map((ele, i) => (
-                <button
-                  key={ele.id + i}
-                  className="downloadButtonSeries"
-                  onClick={() => {
-                    setNewContentSrc(`https://vixsrc.to/movie/${ele.id}`);
-                    setSeriesObject({});
-                    NewContentRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
-                    logEvent(analytics, `${user.displayName}-${ele.name}`, {
-                      user: user?.displayName || "guest",
-                      timestamp: moment().format("YYYY-MM-DD HH:mm:ss"),
-                      category: "movie/tv",
-                    });
-                  }}
-                >
-                  <img src={ele.img} alt={ele.name} />
-                  <div className="posterTitle">{ele.name}</div>
-                </button>
-              ))}
-            </div>
-          </div>
-        </>
-      ),
-    },
   ];
   const onSourceChange = (key) => {
     setKey(key);
@@ -1460,7 +1296,7 @@ const MoviesBox = () => {
         // style={{ fontSize: "1.5rem" }}
         className="netflix-heading"
       >
-        Live Stream Movies / TV Series (use mobile data to start video if showing blank)
+        Live Stream Movies / TV Series
       </div>
       <div style={{ fontSize: "1.2rem" }}>USE AD BLOCKER / CLOSE ADS TO WATCH MOVIE</div>
       <div style={{ width: "100%" }}>
@@ -1575,7 +1411,6 @@ const MoviesBox = () => {
         </div>
       </>
       {/* <KapilBox Kapilref={Kapilref} kapils02={kapils02} episode={episode} setEpisode={setEpisode} /> */}
-
       <div style={{ width: "100%", position: "relative" }}>
         <Overlay channel={NewContentSrc} />
         {/* <video style={{ minHeight: 200 }} src={channel}></video> */}
@@ -1613,14 +1448,6 @@ const MoviesBox = () => {
                           `https://streambox-scrapper.vercel.app/stream/series/${seriesObject.id}/${seasonData.season}/${index}`,
                         );
                         NewContentRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
-                      } else if (key === "Source_6") {
-                        setNewContentSrc(
-                          `https://video.moviepire.co/embed/tv/${seriesObject.id}/${seasonData.season}/${index}`,
-                        );
-                        NewContentRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
-                      } else if (key === "Source_7") {
-                        setNewContentSrc(`https://vixsrc.to/tv/${seriesObject.id}/${seasonData.season}/${index}`);
-                        NewContentRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
                       }
 
                       // footballFrameref.current.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -1642,7 +1469,7 @@ const MoviesBox = () => {
           ref={NewContentRef}
         />
       </div>
-      <h2> Changing of Source : 1.click source 2.click Movie or TV series again</h2>
+
       <Tabs
         defaultActiveKey={key}
         style={{ width: "100%" }}
