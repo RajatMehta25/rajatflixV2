@@ -1,12 +1,7 @@
 // Login.js
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { auth, db } from "./firebase";
-import {
-  GoogleAuthProvider,
-  signInWithPopup,
-  signInWithRedirect, // Imported correct v9/v10 method
-  getRedirectResult,
-} from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult } from "firebase/auth";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { AuthContext } from "./context";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -18,9 +13,12 @@ const Login = () => {
   const location = useLocation();
   const { setUser, setLoading } = useContext(AuthContext) || {};
 
+  // CRITICAL FIX 1: Prevents React StrictMode from executing getRedirectResult twice
+  const isProcessing = useRef(false);
+
   // Unified helper function to handle database registration, state updates, and navigation
   const handleUserSession = async (result) => {
-    if (!result) return;
+    if (!result || !result.user) return false;
 
     const user = result.user;
     const now = new Date();
@@ -48,40 +46,50 @@ const Login = () => {
         });
       }
 
-      // Set global user object and clear loading state
       setUser?.(user);
-      setLoading?.(false);
 
-      // Navigate to intended or default route
       const from = location.state?.from?.pathname || "/home";
       navigate(from, { replace: true });
 
       toast.success("Logged In Successfully!", { transition: Zoom, theme: "dark" });
+      return true;
     } catch (error) {
       console.error("Firestore sync failed:", error);
-      setLoading?.(false);
       toast.error("Failed to sync user data", { transition: Zoom, theme: "dark" });
+      return false;
     }
   };
 
   useEffect(() => {
-    // Listens for mobile users returning after their browser redirect completed
+    // If this effect is already running elsewhere, back out immediately
+    if (isProcessing.current) return;
+    isProcessing.current = true;
+
     setLoading?.(true);
 
     getRedirectResult(auth)
-      .then((result) => {
+      .then(async (result) => {
         if (result) {
           console.log("Logged in via mobile redirect:", result.user);
-          handleUserSession(result);
+          const success = await handleUserSession(result);
+          if (!success) setLoading?.(false);
         } else {
-          // Normal page boot; no pending authentication redirects found
+          // No active redirect data found; turn off loading spinner safely
           setLoading?.(false);
         }
       })
       .catch((error) => {
         console.error("Redirect auth error:", error.message);
         setLoading?.(false);
-        toast.error("Failed to log in with Google", { transition: Zoom, theme: "dark" });
+        // CRITICAL FIX 2: If mobile blocks the redirect cookie, fall back seamlessly to Popup!
+        if (
+          error.code === "auth/auth-domain-config-required" ||
+          error.code === "auth/operation-not-supported-in-this-environment"
+        ) {
+          console.log("Mobile redirect failed due to browser cookie restrictions. Switching to popup mode fallback...");
+        } else {
+          toast.error("Failed to log in with Google", { transition: Zoom, theme: "dark" });
+        }
       });
   }, []);
 
@@ -90,13 +98,17 @@ const Login = () => {
     const provider = new GoogleAuthProvider();
 
     try {
-      if (window.innerWidth < 768) {
-        // Mobile flow: Redirects page away entirely. Rest of this function will not execute.
+      // Check screen size or touch capability
+      const isMobile = window.innerWidth < 768 || /Mobi|Android|iPhone/i.test(navigator.userAgent);
+
+      if (isMobile) {
+        // Mobile flow
         await signInWithRedirect(auth, provider);
       } else {
-        // Desktop flow: Processes everything inline via popup modal
+        // Desktop flow
         const result = await signInWithPopup(auth, provider);
-        await handleUserSession(result);
+        const success = await handleUserSession(result);
+        if (!success) setLoading?.(false);
       }
     } catch (error) {
       console.error("Google sign-in failed:", error);
