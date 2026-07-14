@@ -513,21 +513,21 @@ const MoviesBox = () => {
   }
   const channelNumberArray = [885, 886, 887];
   const liveTVChannel = async (channelNumber) => {
-    // const response = await fetch(`https://dami-tv.pro/papi/tv/resolve/${channelNumber}`);
+    // const response = await fetch(`https://damitv.st/papi/tv/resolve/${channelNumber}`);
     // const data = await response.json();
-    // const streamingLink = `https://dami-tv.pro${data.stream}`;
+    // const streamingLink = `https://damitv.st${data.stream}`;
     // return streamingLink;
-    // return `https://dami-tv.pro/embed/?id=${channelNumber}`;
-    return `https://dami-tv.pro/embed/channel/?id=${channelNumber}`;
+    // return `https://damitv.st/embed/?id=${channelNumber}`;
+    return `https://damitv.st/embed/channel/?id=${channelNumber}`;
   };
   const channelNumberArrayESPN = [44, 45];
   const liveTVChannelESPN = async (channelNumber) => {
-    // const response = await fetch(`https://dami-tv.pro/papi/tv/resolve/${channelNumber}`);
+    // const response = await fetch(`https://damitv.st/papi/tv/resolve/${channelNumber}`);
     // const data = await response.json();
-    // const streamingLink = `https://dami-tv.pro${data.stream}`;
+    // const streamingLink = `https://damitv.st${data.stream}`;
     // return streamingLink;
-    // return `https://dami-tv.pro/embed/?id=${channelNumber}`;
-    return `https://dami-tv.pro/embed/channel/?id=${channelNumber}`;
+    // return `https://damitv.st/embed/?id=${channelNumber}`;
+    return `https://damitv.st/embed/channel/?id=${channelNumber}`;
   };
   const channelNumberArrayHBO = [
     { channelNumber: 690, name: "HBO Comedy" },
@@ -539,24 +539,24 @@ const MoviesBox = () => {
     { channelNumber: 689, name: "HBO 2" },
   ];
   const liveTVChannelHBO = async (channelNumber) => {
-    // const response = await fetch(`https://dami-tv.pro/papi/tv/resolve/${channelNumber}`);
+    // const response = await fetch(`https://damitv.st/papi/tv/resolve/${channelNumber}`);
     // const data = await response.json();
-    // const streamingLink = `https://dami-tv.pro${data.stream}`;
-    return `https://dami-tv.pro/embed/channel/?id=${channelNumber}`;
-    // return `https://dami-tv.pro/embed/?id=${channelNumber}`;
+    // const streamingLink = `https://damitv.st${data.stream}`;
+    return `https://damitv.st/embed/channel/?id=${channelNumber}`;
+    // return `https://damitv.st/embed/?id=${channelNumber}`;
   };
   const channelNumberArrayWWE = [{ channelNumber: 376, name: "WWE" }];
   const liveTVChannelWWE = async (channelNumber) => {
-    // const response = await fetch(`https://dami-tv.pro/papi/tv/resolve/${channelNumber}`);
+    // const response = await fetch(`https://damitv.st/papi/tv/resolve/${channelNumber}`);
     // console.log("WWE Channel Response:", response);
     // const data = await response.json();
     // console.log("WWE Channel Data:", data);
-    // const streamingLink = `https://dami-tv.pro${data.stream}`;
-    // return `https://dami-tv.pro/embed/?id=${channelNumber}`;
-    return `https://dami-tv.pro/embed/channel/?id=${channelNumber}`;
-    // return `https://dami-tv.pro/player/hls/?v=300&resolve=${channelNumber}&name=${encodeURIComponent("MTV USA")}`;
+    // const streamingLink = `https://damitv.st${data.stream}`;
+    // return `https://damitv.st/embed/?id=${channelNumber}`;
+    return `https://damitv.st/embed/channel/?id=${channelNumber}`;
+    // return `https://damitv.st/player/hls/?v=300&resolve=${channelNumber}&name=${encodeURIComponent("MTV USA")}`;
   };
-  //dami-tv.pro/player/hls/?v=300&resolve=
+  //damitv.st/player/hls/?v=300&resolve=
   const channelNumberArrayBBC = [
     { channelNumber: 305, name: "BBC AMerica" },
     { channelNumber: 306, name: "BBC" },
@@ -566,14 +566,14 @@ const MoviesBox = () => {
     { channelNumber: 310, name: "BBC One" },
   ];
   const liveTVChannelBBC = async (channelNumber) => {
-    // const response = await fetch(`https://dami-tv.pro/papi/tv/resolve/${channelNumber}`);
+    // const response = await fetch(`https://damitv.st/papi/tv/resolve/${channelNumber}`);
     // console.log("WWE Channel Response:", response);
     // const data = await response.json();
     // console.log("WWE Channel Data:", data);
-    // const streamingLink = `https://dami-tv.pro${data.stream}`;
-    // return `https://dami-tv.pro/embed/?id=${channelNumber}`;
-    return `https://dami-tv.pro/embed/channel/?id=${channelNumber}`;
-    // return `https://dami-tv.pro/player/hls/?v=300&resolve=${channelNumber}&name=${encodeURIComponent("MTV USA")}`;
+    // const streamingLink = `https://damitv.st${data.stream}`;
+    // return `https://damitv.st/embed/?id=${channelNumber}`;
+    return `https://damitv.st/embed/channel/?id=${channelNumber}`;
+    // return `https://damitv.st/player/hls/?v=300&resolve=${channelNumber}&name=${encodeURIComponent("MTV USA")}`;
   };
   const TVSeriesData = [
     {
@@ -1500,7 +1500,7 @@ const MoviesBox = () => {
               className="downloadButton"
               onClick={() => {
                 if (!ele.embedUrl) {
-                  setChannel(`https://dami-tv.pro/embed/channel/?id=${ele.id}`);
+                  setChannel(`https://damitv.st/embed/channel/?id=${ele.id}`);
                 } else {
                   setChannel(ele.embedUrl);
                 }
@@ -1690,13 +1690,6 @@ const MoviesBox = () => {
         />
       </Suspense>
       <div>
-        <h2>Football Source 1</h2>
-        <iframe
-          className="iframe"
-          src={`https://hd.muesra.sbs/albaplayer/oooe/`}
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen ; download ; translator"
-          allowFullScreen
-        />
         <h2>Football Source 2</h2>
         <div>
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((ele, i) => (
@@ -1711,43 +1704,6 @@ const MoviesBox = () => {
           <iframe
             className="iframe"
             src={footballSource2}
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen ; download ; translator"
-            allowFullScreen
-          />
-        </div>
-        <h2>Live TV Source 1</h2>
-        <div>
-          {[
-            "AAJTAK",
-            "STARGOLDHD",
-            "TRAVELXP4K",
-            "B4UMUSIC",
-            "BALLEBALLE",
-            "INDIATODAY",
-            "MUSICINDIA",
-            "ZEENEWS",
-            "INDIATODAY",
-            "GOODNEWSTODAY",
-            "WION",
-            "7XMUSIC",
-            "HARYANABEATS",
-            "SAGAMUSICHD",
-            "ZOOM",
-            "DESITASHAN",
-          ].map((ele, i) => (
-            <button
-              className="downloadButton"
-              onClick={() => setliveTVSource1(`https://techy-kuldeep-zee5-fhuc55.vercel.app/${ele}.html`)}
-            >
-              {ele}
-            </button>
-          ))}
-        </div>
-        <div style={{ width: "100%", position: "relative" }}>
-          <Overlay channel={liveTvSource1} />
-          <iframe
-            className="iframe"
-            src={liveTvSource1}
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen ; download ; translator"
             allowFullScreen
           />

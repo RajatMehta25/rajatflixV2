@@ -29,8 +29,8 @@ const FootballSection = ({
     // fetch(`https://streamed.pk/api/matches/football`)
     try {
       // fetch(`https://streamed.pk/api/matches/all`)
-      fetch(`https://dami-tv.pro/papi/matches/all`)
-        // fetch(`https://dami-tv.pro/papi/api/streams`)
+      fetch(`https://damitv.st/papi/matches/all`)
+        // fetch(`https://damitv.st/papi/api/streams`)
         .then((res) => res.json())
         .then((data) => {
           setFootballCardData(data);
@@ -71,7 +71,7 @@ const FootballSection = ({
     // const results = await Promise.allSettled(
     //   sources.map(({ source, id }) =>
     //     // fetch(`https://pooembed.eu/embed/${source}/${id}`)
-    //     fetch(`https://dami-tv.pro/embed/?id=${id}`).then((r) => {
+    //     fetch(`https://damitv.st/embed/?id=${id}`).then((r) => {
     //       if (!r.ok) throw new Error(`HTTP ${r.status}`);
     //       return r.json();
     //     }),
@@ -84,7 +84,7 @@ const FootballSection = ({
     setFootballCardSources(newChannels);
     // console.log("Selected sources for fetching:", sources);
     footballFrameref.current.scrollIntoView({ behavior: "smooth", block: "center" });
-    setChannel(`https://dami-tv.pro/embed/?id=${sources[0].id}`);
+    setChannel(`https://damitv.st/embed/?id=${sources[0].id}`);
 
     // const failed = results.filter((r) => r.status === "rejected").length;
     // if (failed) console.warn(`Skipped ${failed} failed request(s).`);

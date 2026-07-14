@@ -9,7 +9,7 @@ const FootballCard = ({ homeLogo, awayLogo, homeName, awayName, status, time, sc
     if (poster && poster.startsWith("http")) {
       return poster;
     } else {
-      return `https://dami-tv.pro${poster}`;
+      return `https://damitv.st${poster}`;
     }
   };
 
