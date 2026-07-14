@@ -26,7 +26,7 @@ const Home = () => {
   const { user, setUser, loading, setLoading, authResolved } = useContext(AuthContext);
   const [userDetails, setUserDetails] = useState({});
   const navigate = useNavigate();
-  DisableDevTool();
+  // DisableDevTool();
   // Fetch user details once we have an authenticated user
   const fetchUserData = useCallback(
     async (uid) => {
